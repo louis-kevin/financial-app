@@ -1,0 +1,31 @@
+import 'package:financialapp/locale/locale_i18n.dart';
+import 'package:financialapp/locale/locale_keys.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+
+class EmailInput extends FormBuilderTextField {
+  EmailInput({
+    Key key,
+    String attribute,
+    InputDecoration decoration,
+    TextStyle style,
+    String errorMessage,
+    List<FormFieldValidator> validators,
+  }) : super(
+          attribute: attribute ?? 'email',
+          key: key,
+          keyboardType: TextInputType.emailAddress,
+          style: style ??
+              TextStyle(
+                color: Colors.white,
+              ),
+          decoration: decoration?.copyWith(errorText: errorMessage) ??
+              const InputDecoration().copyWith(
+                labelText: LabelTextKeys.email.i18n,
+                errorText: errorMessage,
+              ),
+          validators: [
+            FormBuilderValidators.email(),
+          ],
+        );
+}
