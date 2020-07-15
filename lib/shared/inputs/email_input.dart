@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class EmailInput extends FormBuilderTextField {
-  EmailInput({
-    Key key,
-    String attribute,
-    InputDecoration decoration,
-    TextStyle style,
-    String errorMessage,
-    List<FormFieldValidator> validators,
-  }) : super(
+  EmailInput(
+      {Key key,
+      String attribute,
+      InputDecoration decoration,
+      TextStyle style,
+      String errorMessage,
+      List<FormFieldValidator> validators,
+      bool required = false})
+      : super(
           attribute: attribute ?? 'email',
           key: key,
           keyboardType: TextInputType.emailAddress,
@@ -24,8 +25,10 @@ class EmailInput extends FormBuilderTextField {
                 labelText: LabelTextKeys.email.i18n,
                 errorText: errorMessage,
               ),
-          validators: [
-            FormBuilderValidators.email(),
-          ],
+          validators: (validators ?? [])
+            ..addAll([
+              if (required) FormBuilderValidators.required(),
+              FormBuilderValidators.email()
+            ]),
         );
 }

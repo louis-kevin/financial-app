@@ -38,12 +38,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var authState = AuthState();
+  AuthState authState;
 
   @override
   void initState() {
     super.initState();
-    authState.checkUser();
+    authState = AuthState()..checkUser();
   }
 
   @override

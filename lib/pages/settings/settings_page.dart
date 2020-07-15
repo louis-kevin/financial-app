@@ -1,26 +1,24 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:financialapp/locale/locale_keys.dart';
+import 'package:financialapp/models/user_model.dart';
 import 'package:financialapp/pages/settings/settings_second_step_page.dart';
 import 'package:financialapp/shared/base_button.dart';
 import 'package:financialapp/shared/layout/base_back_button_page.dart';
 import 'package:financialapp/shared/typography/display2_text.dart';
 import 'package:financialapp/shared/typography/subtitle_text.dart';
+import 'package:financialapp/states/auth_state.dart';
 import 'package:financialapp/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
 
-class _SettingsPageState extends State<SettingsPage>
-    with AutomaticKeepAliveClientMixin {
+class _SettingsPageState extends State<SettingsPage> {
   TextEditingController controller;
-  int dayType = 0;
-  bool _wantKeepAlive = false;
-
-  @override
-  bool get wantKeepAlive => _wantKeepAlive;
+  UserConfig userConfig = UserConfig.empty();
 
   @override
   void initState() {
@@ -28,11 +26,19 @@ class _SettingsPageState extends State<SettingsPage>
 
     controller.addListener(validateInput);
 
+    var authState = Provider.of<AuthState>(context, listen: false);
+
+    print(authState.logged);
+
+    if (authState.user?.config != null) {
+      userConfig = authState.user.config;
+      controller.text = userConfig.day.toString();
+    }
     super.initState();
   }
 
   void selectDayTypeOption(int value) {
-    dayType = value;
+    userConfig.dayType = value == 0 ? DayType.workDay : DayType.allDays;
     setState(() {});
     validateInput();
   }
@@ -44,10 +50,12 @@ class _SettingsPageState extends State<SettingsPage>
 
     if (value < 1) {
       controller.clear();
-    } else if (dayType == 0 && value > 20) {
+    } else if (userConfig.dayType == DayType.workDay && value > 20) {
       controller.clear();
-    } else if (dayType == 1 && value > 31) {
+    } else if (userConfig.dayType == DayType.allDays && value > 31) {
       controller.clear();
+    } else {
+      userConfig.day = value;
     }
 
     setState(() {});
@@ -57,11 +65,9 @@ class _SettingsPageState extends State<SettingsPage>
     int day = int.tryParse(controller.text);
     if (day == null) return;
 
-    _wantKeepAlive = true;
-
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => SettingsSecondStepPage(day: day, dayType: dayType),
+        builder: (_) => SettingsSecondStepPage(userConfig: userConfig),
       ),
     );
   }
@@ -115,8 +121,10 @@ class _SettingsPageState extends State<SettingsPage>
   Widget buildDayTypeSelector() {
     return CarouselSlider(
       items: [
-        buildDayTypeOption(SettingsPageTextKeys.selectionWorkDay, 0),
-        buildDayTypeOption(SettingsPageTextKeys.selectionAllDays, 1),
+        buildDayTypeOption(
+            SettingsPageTextKeys.selectionWorkDay, DayType.workDay),
+        buildDayTypeOption(
+            SettingsPageTextKeys.selectionAllDays, DayType.allDays),
       ],
       options: CarouselOptions(
         viewportFraction: 0.2,
@@ -130,8 +138,10 @@ class _SettingsPageState extends State<SettingsPage>
     );
   }
 
-  Widget buildDayTypeOption(String titleKey, int value) {
-    Color color = value == dayType ? Colors.white : DefaultColors.subtitleColor;
+  Widget buildDayTypeOption(String titleKey, DayType value) {
+    Color color = value == userConfig.dayType
+        ? Colors.white
+        : DefaultColors.subtitleColor;
     return Display2Text.key(
       titleKey,
       textColor: color,

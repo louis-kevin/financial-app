@@ -1,38 +1,24 @@
 import 'package:dio/dio.dart';
 import 'package:financialapp/services/base_service.dart';
 
-var user = {'id': 1, 'name': 'Kevin', 'email': 'keviinlouis@hotmail.com'};
-
 class AuthService extends BaseService {
   Future<Response> me() {
-    return Future.delayed(
-      Duration(milliseconds: 300),
-      () => Response(data: user, statusCode: 200),
-    );
-    return get('me');
+    return get('user/me');
+  }
+
+  Future<Response> updateSettings(Map data) {
+    return put('user/settings', data);
   }
 
   Future<Response> login(Map data) {
-    return Future.delayed(
-      Duration(milliseconds: 300),
-      () => Response(data: user, statusCode: 200),
-    );
-    return post('login', data);
+    return post('user/login', data);
   }
 
-  register(Map data) {
-    return Future.delayed(
-      Duration(milliseconds: 300),
-      () => Response(data: user, statusCode: 200),
-    );
-    return post('register', data);
+  Future<Response> register(Map data) {
+    return post('user/register', data);
   }
 
-  forgotPassword(Map data) {
-    return Future.delayed(
-      Duration(milliseconds: 300),
-      () => Response(statusCode: 200),
-    );
-    return post('forgot-password', data);
+  Future<Response> forgotPassword(Map data) {
+    return post('user/reset-password', data);
   }
 }

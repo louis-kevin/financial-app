@@ -23,6 +23,7 @@ var inputDecoration = InputDecorationTheme(
   labelStyle: TextStyle(fontFamily: 'Gibson', color: Color(0xFF6E768A)),
   contentPadding: EdgeInsets.all(10),
   filled: true,
+  errorStyle: TextStyle(fontSize: 16),
   fillColor: Color(0xFF353D50),
   border: UnderlineInputBorder(
     borderSide: BorderSide.none,

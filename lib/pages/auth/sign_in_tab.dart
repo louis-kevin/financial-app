@@ -14,14 +14,26 @@ import 'package:provider/provider.dart';
 class SignInTab extends StatelessWidget {
   final formKey = GlobalKey<FormBuilderState>();
 
-  save(context) async {
+  save(context, authState) async {
     if (!formKey.currentState.saveAndValidate()) return;
-
-    var authState = Provider.of<AuthState>(context, listen: false);
 
     await authState.login(formKey.currentState.value);
 
-    Navigator.of(context).pushNamed(Router.HOME);
+    if (authState.hasErrors) return;
+
+    var navigator = Navigator.of(context);
+
+    if (authState.user.needsConfig) {
+      return navigator.pushNamedAndRemoveUntil(
+        Router.SETTINGS,
+        (Route<dynamic> route) => false,
+      );
+    }
+
+    navigator.pushNamedAndRemoveUntil(
+      Router.HOME,
+      (Route<dynamic> route) => false,
+    );
   }
 
   goToRecoveryPasswordPage(context) {
@@ -35,16 +47,28 @@ class SignInTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authState = Provider.of<AuthState>(context);
+
     return FormBuilder(
       key: formKey,
+      initialValue: {
+        'email': 'kevinlouis.dev@gmail.com',
+        'password': '12345678'
+      },
       child: BaseBackButtonPage(
         hasAppBar: false,
         content: <Widget>[
-          EmailInput(),
+          EmailInput(
+            errorMessage: authState.getErrorByField('email'),
+            required: true,
+          ),
           SizedBox(
             height: 20,
           ),
-          PasswordInput(),
+          PasswordInput(
+            errorMessage: authState.getErrorByField('password'),
+            required: true,
+          ),
           SizedBox(
             height: 20,
           ),
@@ -57,7 +81,7 @@ class SignInTab extends StatelessWidget {
           )
         ],
         bottom: BaseButton(
-          onPressed: () => save(context),
+          onPressed: () => save(context, authState),
           textKey: AuthPageTextKeys.btnEnter,
         ),
       ),

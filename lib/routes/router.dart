@@ -53,7 +53,7 @@ class Router {
     MENU: (arguments) => MenuPage(),
     ACCOUNTS: (arguments) => AccountsPage(),
     PROFILE: (arguments) => ProfilePage(),
-    SETTINGS: (arguments) => SettingsPage(),
+    SETTINGS: (RouteArguments arguments) => SettingsPage(),
     ACCOUNT_MONEY_UPDATE: (arguments) => AccountMoneyUpdatePage(),
   };
 

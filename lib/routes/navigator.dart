@@ -10,13 +10,13 @@ class NavigatorSingleton {
     _instance ??= NavigatorSingleton._internalConstructor();
     return _instance;
   }
+
   GlobalKey<NavigatorState> key = GlobalKey<NavigatorState>();
 
   bool openedPushNotification = false;
 
   NavigatorSingleton._internalConstructor() {
     Notifier notifier = Notifier();
-    print(1);
 
     notifier.listen<Logout>(handleLogout);
 
@@ -28,35 +28,39 @@ class NavigatorSingleton {
   }
 
   handleLogout(event) {
-    this.key.currentState.pushNamed(Router.AUTH);
+    pushReplacementNamed(Router.WELCOME);
   }
 
   handleAuthStarted(AuthStartedEvent event) async {
-    String route = Router.WELCOME;
+    if (!event.logged) return pushReplacementNamed(Router.WELCOME);
 
-    if (event.logged) {
-      route = Router.HOME;
-    }
+    if (event.user.needsConfig) return pushReplacementNamed(Router.SETTINGS);
 
-    await Future.delayed(Duration(milliseconds: 300));
-
-    if (!openedPushNotification || !event.logged) {
-      this.key.currentState.pushNamed(route);
-    }
+    pushReplacementNamed(Router.HOME);
   }
 
   handlePushNotificationOpened(PushNotificationOpened event) async {
     this.openedPushNotification = true;
-    await this.key.currentState.pushNamed(
+    await pushReplacementNamed(
       event.path,
       arguments: {'id': event.resourceId},
     );
     this.openedPushNotification = false;
-
-    handleAuthStarted(AuthStartedEvent(true));
   }
 
   handleContentNotFound(event) async {
     await this.key.currentState.pushReplacementNamed(Router.HOME);
+  }
+
+  _pushNamed(String name, {arguments}) {
+    return this.key.currentState.pushNamed(name, arguments: arguments);
+  }
+
+  pushReplacementNamed(String name, {arguments}) {
+    return this.key.currentState.pushNamedAndRemoveUntil(
+          name,
+          (Route<dynamic> route) => false,
+          arguments: arguments,
+        );
   }
 }

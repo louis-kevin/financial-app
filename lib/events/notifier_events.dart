@@ -6,8 +6,9 @@ class AppStartedEvent {}
 
 class AuthStartedEvent {
   final bool logged;
+  final UserModel user;
 
-  AuthStartedEvent(this.logged);
+  AuthStartedEvent(this.logged, this.user);
 }
 
 class Logout {}

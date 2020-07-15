@@ -3,25 +3,27 @@ import 'package:financialapp/events/notifier.dart';
 import 'package:financialapp/events/notifier_events.dart';
 import 'package:financialapp/models/user_model.dart';
 import 'package:financialapp/services/auth_service.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:financialapp/states/base_state.dart';
 
-class AuthState extends ChangeNotifier {
+class AuthState extends BaseState {
   bool logged;
 
   UserModel user;
 
   AuthService authService = AuthService();
 
+  AuthState() {
+    Notifier()..listen((event) => logout());
+  }
+
   checkUser() async {
-    Response response = await authService.me();
+    user = await _getUser();
 
-    this.user = UserModel.fromJson(response.data);
-
-    this.logged = true;
+    logged = user != null;
 
     notifyListeners();
 
-    Notifier()..fire(AuthStartedEvent(logged));
+    Notifier()..fire(AuthStartedEvent(logged, user));
   }
 
   Future<void> login(Map data) {
@@ -36,17 +38,45 @@ class AuthState extends ChangeNotifier {
     });
   }
 
+  Future<void> updateSettings(UserConfig userConfig) async {
+    Response response = await authService.updateSettings(userConfig.toJson());
+
+    var userConfigModel = UserConfig.fromJson(response.data);
+
+    user?.config = userConfigModel;
+  }
+
+  Future<UserModel> _getUser() async {
+    if (!await authService.hasToken) return null;
+
+    try {
+      Response response = await authService.me();
+      return UserModel.fromJson(response.data);
+    } catch (e) {
+      return null;
+    }
+  }
+
   _authenticate(Function authenticationCall) async {
-    Response response = await authenticationCall();
+    return handleAsync(() async {
+      Response response = await authenticationCall();
 
-    var user = UserModel.fromJson(response.data);
+      var user = UserModel.fromJson(response.data);
 
-    this.user = user;
+      this.user = user;
 
-    this.logged = true;
+      this.logged = true;
+
+      notifyListeners();
+
+      Notifier()..fire(Login(this.user));
+    });
+  }
+
+  void logout() {
+    user = null;
+    logged = false;
 
     notifyListeners();
-
-    Notifier()..fire(Login(this.user));
   }
 }

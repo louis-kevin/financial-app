@@ -1,3 +1,5 @@
+import 'package:financialapp/events/notifier.dart';
+import 'package:financialapp/events/notifier_events.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/routes/router.dart';
 import 'package:financialapp/shared/typography/display1_text.dart';
@@ -19,7 +21,7 @@ class MenuPage extends StatelessWidget {
   }
 
   goToWelcomePage(context) {
-    Navigator.of(context).pushNamed(Router.WELCOME);
+    Notifier()..fire(Logout());
   }
 
   @override

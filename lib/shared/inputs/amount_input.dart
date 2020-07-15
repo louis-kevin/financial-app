@@ -17,15 +17,19 @@ class AmountInput extends FormBuilderTextField {
     TextStyle style,
     double value,
     String attribute,
+    MoneyMaskedTextController controller,
+    List<FormFieldValidator> validators,
+    bool required = false,
   }) : super(
           attribute: attribute ?? 'amount',
           key: key,
-          controller: new MoneyMaskedTextController(
-            decimalSeparator: MoneyTextKeys.decimalSeparator.i18n,
-            thousandSeparator: MoneyTextKeys.thousandSeparator.i18n,
-            leftSymbol: MoneyTextKeys.leftSymbol.i18n,
-            initialValue: value ?? 0,
-          ),
+          controller: controller ??
+              new MoneyMaskedTextController(
+                decimalSeparator: MoneyTextKeys.decimalSeparator.i18n,
+                thousandSeparator: MoneyTextKeys.thousandSeparator.i18n,
+                leftSymbol: MoneyTextKeys.leftSymbol.i18n,
+                initialValue: value ?? 0,
+              ),
           initialValue: value?.toString() ?? 0.toString(),
           keyboardType: TextInputType.number,
           textAlign: TextAlign.start,
@@ -33,6 +37,10 @@ class AmountInput extends FormBuilderTextField {
             _controller.text = value;
             return _controller.numberValue;
           },
+          validators: (validators ?? [])
+            ..addAll([
+              if (required) FormBuilderValidators.required(),
+            ]),
           style: style ??
               TextStyle(
                 color: Colors.white,

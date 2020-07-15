@@ -9,6 +9,9 @@ class NameInput extends FormBuilderTextField {
     InputDecoration decoration,
     TextStyle style,
     String attribute,
+    String errorMessage,
+    List<FormFieldValidator> validators,
+    bool required = false,
   }) : super(
           attribute: attribute ?? 'name',
           key: key,
@@ -17,9 +20,14 @@ class NameInput extends FormBuilderTextField {
               TextStyle(
                 color: Colors.white,
               ),
-          decoration: decoration ??
+          decoration: decoration?.copyWith(errorText: errorMessage) ??
               const InputDecoration().copyWith(
                 labelText: LabelTextKeys.name.i18n,
+                errorText: errorMessage,
               ),
+          validators: (validators ?? [])
+            ..addAll([
+              if (required) FormBuilderValidators.required(),
+            ]),
         );
 }

@@ -13,35 +13,48 @@ import 'package:provider/provider.dart';
 class SignUpTab extends StatelessWidget {
   final formKey = GlobalKey<FormBuilderState>();
 
-  save(context) async {
+  save(context, authState) async {
     if (!formKey.currentState.saveAndValidate()) return;
-
-    var authState = Provider.of<AuthState>(context, listen: false);
 
     await authState.register(formKey.currentState.value);
 
-    Navigator.of(context).pushNamed(Router.SETTINGS);
+    if (authState.hasErrors) return;
+
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      Router.SETTINGS,
+      (Route<dynamic> route) => false,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    final authState = Provider.of<AuthState>(context);
     return FormBuilder(
       key: formKey,
       child: BaseBackButtonPage(
         hasAppBar: false,
         content: <Widget>[
-          NameInput(),
+          NameInput(
+            errorMessage: authState.getErrorByField('name'),
+            required: true,
+          ),
           SizedBox(
             height: 20,
           ),
-          EmailInput(),
+          EmailInput(
+            errorMessage: authState.getErrorByField('email'),
+            required: true,
+          ),
           SizedBox(
             height: 20,
           ),
-          PasswordInput(),
+          PasswordInput(
+            errorMessage: authState.getErrorByField('password'),
+            required: true,
+          ),
         ],
         bottom: BaseButton(
-          onPressed: () => save(context),
+          onPressed: () => save(context, authState),
           textKey: AuthPageTextKeys.btnSignUp,
         ),
       ),
