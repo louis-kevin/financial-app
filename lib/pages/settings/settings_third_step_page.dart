@@ -50,6 +50,7 @@ class _SettingsThirdStepPageState extends State<SettingsThirdStepPage> {
             height: 20,
           ),
           AmountInput(
+            context,
             style: Theme.of(context).textTheme.display2,
             decoration: InputDecoration(),
             value: Provider.of<AuthState>(context)

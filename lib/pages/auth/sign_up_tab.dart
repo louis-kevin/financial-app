@@ -1,5 +1,5 @@
 import 'package:financialapp/locale/locale_keys.dart';
-import 'package:financialapp/routes/router.dart';
+import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/base_button.dart';
 import 'package:financialapp/shared/inputs/email_input.dart';
 import 'package:financialapp/shared/inputs/name_input.dart';
@@ -21,7 +21,7 @@ class SignUpTab extends StatelessWidget {
     if (authState.hasErrors) return;
 
     Navigator.of(context).pushNamedAndRemoveUntil(
-      Router.SETTINGS,
+      RouterManager.SETTINGS,
       (Route<dynamic> route) => false,
     );
   }
@@ -35,6 +35,7 @@ class SignUpTab extends StatelessWidget {
         hasAppBar: false,
         content: <Widget>[
           NameInput(
+            context,
             errorMessage: authState.getErrorByField('name'),
             required: true,
           ),
@@ -42,6 +43,7 @@ class SignUpTab extends StatelessWidget {
             height: 20,
           ),
           EmailInput(
+            context,
             errorMessage: authState.getErrorByField('email'),
             required: true,
           ),
@@ -49,6 +51,7 @@ class SignUpTab extends StatelessWidget {
             height: 20,
           ),
           PasswordInput(
+            context,
             errorMessage: authState.getErrorByField('password'),
             required: true,
           ),

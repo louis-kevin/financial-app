@@ -3,8 +3,8 @@ import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/pages/home/bills/bills_tab.dart';
 import 'package:financialapp/pages/home/summary/summary_tab.dart';
 import 'package:financialapp/pages/home/total_debit_app_bar_home.dart';
-import 'package:financialapp/routes/router.dart';
 import 'package:financialapp/routes/router_arguments.dart';
+import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/states/account_state.dart';
 import 'package:financialapp/states/dashboard_state.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage>
 
   openMenu(BuildContext context) {
     Navigator.of(context).pushNamed(
-      Router.MENU,
+      RouterManager.MENU,
       arguments: RouteArguments(transitions: RouterTransitions.fade),
     );
   }

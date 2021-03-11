@@ -54,7 +54,7 @@ class _FormAccountPageState extends State<FormAccountPage> {
   void showColorPicker() {
     showDialog(
       context: context,
-      child: AlertDialog(
+      builder: (_) => AlertDialog(
         title: Body2Text.key(AccountPageTextKeys.titleSelectColor),
         content: SingleChildScrollView(
           child: MaterialPicker(
@@ -77,9 +77,7 @@ class _FormAccountPageState extends State<FormAccountPage> {
   deleteDialog() async {
     var result = await showDialog(
       context: context,
-      child: AccountRemovalDialog(
-        account: widget.account,
-      ),
+      builder: (_) => AccountRemovalDialog(account: widget.account),
     ) as bool;
 
     if (result) {
@@ -106,9 +104,10 @@ class _FormAccountPageState extends State<FormAccountPage> {
             ? AccountPageTextKeys.editTitle
             : AccountPageTextKeys.addTitle,
         content: <Widget>[
-          NameInput(),
+          NameInput(context),
           buildColorSelector(),
           AmountInput(
+            context,
             value: widget.account?.amount,
           ),
         ],

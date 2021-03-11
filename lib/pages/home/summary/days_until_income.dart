@@ -1,5 +1,5 @@
 import 'package:financialapp/locale/locale_keys.dart';
-import 'package:financialapp/routes/router.dart';
+import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/typography/body2_text.dart';
 import 'package:financialapp/shared/typography/subhead_text.dart';
 import 'package:financialapp/states/dashboard_state.dart';
@@ -15,7 +15,7 @@ class _DaysUntilIncomeState extends State<DaysUntilIncome> {
   double daysPercent = 0.8;
 
   void goToSettings(context) {
-    Navigator.of(context).pushNamed(Router.SETTINGS);
+    Navigator.of(context).pushNamed(RouterManager.SETTINGS);
   }
 
   @override

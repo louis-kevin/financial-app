@@ -1,6 +1,6 @@
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/models/user_model.dart';
-import 'package:financialapp/routes/router.dart';
+import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/base_button.dart';
 import 'package:financialapp/shared/layout/base_back_button_page.dart';
 import 'package:financialapp/shared/typography/subtitle_text.dart';
@@ -21,7 +21,7 @@ class SettingsLastStepPage extends StatelessWidget {
 
     if (state.hasErrors) return;
 
-    Navigator.of(context).pushReplacementNamed(Router.HOME);
+    Navigator.of(context).pushReplacementNamed(RouterManager.HOME);
   }
 
   @override

@@ -9,12 +9,12 @@ class DefaultColors {
 }
 
 var textTheme = TextTheme(
-  display4: TextStyle(fontSize: 52, color: Colors.white),
-  display3: TextStyle(fontSize: 40, color: Colors.white),
-  display2: TextStyle(fontSize: 29, color: Colors.white),
-  display1: TextStyle(fontSize: 24, color: Colors.white),
-  headline: TextStyle(fontSize: 20, color: DefaultColors.subtitleColor),
-  subtitle: TextStyle(fontSize: 18, color: DefaultColors.subtitleColor),
+  headline1: TextStyle(fontSize: 52, color: Colors.white),
+  headline2: TextStyle(fontSize: 40, color: Colors.white),
+  headline3: TextStyle(fontSize: 29, color: Colors.white),
+  headline4: TextStyle(fontSize: 24, color: Colors.white),
+  headline5: TextStyle(fontSize: 20, color: DefaultColors.subtitleColor),
+  subtitle1: TextStyle(fontSize: 18, color: DefaultColors.subtitleColor),
   subhead: TextStyle(fontSize: 16, color: DefaultColors.subtitleColor),
   body2: TextStyle(fontSize: 14, color: DefaultColors.subtitleColor),
 );

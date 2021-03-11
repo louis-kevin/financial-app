@@ -18,7 +18,7 @@ class BaseState extends ChangeNotifier {
     try {
       return await asyncRequest();
     } on DioError catch (error) {
-      if (error?.type != DioErrorType.RESPONSE) throw error;
+      if (error?.type != DioErrorType.response) throw error;
       if (error?.response?.statusCode != 422) throw error;
 
       errors = error.response?.data;

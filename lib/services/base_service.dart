@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:financialapp/config.dart';
 import 'package:financialapp/events/notifier.dart';
 import 'package:financialapp/events/notifier_events.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart' as Storage;
+import 'package:get_storage/get_storage.dart';
 
 class BaseService {
   static const AUTH_TOKEN_KEY = 'JWT_TOKEN';
@@ -22,25 +22,11 @@ class BaseService {
 
     client.interceptors.add(AuthenticationInterceptor());
 
-    Notifier()..listen<Logout>((logout) => clearToken());
-  }
-
-  Future<String> get token async {
-    final storage = new Storage.FlutterSecureStorage();
-
-    return await storage.read(key: BaseService.AUTH_TOKEN_KEY);
+    Notifier()..listen<Logout>((logout) => TokenManager.clearToken());
   }
 
   Future<bool> get hasToken async {
-    String token = await this.token;
-
-    return token != null;
-  }
-
-  void clearToken() {
-    final storage = new Storage.FlutterSecureStorage();
-
-    storage.delete(key: BaseService.AUTH_TOKEN_KEY);
+    return await TokenManager.fetchToken() != null;
   }
 
   get(String path, {Map query, Map headers}) {
@@ -120,13 +106,13 @@ class AuthenticationInterceptor extends InterceptorsWrapper {
     print(
         "ERROR[${response?.statusCode}] => PATH: ${error?.request?.uri?.path}");
 
-    if (error.type != DioErrorType.RESPONSE) return super.onError(error);
+    if (error.type != DioErrorType.response) return super.onError(error);
 
-    if (response.statusCode == 401) {
+    if (response?.statusCode == 401) {
       Notifier()..fire(Logout());
     }
 
-    if (response.statusCode == 422) {
+    if (response?.statusCode == 422) {
       print("MESSAGE => ${response.data}");
     }
 
@@ -134,7 +120,7 @@ class AuthenticationInterceptor extends InterceptorsWrapper {
   }
 
   Future<Map<String, dynamic>> _fetchAuthHeader() async {
-    String token = await _fetchJwtToken();
+    String token = await TokenManager.fetchToken();
 
     if (token == null) return {};
 
@@ -144,7 +130,7 @@ class AuthenticationInterceptor extends InterceptorsWrapper {
   void _checkIfHasRenewHeader(Headers headers) {
     var token = headers.value(BaseService.RENEW_TOKEN_KEY);
     if (token == null) return;
-    _writeJwtToken(token);
+    TokenManager.writeToken(token);
   }
 
   void _checkIfHasTokenOnBody(data) {
@@ -154,18 +140,24 @@ class AuthenticationInterceptor extends InterceptorsWrapper {
 
     if (token == null) return;
 
-    _writeJwtToken(token);
+    TokenManager.writeToken(token);
   }
+}
 
-  void _writeJwtToken(token) {
+class TokenManager {
+  static void writeToken(token) {
     print('Writing JWT TOKEN');
-    final storage = new Storage.FlutterSecureStorage();
-    storage.write(key: BaseService.AUTH_TOKEN_KEY, value: token);
+    final storage = new GetStorage();
+    storage.write(BaseService.AUTH_TOKEN_KEY, token);
   }
 
-  Future<String> _fetchJwtToken() async {
-    final storage = new Storage.FlutterSecureStorage();
+  static void clearToken() {
+    final storage = new GetStorage();
+    storage.remove(BaseService.AUTH_TOKEN_KEY);
+  }
 
-    return storage.read(key: BaseService.AUTH_TOKEN_KEY);
+  static Future<String> fetchToken() async {
+    final storage = new GetStorage();
+    return storage.read(BaseService.AUTH_TOKEN_KEY);
   }
 }

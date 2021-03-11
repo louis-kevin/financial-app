@@ -27,15 +27,11 @@ class AuthState extends BaseState {
   }
 
   Future<void> login(Map data) {
-    return _authenticate(() {
-      return authService.login(data);
-    });
+    return _authenticate(() async => await authService.login(data));
   }
 
   Future<void> register(Map data) {
-    return _authenticate(() {
-      return authService.register(data);
-    });
+    return _authenticate(() async => await authService.register(data));
   }
 
   Future<void> updateSettings(UserConfig userConfig) async {
@@ -62,6 +58,8 @@ class AuthState extends BaseState {
       Response response = await authenticationCall();
 
       var user = UserModel.fromJson(response.data);
+
+      print(user);
 
       this.user = user;
 

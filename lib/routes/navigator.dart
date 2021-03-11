@@ -1,6 +1,6 @@
 import 'package:financialapp/events/notifier.dart';
 import 'package:financialapp/events/notifier_events.dart';
-import 'package:financialapp/routes/router.dart';
+import 'package:financialapp/routes/router_manager.dart';
 import 'package:flutter/material.dart';
 
 class NavigatorSingleton {
@@ -28,15 +28,16 @@ class NavigatorSingleton {
   }
 
   handleLogout(event) {
-    pushReplacementNamed(Router.WELCOME);
+    pushReplacementNamed(RouterManager.WELCOME);
   }
 
   handleAuthStarted(AuthStartedEvent event) async {
-    if (!event.logged) return pushReplacementNamed(Router.WELCOME);
+    if (!event.logged) return pushReplacementNamed(RouterManager.WELCOME);
 
-    if (event.user.needsConfig) return pushReplacementNamed(Router.SETTINGS);
+    if (event.user.needsConfig)
+      return pushReplacementNamed(RouterManager.SETTINGS);
 
-    pushReplacementNamed(Router.HOME);
+    pushReplacementNamed(RouterManager.HOME);
   }
 
   handlePushNotificationOpened(PushNotificationOpened event) async {
@@ -49,11 +50,7 @@ class NavigatorSingleton {
   }
 
   handleContentNotFound(event) async {
-    await this.key.currentState.pushReplacementNamed(Router.HOME);
-  }
-
-  _pushNamed(String name, {arguments}) {
-    return this.key.currentState.pushNamed(name, arguments: arguments);
+    await this.key.currentState.pushReplacementNamed(RouterManager.HOME);
   }
 
   pushReplacementNamed(String name, {arguments}) {

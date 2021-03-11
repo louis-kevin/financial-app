@@ -26,14 +26,6 @@ class _SettingsPageState extends State<SettingsPage> {
 
     controller.addListener(validateInput);
 
-    var authState = Provider.of<AuthState>(context, listen: false);
-
-    print(authState.logged);
-
-    if (authState.user?.config != null) {
-      userConfig = authState.user.config;
-      controller.text = userConfig.day.toString();
-    }
     super.initState();
   }
 
@@ -74,6 +66,15 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    var authState = Provider.of<AuthState>(context);
+
+    print(authState.logged);
+
+    if (authState.user?.config != null) {
+      userConfig = authState.user.config;
+      controller.text = userConfig.day.toString();
+    }
+
     return BaseBackButtonPage(
       titleKey: SettingsPageTextKeys.firstTitle,
       content: <Widget>[

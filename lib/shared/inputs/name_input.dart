@@ -4,16 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class NameInput extends FormBuilderTextField {
-  NameInput({
+  NameInput(
+    BuildContext context, {
     Key key,
     InputDecoration decoration,
     TextStyle style,
-    String attribute,
+    String name,
     String errorMessage,
     List<FormFieldValidator> validators,
     bool required = false,
   }) : super(
-          attribute: attribute ?? 'name',
+          name: name ?? 'name',
           key: key,
           keyboardType: TextInputType.text,
           style: style ??
@@ -25,9 +26,11 @@ class NameInput extends FormBuilderTextField {
                 labelText: LabelTextKeys.name.i18n,
                 errorText: errorMessage,
               ),
-          validators: (validators ?? [])
-            ..addAll([
-              if (required) FormBuilderValidators.required(),
-            ]),
+          validator: FormBuilderValidators.compose(
+            (validators ?? [])
+              ..addAll([
+                if (required) FormBuilderValidators.required(context),
+              ]),
+          ),
         );
 }

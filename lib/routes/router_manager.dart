@@ -26,7 +26,7 @@ enum Routes {
   settings,
 }
 
-class Router {
+class RouterManager {
   static const ACCOUNT = 'account';
   static const ACCOUNTS = 'accounts';
   static const BILL = 'bill';

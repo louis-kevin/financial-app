@@ -1,6 +1,6 @@
 import 'package:financialapp/locale/locale_i18n.dart';
 import 'package:financialapp/locale/locale_keys.dart';
-import 'package:financialapp/routes/router.dart';
+import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/typography/display4_text.dart';
 import 'package:financialapp/shared/typography/headline_text.dart';
 import 'package:financialapp/states/dashboard_state.dart';
@@ -71,7 +71,7 @@ class TotalsCard extends StatelessWidget {
   const TotalsCard({Key key, this.titleKey, this.amount}) : super(key: key);
 
   void goToUpdateAccountMoney(context) {
-    Navigator.of(context).pushNamed(Router.ACCOUNT_MONEY_UPDATE);
+    Navigator.of(context).pushNamed(RouterManager.ACCOUNT_MONEY_UPDATE);
   }
 
   @override

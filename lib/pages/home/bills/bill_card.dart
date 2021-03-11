@@ -1,6 +1,6 @@
 import 'package:financialapp/models/bill_model.dart';
-import 'package:financialapp/routes/router.dart';
 import 'package:financialapp/routes/router_arguments.dart';
+import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/typography/subhead_text.dart';
 import 'package:financialapp/shared/typography/subtitle_text.dart';
 import 'package:financialapp/states/bill_state.dart';
@@ -14,7 +14,7 @@ class BillCard extends StatelessWidget {
 
   void goToAddBill(context) {
     Navigator.of(context).pushNamed(
-      Router.BILL,
+      RouterManager.BILL,
       arguments: RouteArguments(
         model: Provider.of<BillModel>(context, listen: false),
         transitionBuilder: (page) {

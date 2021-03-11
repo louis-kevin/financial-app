@@ -43,14 +43,16 @@ class BillService extends BaseService {
 
     return Future.delayed(
       Duration(milliseconds: 300),
-      () => Response(data: bills, statusCode: 200),
+      () => Response(
+          data: bills, statusCode: 200, request: RequestOptions(path: 'test')),
     );
   }
 
   saveBill(Map<String, dynamic> data, {int id}) {
     return Future.delayed(
       Duration(seconds: 1),
-      () => Response(data: data, statusCode: 200),
+      () => Response(
+          data: data, statusCode: 200, request: RequestOptions(path: 'test')),
     );
   }
 

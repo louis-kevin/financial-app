@@ -1,6 +1,6 @@
 import 'package:financialapp/locale/locale_i18n.dart';
 import 'package:financialapp/models/account_model.dart';
-import 'package:financialapp/routes/router.dart';
+import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/typography/subhead_text.dart';
 import 'package:financialapp/shared/typography/subtitle_text.dart';
 import 'package:financialapp/states/account_state.dart';
@@ -31,7 +31,7 @@ class AccountCards extends StatelessWidget {
 
 class AccountCard extends StatelessWidget {
   void goToUpdateAccountMoney(context) {
-    Navigator.of(context).pushNamed(Router.ACCOUNT_MONEY_UPDATE);
+    Navigator.of(context).pushNamed(RouterManager.ACCOUNT_MONEY_UPDATE);
   }
 
   @override

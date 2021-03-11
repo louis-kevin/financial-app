@@ -77,7 +77,7 @@ class _FormBillPageState extends State<FormBillPage> {
             ? BillFormPageTextKeys.editTitle
             : BillFormPageTextKeys.addTitle,
         content: <Widget>[
-          NameInput(),
+          NameInput(context),
           SizedBox(
             height: 20,
           ),
@@ -91,6 +91,7 @@ class _FormBillPageState extends State<FormBillPage> {
             height: 20,
           ),
           AmountInput(
+            context,
             value: widget.model?.amount ?? 0,
           ),
           SizedBox(

@@ -1,4 +1,4 @@
-import 'package:financialapp/routes/router.dart';
+import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/typography/headline_text.dart';
 import 'package:financialapp/states/dashboard_state.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 class TotalDebitAppBarHome extends StatelessWidget {
   void goToUpdateAccountMoney(context) {
-    Navigator.of(context).pushNamed(Router.ACCOUNT_MONEY_UPDATE);
+    Navigator.of(context).pushNamed(RouterManager.ACCOUNT_MONEY_UPDATE);
   }
 
   @override

@@ -22,7 +22,10 @@ class AccountService extends BaseService {
   Future<Response> fetchAccounts() {
     return Future.delayed(
       Duration(milliseconds: 300),
-      () => Response(data: accounts, statusCode: 200),
+      () => Response(
+          data: accounts,
+          statusCode: 200,
+          request: RequestOptions(path: 'test')),
     );
   }
 
@@ -30,7 +33,8 @@ class AccountService extends BaseService {
     data['id'] = id;
     return Future.delayed(
       Duration(seconds: 1),
-      () => Response(data: data, statusCode: 200),
+      () => Response(
+          data: data, statusCode: 200, request: RequestOptions(path: 'test')),
     );
   }
 }

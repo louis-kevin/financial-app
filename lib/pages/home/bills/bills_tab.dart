@@ -1,6 +1,6 @@
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/models/account_model.dart';
-import 'package:financialapp/routes/router.dart';
+import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/typography/display1_text.dart';
 import 'package:financialapp/states/account_state.dart';
 import 'package:financialapp/states/bill_state.dart';
@@ -81,6 +81,6 @@ class _BillsTabState extends State<BillsTab>
   }
 
   goToAccountForm() {
-    Navigator.of(context).pushNamed(Router.ACCOUNT);
+    Navigator.of(context).pushNamed(RouterManager.ACCOUNT);
   }
 }

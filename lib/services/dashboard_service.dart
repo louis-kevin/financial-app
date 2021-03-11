@@ -15,7 +15,10 @@ class DashboardService extends BaseService {
   Future<Response> fetchDashboard() {
     return Future.delayed(
       Duration(milliseconds: 300),
-      () => Response(data: dashboard, statusCode: 200),
+      () => Response(
+          data: dashboard,
+          statusCode: 200,
+          request: RequestOptions(path: 'test')),
     );
   }
 }

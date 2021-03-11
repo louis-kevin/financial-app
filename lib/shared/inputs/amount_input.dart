@@ -1,8 +1,8 @@
+import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:financialapp/locale/locale_i18n.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
 
 var _controller = MoneyMaskedTextController(
   decimalSeparator: MoneyTextKeys.decimalSeparator.i18n,
@@ -11,17 +11,18 @@ var _controller = MoneyMaskedTextController(
 );
 
 class AmountInput extends FormBuilderTextField {
-  AmountInput({
+  AmountInput(
+    BuildContext context, {
     Key key,
     InputDecoration decoration,
     TextStyle style,
     double value,
-    String attribute,
+    String name,
     MoneyMaskedTextController controller,
     List<FormFieldValidator> validators,
     bool required = false,
   }) : super(
-          attribute: attribute ?? 'amount',
+          name: name ?? 'amount',
           key: key,
           controller: controller ??
               new MoneyMaskedTextController(
@@ -37,10 +38,12 @@ class AmountInput extends FormBuilderTextField {
             _controller.text = value;
             return _controller.numberValue;
           },
-          validators: (validators ?? [])
-            ..addAll([
-              if (required) FormBuilderValidators.required(),
-            ]),
+          validator: FormBuilderValidators.compose(
+            (validators ?? [])
+              ..addAll([
+                if (required) FormBuilderValidators.required(context),
+              ]),
+          ),
           style: style ??
               TextStyle(
                 color: Colors.white,

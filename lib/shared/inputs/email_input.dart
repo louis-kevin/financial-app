@@ -5,15 +5,16 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class EmailInput extends FormBuilderTextField {
   EmailInput(
-      {Key key,
-      String attribute,
-      InputDecoration decoration,
-      TextStyle style,
-      String errorMessage,
-      List<FormFieldValidator> validators,
-      bool required = false})
-      : super(
-          attribute: attribute ?? 'email',
+    BuildContext context, {
+    Key key,
+    String name,
+    InputDecoration decoration,
+    TextStyle style,
+    String errorMessage,
+    List<FormFieldValidator> validators,
+    bool required = false,
+  }) : super(
+          name: name ?? 'email',
           key: key,
           keyboardType: TextInputType.emailAddress,
           style: style ??
@@ -25,10 +26,12 @@ class EmailInput extends FormBuilderTextField {
                 labelText: LabelTextKeys.email.i18n,
                 errorText: errorMessage,
               ),
-          validators: (validators ?? [])
-            ..addAll([
-              if (required) FormBuilderValidators.required(),
-              FormBuilderValidators.email()
-            ]),
+          validator: FormBuilderValidators.compose(
+            (validators ?? [])
+              ..addAll([
+                if (required) FormBuilderValidators.required(context),
+                FormBuilderValidators.email(context)
+              ]),
+          ),
         );
 }
