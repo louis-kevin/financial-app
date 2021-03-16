@@ -68,8 +68,6 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     var authState = Provider.of<AuthState>(context);
 
-    print(authState.logged);
-
     if (authState.user?.config != null) {
       userConfig = authState.user.config;
       controller.text = userConfig.day.toString();

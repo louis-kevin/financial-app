@@ -31,7 +31,6 @@ class AmountInput extends FormBuilderTextField {
                 leftSymbol: MoneyTextKeys.leftSymbol.i18n,
                 initialValue: value ?? 0,
               ),
-          initialValue: value?.toString() ?? 0.toString(),
           keyboardType: TextInputType.number,
           textAlign: TextAlign.start,
           valueTransformer: (value) {

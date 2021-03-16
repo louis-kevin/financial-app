@@ -1,7 +1,7 @@
 import 'package:financialapp/locale/locale_i18n.dart';
 
 class DashboardModel {
-  double additionalPerDay;
+  double overheadPerDay;
   double totalRemainingDebit;
   DateTime lastPayment;
   DateTime nextPayment;
@@ -9,7 +9,7 @@ class DashboardModel {
   int businessDays;
   int weekendDays;
 
-  String get additionalPerDayMonetized => additionalPerDay.monetize;
+  String get overheadPerDayMonetized => overheadPerDay.monetize;
   String get totalRemainingDebitMonetized => totalRemainingDebit.monetize;
 
   String get lastPaymentFormatted => lastPayment.dateLocalized;
@@ -19,12 +19,11 @@ class DashboardModel {
   double get percentageUntilIncome {
     int a = lastPayment.difference(DateTime.now()).inDays;
     int b = lastPayment.difference(nextPayment).inDays;
-
     return (a / b).toDouble();
   }
 
   DashboardModel.fromJson(Map<String, dynamic> json) {
-    this.additionalPerDay = double.parse(json['additional_per_day'].toString());
+    this.overheadPerDay = double.parse(json['overhead_per_day'].toString());
     this.totalRemainingDebit =
         double.parse(json['total_remaining_debit'].toString());
     this.lastPayment = DateTime.parse(json['last_payment']);

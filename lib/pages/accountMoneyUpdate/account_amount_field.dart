@@ -22,7 +22,7 @@ class AccountAmountField extends StatelessWidget {
             Expanded(
               child: AmountInput(
                 context,
-                value: account.amount,
+                value: account?.amount ?? 0,
                 name: account.id.toString(),
                 decoration: InputDecoration(),
               ),

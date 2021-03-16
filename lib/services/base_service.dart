@@ -22,7 +22,8 @@ class BaseService {
 
     client.interceptors.add(AuthenticationInterceptor());
 
-    Notifier()..listen<Logout>((logout) => TokenManager.clearToken());
+    Notifier()..listen<Logout>(TokenManager.clearToken);
+    Notifier()..listen<TokenExpired>(TokenManager.clearToken);
   }
 
   Future<bool> get hasToken async {
@@ -82,17 +83,17 @@ class AuthenticationInterceptor extends InterceptorsWrapper {
   @override
   Future onRequest(RequestOptions options) async {
     options.headers.addAll(await _fetchAuthHeader());
-    print("REQUEST[${options?.method}] => PATH: ${options?.path}");
-    print("HEADERS: ${options.headers}");
-    print("BODY: ${options?.data}");
+    print("[DIO] REQUEST[${options?.method}] => PATH: ${options?.path}");
+    print("[DIO] HEADERS: ${options.headers}");
+    print("[DIO] BODY: ${options?.data}");
     return super.onRequest(options);
   }
 
   @override
   Future onResponse(Response response) {
     print(
-        "RESPONSE[${response?.statusCode}] => PATH: ${response?.request?.path}");
-    print("BODY: ${response?.data}");
+        "[DIO] RESPONSE[${response?.statusCode}] => PATH: ${response?.request?.path}");
+    print("[DIO] BODY: ${response?.data}");
 
     _checkIfHasRenewHeader(response.headers);
     _checkIfHasTokenOnBody(response.data);
@@ -103,17 +104,18 @@ class AuthenticationInterceptor extends InterceptorsWrapper {
   @override
   Future onError(DioError error) async {
     var response = error?.response;
-    print(
-        "ERROR[${response?.statusCode}] => PATH: ${error?.request?.uri?.path}");
 
     if (error.type != DioErrorType.response) return super.onError(error);
+
+    print(
+        "ERROR[${response?.statusCode}] => PATH: ${error?.request?.uri?.path}");
 
     if (response?.statusCode == 401) {
       Notifier()..fire(Logout());
     }
 
     if (response?.statusCode == 422) {
-      print("MESSAGE => ${response.data}");
+      print("[DIO] MESSAGE => ${response.data}");
     }
 
     return super.onError(error);
@@ -146,17 +148,19 @@ class AuthenticationInterceptor extends InterceptorsWrapper {
 
 class TokenManager {
   static void writeToken(token) {
-    print('Writing JWT TOKEN');
+    print('[JWT] Writing JWT TOKEN');
     final storage = new GetStorage();
     storage.write(BaseService.AUTH_TOKEN_KEY, token);
   }
 
-  static void clearToken() {
+  static void clearToken(_) {
+    print('[JWT] Clearing JWT TOKEN');
     final storage = new GetStorage();
     storage.remove(BaseService.AUTH_TOKEN_KEY);
   }
 
   static Future<String> fetchToken() async {
+    print('[JWT] Fetching JWT TOKEN');
     final storage = new GetStorage();
     return storage.read(BaseService.AUTH_TOKEN_KEY);
   }

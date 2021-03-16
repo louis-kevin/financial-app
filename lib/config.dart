@@ -3,10 +3,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
 enum Env { production, development, test, staging }
 
 class Config {
-  static Config _instance;
+  static final Config _instance = Config._internalConstructor();
 
   factory Config() {
-    _instance ??= Config._internalConstructor();
     return _instance;
   }
 

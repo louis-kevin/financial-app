@@ -50,11 +50,11 @@ class NavigatorSingleton {
   }
 
   handleContentNotFound(event) async {
-    await this.key.currentState.pushReplacementNamed(RouterManager.HOME);
+    await this.key.currentState?.pushReplacementNamed(RouterManager.HOME);
   }
 
   pushReplacementNamed(String name, {arguments}) {
-    return this.key.currentState.pushNamedAndRemoveUntil(
+    return this.key.currentState?.pushNamedAndRemoveUntil(
           name,
           (Route<dynamic> route) => false,
           arguments: arguments,

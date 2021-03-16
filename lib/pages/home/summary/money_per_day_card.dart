@@ -34,7 +34,7 @@ class MoneyPerDayCard extends StatelessWidget {
               Consumer<DashboardState>(
                 builder: (_, state, __) {
                   return SubtitleText(
-                    state.dashboard?.additionalPerDayMonetized ?? '',
+                    state.dashboard?.overheadPerDayMonetized ?? '',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

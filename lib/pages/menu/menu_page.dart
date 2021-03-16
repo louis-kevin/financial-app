@@ -22,7 +22,7 @@ class MenuPage extends StatelessWidget {
     Navigator.of(context).pushNamed(RouterManager.SETTINGS);
   }
 
-  goToWelcomePage(context) {
+  void goToWelcomePage(context) {
     Notifier()..fire(Logout());
   }
 
@@ -46,8 +46,8 @@ class MenuPage extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: CircleAvatar(),
                     ),
-                    Display1Text(authState.user.name),
-                    SubheadText(authState.user.email)
+                    Display1Text(authState.user?.name ?? ''),
+                    SubheadText(authState.user?.email ?? '')
                   ],
                 ),
               ),
