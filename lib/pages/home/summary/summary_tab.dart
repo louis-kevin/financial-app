@@ -36,10 +36,11 @@ class SummaryTab extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: MoneyPerDayCard(),
                 ),
-                Container(
-                  height: 170,
-                  child: TotalsCards(),
-                ),
+                if (dashboard.hasAccounts)
+                  Container(
+                    height: 170,
+                    child: TotalsCards(),
+                  ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: DaysUntilIncome(),

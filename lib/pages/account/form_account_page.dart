@@ -1,3 +1,7 @@
+import 'package:extended_masked_text/extended_masked_text.dart';
+import 'package:financialapp/events/notifier.dart';
+import 'package:financialapp/events/notifier_events.dart';
+import 'package:financialapp/locale/locale_i18n.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/models/account_model.dart';
 import 'package:financialapp/shared/base_button.dart';
@@ -23,7 +27,8 @@ class FormAccountPage extends StatefulWidget {
 }
 
 class _FormAccountPageState extends State<FormAccountPage> {
-  final formKey = GlobalKey<FormBuilderState>();
+  var formKey;
+  var controller;
 
   Color currentColor;
 
@@ -47,7 +52,9 @@ class _FormAccountPageState extends State<FormAccountPage> {
 
     await state.saveAccount(model);
 
-    Navigator.of(context).pop();
+    Notifier()..fire(AccountsUpdated());
+
+    Navigator.of(context).pop(true);
   }
 
   void changeColor(Color color) {
@@ -92,6 +99,12 @@ class _FormAccountPageState extends State<FormAccountPage> {
 
   @override
   void initState() {
+    formKey = GlobalKey<FormBuilderState>();
+    controller = MoneyMaskedTextController(
+      decimalSeparator: MoneyTextKeys.decimalSeparator.i18n,
+      thousandSeparator: MoneyTextKeys.thousandSeparator.i18n,
+      leftSymbol: MoneyTextKeys.leftSymbol.i18n,
+    );
     super.initState();
     currentColor = widget.account?.color ?? Colors.blue;
   }
@@ -110,11 +123,13 @@ class _FormAccountPageState extends State<FormAccountPage> {
             : AccountPageTextKeys.addTitle,
         content: <Widget>[
           NameInput(context),
-          buildColorSelector(),
+          SizedBox(height: 10),
           AmountInput(
             context,
-            value: widget.account?.amount,
+            controller:
+                controller, // TODO Check if there is a way to not pass a controller
           ),
+          buildColorSelector(),
         ],
         bottom: buildButtons(),
       ),

@@ -11,6 +11,7 @@ class DashboardState extends ChangeNotifier {
 
   DashboardState() {
     Notifier()..listen<TotalAmountUpdate>(updateTotalAmount);
+    Notifier()..listen<AccountsUpdated>((event) => fetchDashboard());
   }
 
   updateTotalAmount(TotalAmountUpdate event) {

@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:financialapp/events/notifier.dart';
+import 'package:financialapp/events/notifier_events.dart';
 import 'package:financialapp/models/account_model.dart';
 import 'package:financialapp/models/bill_model.dart';
 import 'package:financialapp/services/account_service.dart';
@@ -11,6 +13,10 @@ class AccountState extends BaseState {
   BillService billService = BillService();
 
   List<AccountModel> accounts = [];
+
+  AccountState() {
+    Notifier()..listen<AccountsUpdated>((event) => fetchAccounts());
+  }
 
   Future<List<AccountModel>> fetchAccounts() async {
     var async = () async {
@@ -72,9 +78,11 @@ class AccountState extends BaseState {
     );
   }
 
-  void deleteAccount(AccountModel account) {
+  void deleteAccount(AccountModel account) async {
     accounts.remove(account);
     notifyListeners();
+    await accountService.removeAccount(account.id);
+    Notifier()..fire(AccountsUpdated());
   }
 
   Future<List<BillModel>> fetchBillsFromAccount(AccountModel account) async {

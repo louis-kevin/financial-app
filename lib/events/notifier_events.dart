@@ -40,3 +40,5 @@ class TotalAmountUpdate {
 
   TotalAmountUpdate({this.oldAmount, this.newAmount});
 }
+
+class AccountsUpdated {}

@@ -30,7 +30,7 @@ class _BillsTabState extends State<BillsTab>
     );
   }
 
-  goToAccountForm() {
+  goToAccountForm() async {
     Navigator.of(context).pushNamed(RouterManager.ACCOUNT);
   }
 

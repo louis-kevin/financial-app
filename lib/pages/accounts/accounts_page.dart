@@ -25,19 +25,19 @@ class _AccountsPageState extends State<AccountsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AccountState>(builder: (_, state, __) {
-      return BaseBackButtonPage(
-        titleKey: AccountsPageTextKeys.title,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => goToFormAccount(context),
-            color: Colors.white,
-          ),
-        ],
-        content: buildAccounts(state.accounts),
-      );
-    });
+    var state = context.watch<AccountState>();
+
+    return BaseBackButtonPage(
+      titleKey: AccountsPageTextKeys.title,
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => goToFormAccount(context),
+          color: Colors.white,
+        ),
+      ],
+      content: buildAccounts(state.accounts),
+    );
   }
 
   List<Widget> buildAccounts(List<AccountModel> accounts) {

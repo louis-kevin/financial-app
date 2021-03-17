@@ -29,13 +29,12 @@ class AmountInput extends FormBuilderTextField {
                 decimalSeparator: MoneyTextKeys.decimalSeparator.i18n,
                 thousandSeparator: MoneyTextKeys.thousandSeparator.i18n,
                 leftSymbol: MoneyTextKeys.leftSymbol.i18n,
-                initialValue: value ?? 0,
               ),
           keyboardType: TextInputType.number,
           textAlign: TextAlign.start,
           valueTransformer: (value) {
             _controller.text = value;
-            double numberValue = _controller.numberValue;
+            double numberValue = _controller.numberValue * 100;
             return numberValue.toInt();
           },
           validator: FormBuilderValidators.compose(
