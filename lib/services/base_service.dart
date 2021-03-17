@@ -98,6 +98,7 @@ class AuthenticationInterceptor extends InterceptorsWrapper {
     print("[DIO] REQUEST[${options?.method}] => PATH: ${options?.path}");
     print("[DIO] HEADERS: ${options.headers}");
     print("[DIO] BODY: ${options?.data}");
+    print("[DIO] QUERY: ${options?.queryParameters}");
     return super.onRequest(options);
   }
 

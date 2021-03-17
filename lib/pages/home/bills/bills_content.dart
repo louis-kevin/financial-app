@@ -17,8 +17,12 @@ class BillsContent extends StatefulWidget {
   _BillsContentState createState() => _BillsContentState();
 }
 
-class _BillsContentState extends State<BillsContent> {
+class _BillsContentState extends State<BillsContent>
+    with AutomaticKeepAliveClientMixin {
   Color color;
+
+  @override
+  bool get wantKeepAlive => true;
 
   sumBills() {
     var bills = context.read<BillState>().bills;
@@ -69,8 +73,6 @@ class _BillsContentState extends State<BillsContent> {
     var state = context.watch<BillState>();
     var bills = state.bills;
     var account = state.account;
-
-    print(bills);
 
     if (bills == null) {
       return Center(

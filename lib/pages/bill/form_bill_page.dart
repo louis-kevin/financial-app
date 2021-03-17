@@ -25,7 +25,7 @@ class FormBillPage extends StatefulWidget {
 
 class _FormBillPageState extends State<FormBillPage> {
   var formKey;
-  var controller;
+  MoneyMaskedTextController controller;
 
   int selectedDay = 1;
   BillType billType = BillType.once;
@@ -63,16 +63,18 @@ class _FormBillPageState extends State<FormBillPage> {
 
   @override
   void initState() {
-    if (widget.model != null) {
-      selectedDay = widget.model.paymentDay;
-      billType = widget.model.repetitionType;
-    }
     formKey = GlobalKey<FormBuilderState>();
     controller = MoneyMaskedTextController(
       decimalSeparator: MoneyTextKeys.decimalSeparator.i18n,
       thousandSeparator: MoneyTextKeys.thousandSeparator.i18n,
       leftSymbol: MoneyTextKeys.leftSymbol.i18n,
     );
+
+    if (widget.model != null) {
+      selectedDay = widget.model.paymentDay;
+      billType = widget.model.repetitionType;
+      controller.updateValue(widget.model.amount);
+    }
     super.initState();
   }
 
@@ -103,7 +105,6 @@ class _FormBillPageState extends State<FormBillPage> {
           ),
           AmountInput(
             context,
-            value: widget.model?.amount ?? 0,
             controller: controller,
           ),
           SizedBox(

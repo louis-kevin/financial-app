@@ -12,23 +12,19 @@ class BillCard extends StatelessWidget {
 
   const BillCard({Key key, this.color}) : super(key: key);
 
-  void goToAddBill(BuildContext context) {
-    Navigator.of(context).pushNamed(
+  void goToAddBill(BuildContext context) async {
+    await Navigator.of(context).pushNamed(
       RouterManager.BILL,
       arguments: RouteArguments(
         model: context.read<BillModel>(),
-        transitionBuilder: (page) {
-          return MaterialPageRoute(
-            builder: (_) {
-              return ChangeNotifierProvider.value(
-                value: context.read<BillState>(),
-                child: page,
-              );
-            },
-          );
-        },
+        state: (page) => ChangeNotifierProvider.value(
+          value: context.read<BillState>(),
+          child: page,
+        ),
       ),
     );
+
+    context.read<BillState>().fetchBills();
   }
 
   @override
