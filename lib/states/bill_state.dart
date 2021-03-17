@@ -12,9 +12,9 @@ class BillState extends BaseState {
 
   BillService billService = BillService();
 
-  List<BillModel> bills = [];
+  List<BillModel> bills;
 
-  Future<List<BillModel>> fetchBills() async {
+  Future<List<BillModel>> fetchBills() {
     var async = () async {
       Response response = await billService.fetchBillsByAccount(account.id);
 

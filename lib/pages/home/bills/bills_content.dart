@@ -18,17 +18,18 @@ class BillsContent extends StatefulWidget {
 }
 
 class _BillsContentState extends State<BillsContent> {
-  List<BillModel> bills = [];
-
   Color color;
 
   sumBills() {
+    var bills = context.read<BillState>().bills;
     double sum = 0;
     bills.forEach((item) => sum += item.amount);
     return sum;
   }
 
   void updateBill(BillModel bill, bool value) {
+    var bills = context.read<BillState>().bills;
+
     var billInList = bills.firstWhere((item) => item.id == bill.id);
 
     billInList.payed = value;
@@ -69,6 +70,8 @@ class _BillsContentState extends State<BillsContent> {
     var bills = state.bills;
     var account = state.account;
 
+    print(bills);
+
     if (bills == null) {
       return Center(
         child: CircularProgressIndicator(
@@ -76,6 +79,7 @@ class _BillsContentState extends State<BillsContent> {
         ),
       );
     }
+
     List<Widget> content = [
       SliverList(
         delegate: SliverChildListDelegate([
@@ -93,7 +97,7 @@ class _BillsContentState extends State<BillsContent> {
       ),
     ];
 
-    if (this.bills.isEmpty) {
+    if (state.bills.isEmpty) {
       content.add(buildEmptyBills());
     } else {
       content.addAll(buildBills());
@@ -165,12 +169,15 @@ class _BillsContentState extends State<BillsContent> {
   }
 
   buildOnce() {
+    var bills = context.read<BillState>().bills;
+
     List<BillModel> onceBills =
         bills.where((item) => item.repetitionType == BillType.once).toList();
     return buildCheckableCards(onceBills);
   }
 
   Widget buildDaily() {
+    var bills = context.read<BillState>().bills;
     List<BillModel> dailyBills =
         bills.where((item) => item.repetitionType == BillType.daily).toList();
 
@@ -189,6 +196,7 @@ class _BillsContentState extends State<BillsContent> {
   }
 
   Widget buildMonthly() {
+    var bills = context.read<BillState>().bills;
     List<BillModel> monthlyBills =
         bills.where((item) => item.repetitionType == BillType.monthly).toList();
 
