@@ -23,8 +23,6 @@ class BillCard extends StatelessWidget {
         ),
       ),
     );
-
-    context.read<BillState>().fetchBills();
   }
 
   @override

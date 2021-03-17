@@ -20,21 +20,15 @@ class CheckableBillCard extends StatefulWidget {
 class _CheckableBillCardState extends State<CheckableBillCard> {
   Timer _debounce;
 
-  void goToAddBill(BuildContext context) {
+  void goToEditBill(BuildContext context) {
     Navigator.of(context).pushNamed(
       RouterManager.BILL,
       arguments: RouteArguments(
         model: context.read<BillModel>(),
-        transitionBuilder: (page) {
-          return MaterialPageRoute(
-            builder: (_) {
-              return ChangeNotifierProvider.value(
-                value: context.read<BillState>(),
-                child: page,
-              );
-            },
-          );
-        },
+        state: (page) => ChangeNotifierProvider.value(
+          value: context.read<BillState>(),
+          child: page,
+        ),
       ),
     );
   }
@@ -62,7 +56,7 @@ class _CheckableBillCardState extends State<CheckableBillCard> {
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: GestureDetector(
-            onLongPress: () => goToAddBill(context),
+            onLongPress: () => goToEditBill(context),
             child: buildCard(bill),
           ),
         );

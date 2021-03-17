@@ -137,7 +137,7 @@ class _BillsContentState extends State<BillsContent>
               textColor: DefaultColors.subtitleColor,
             ),
             IconButton(
-              onPressed: () => goToAddBill,
+              onPressed: onPress,
               icon: Icon(
                 Icons.add,
                 color: DefaultColors.subtitleColor,
@@ -170,7 +170,7 @@ class _BillsContentState extends State<BillsContent>
     );
   }
 
-  buildOnce() {
+  Widget buildOnce() {
     var bills = context.read<BillState>().bills;
 
     List<BillModel> onceBills =
@@ -222,7 +222,7 @@ class _BillsContentState extends State<BillsContent>
 
   buildStickHeader(String titleKey, Function() buildChildren) {
     return SliverStickyHeader(
-      header: buildTitle(titleKey, () => {}),
+      header: buildTitle(titleKey, goToAddBill),
       sliver: buildChildren(),
     );
   }
