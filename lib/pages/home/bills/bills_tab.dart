@@ -59,8 +59,9 @@ class _BillsTabState extends State<BillsTab>
   }
 
   Widget buildAccount(AccountModel account) {
-    return ChangeNotifierProvider(
-      create: (_) => BillState(account),
+    var state = BillState(account);
+    return ChangeNotifierProvider.value(
+      value: state,
       child: BillsContent(),
     );
   }
