@@ -2,19 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:financialapp/models/account_model.dart';
 import 'package:financialapp/models/bill_model.dart';
 import 'package:financialapp/services/bill_service.dart';
-import 'package:flutter/material.dart';
 
-class BillState extends ChangeNotifier {
-  bool _busy = false;
+import 'base_state.dart';
 
+class BillState extends BaseState {
   BillState(this.account);
-
-  bool get busy => _busy;
-
-  set busy(bool busy) {
-    _busy = busy;
-    notifyListeners();
-  }
 
   final AccountModel account;
 
@@ -23,39 +15,46 @@ class BillState extends ChangeNotifier {
   List<BillModel> bills = [];
 
   Future<List<BillModel>> fetchBills() async {
-    Response response = await billService.fetchBillsByAccount(account.id);
+    var async = () async {
+      Response response = await billService.fetchBillsByAccount(account.id);
 
-    List<Map> data = response.data as List;
+      List data = response.data["data"];
 
-    bills = data.map((bill) => BillModel.fromJson((bill))).toList();
+      bills = data.map((bill) => BillModel.fromJson((bill))).toList();
 
-    account.addBills(bills);
+      account.addBills(bills);
 
-    notifyListeners();
+      notifyListeners();
 
-    return bills;
+      return bills;
+    };
+
+    return handleAsync(async);
   }
 
   saveBill(BillModel model) async {
     model.busy = true;
+    Function async = () async {
+      bool modelExists = model.id != null;
 
-    bool modelExists = model.id != null;
+      Response response =
+          await billService.saveBill(model.toJson(), id: model.id);
 
-    Response response =
-        await billService.saveBill(model.toJson(), id: model.id);
+      model.fill(response.data);
 
-    model.fill(response.data);
+      account.addOrUpdateBill(model);
 
-    model.id = bills.isEmpty ? 1 : bills.last.id + 1;
+      if (!modelExists) {
+        bills.add(model);
+        notifyListeners();
+      }
+    };
 
-    account.addOrUpdateBill(model);
+    Function runAlways = () {
+      model.busy = false;
+    };
 
-    if (!modelExists) {
-      bills.add(model);
-      notifyListeners();
-    }
-
-    model.busy = false;
+    return handleAsync(async, runAlways: runAlways);
   }
 
   BillModel findById(int id) {

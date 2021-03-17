@@ -7,9 +7,21 @@ import 'package:financialapp/states/account_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AccountsPage extends StatelessWidget {
+class AccountsPage extends StatefulWidget {
+  @override
+  _AccountsPageState createState() => _AccountsPageState();
+}
+
+class _AccountsPageState extends State<AccountsPage> {
   goToFormAccount(BuildContext context) {
     Navigator.of(context).pushNamed(RouterManager.ACCOUNT);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() =>
+        Provider.of<AccountState>(context, listen: false).fetchAccounts());
   }
 
   @override

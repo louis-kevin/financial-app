@@ -35,15 +35,19 @@ class _FormBillPageState extends State<FormBillPage> {
   void save() async {
     if (!formKey.currentState.saveAndValidate()) return;
 
-    var data = formKey.currentState.value;
-
-    data['type'] = billType.toString().replaceAll('BillType.', '');
-    data['payment_day'] = selectedDay;
-
     var state = Provider.of<BillState>(context, listen: false);
 
-    data['account_id'] = state.account.id;
-    data['payed'] = false;
+    var data = Map.from(formKey.currentState.value);
+
+    var dataToAdd = {
+      'type': billType.toString().replaceAll('BillType.', ''),
+      'payment_day': selectedDay,
+      'account_id': state.account.id,
+      'payed': false,
+      'amount_cents': data.remove('amount')
+    };
+
+    data.addAll(dataToAdd);
 
     var model = BillModel();
 

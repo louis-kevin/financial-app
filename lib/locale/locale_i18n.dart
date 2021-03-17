@@ -31,6 +31,8 @@ extension Localization on String {
 
 extension LocalizationNumber on num {
   String get monetize {
+    if (this == null) return '0';
+
     _controller.updateValue(this.toDouble());
 
     String text = _controller.text;

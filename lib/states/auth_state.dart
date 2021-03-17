@@ -1,7 +1,7 @@
 import 'package:financialapp/events/notifier.dart';
 import 'package:financialapp/events/notifier_events.dart';
 import 'package:financialapp/models/user_model.dart';
-import 'package:financialapp/services/auth_service.dart';
+import 'package:financialapp/services/user_service.dart';
 import 'package:financialapp/states/base_state.dart';
 
 typedef AuthenticationCall = Future<UserModel> Function();
@@ -11,7 +11,7 @@ class AuthState extends BaseState {
 
   UserModel user;
 
-  AuthService authService = AuthService();
+  UserService authService = UserService();
 
   AuthState() {
     Notifier()..listen<Logout>((event) => logout());

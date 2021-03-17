@@ -4,7 +4,16 @@ import 'package:flutter/material.dart';
 class BaseState extends ChangeNotifier {
   Map<String, dynamic> errors = {};
 
+  bool _busy = false;
+
   bool get hasErrors => errors.isNotEmpty;
+
+  bool get busy => _busy;
+
+  set busy(bool busy) {
+    _busy = busy;
+    notifyListeners();
+  }
 
   String getErrorByField(String field) {
     if (!errors.containsKey(field)) return null;
@@ -12,7 +21,7 @@ class BaseState extends ChangeNotifier {
     return errors[field];
   }
 
-  handleAsync(Function asyncRequest) async {
+  Future<T> handleAsync<T>(Function asyncRequest, {Function runAlways}) async {
     errors = {};
     notifyListeners();
     try {
@@ -23,6 +32,11 @@ class BaseState extends ChangeNotifier {
 
       errors = error.response?.data;
       notifyListeners();
+    } finally {
+      if (runAlways != null) {
+        runAlways();
+      }
     }
+    return null;
   }
 }

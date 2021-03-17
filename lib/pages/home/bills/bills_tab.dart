@@ -30,6 +30,10 @@ class _BillsTabState extends State<BillsTab>
     );
   }
 
+  goToAccountForm() {
+    Navigator.of(context).pushNamed(RouterManager.ACCOUNT);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AccountState>(
@@ -78,9 +82,5 @@ class _BillsTabState extends State<BillsTab>
         ),
       ),
     );
-  }
-
-  goToAccountForm() {
-    Navigator.of(context).pushNamed(RouterManager.ACCOUNT);
   }
 }

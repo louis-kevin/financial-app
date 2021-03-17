@@ -30,20 +30,32 @@ class BaseService {
     return await TokenManager.fetchToken() != null;
   }
 
-  get(String path, {Map query, Map headers}) {
+  Future<Response> get(String path, {Map query, Map headers}) {
     return _request('get', path, query: query, headers: headers);
   }
 
-  post(String path, Map data, {Map query, Map headers}) {
+  Future<Response> post(String path, Map data, {Map query, Map headers}) {
     return _request('post', path, data: data, query: query, headers: headers);
   }
 
-  put(String path, Map data, {Map query, Map headers}) {
+  Future<Response> put(String path, Map data, {Map query, Map headers}) {
     return _request('put', path, data: data, query: query, headers: headers);
   }
 
-  delete(String path, {Map query, Map headers}) {
+  Future<Response> delete(String path, {Map query, Map headers}) {
     return _request('delete', path, query: query, headers: headers);
+  }
+
+  Future<Response> save(String path, Map data,
+      {String id, Map query, Map headers}) {
+    String method = 'post';
+
+    if (id != null) {
+      path = "$path/$id";
+      method = 'put';
+    }
+
+    return _request(method, path, data: data, query: query, headers: headers);
   }
 
   Future<Response> _request(String method, String path,

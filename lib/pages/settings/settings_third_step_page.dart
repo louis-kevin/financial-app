@@ -24,8 +24,9 @@ class _SettingsThirdStepPageState extends State<SettingsThirdStepPage> {
 
   nextPage() {
     if (!formKey.currentState.saveAndValidate()) return;
-
-    widget.userConfig.income = formKey.currentState.value['amount'];
+    int incomeCents =
+        int.parse((formKey.currentState.value['amount'] * 100).toString());
+    widget.userConfig.incomeCents = incomeCents;
 
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -38,6 +39,8 @@ class _SettingsThirdStepPageState extends State<SettingsThirdStepPage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<AuthState>(context).user;
+
     return FormBuilder(
       key: formKey,
       child: BaseBackButtonPage(
@@ -53,12 +56,7 @@ class _SettingsThirdStepPageState extends State<SettingsThirdStepPage> {
             context,
             style: Theme.of(context).textTheme.display2,
             decoration: InputDecoration(),
-            value: Provider.of<AuthState>(context)
-                    .user
-                    ?.config
-                    ?.income
-                    ?.toDouble() ??
-                0,
+            value: user?.config?.income ?? 0,
           )
         ],
         bottom: BaseButton(

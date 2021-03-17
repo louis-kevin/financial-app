@@ -18,7 +18,7 @@ class BillAccountSummary extends StatelessWidget {
             child: buildSummaryAccount(
               context,
               BillsTabPageTextKeys.titleToPayCard,
-              account.toPay,
+              0, // TODO Fix amount to pay
             ),
           ),
           Expanded(

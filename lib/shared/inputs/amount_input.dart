@@ -35,7 +35,8 @@ class AmountInput extends FormBuilderTextField {
           textAlign: TextAlign.start,
           valueTransformer: (value) {
             _controller.text = value;
-            return _controller.numberValue;
+            double numberValue = _controller.numberValue;
+            return numberValue.toInt();
           },
           validator: FormBuilderValidators.compose(
             (validators ?? [])

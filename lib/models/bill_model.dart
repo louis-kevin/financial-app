@@ -1,10 +1,9 @@
+import 'package:financialapp/models/mixins/amount_attribute.dart';
 import 'package:flutter/material.dart';
-
-import 'mixins/amount_attribute.dart';
 
 enum BillType { once, daily, monthly }
 
-class BillModel extends ChangeNotifier with AmountAttribute {
+class BillModel extends ChangeNotifier with AmountCentsAttribute {
   bool _busy = false;
 
   bool get busy => _busy;
@@ -15,7 +14,7 @@ class BillModel extends ChangeNotifier with AmountAttribute {
   }
 
   int id;
-  double amount;
+  int amountCents;
   String name;
   BillType type;
   int paymentDay;
@@ -32,7 +31,7 @@ class BillModel extends ChangeNotifier with AmountAttribute {
 
   BillModel({
     this.id,
-    this.amount,
+    this.amountCents,
     this.name,
     this.type,
     this.paymentDay,
@@ -46,7 +45,7 @@ class BillModel extends ChangeNotifier with AmountAttribute {
   void fill(Map<String, dynamic> data) {
     this.id = data['id'] ?? this.id;
     this.accountId = data['account_id'] ?? this.accountId;
-    this.amount = double.parse(data['amount'].toString()) ?? this.amount;
+    this.amountCents = data['amount_cents'] ?? this.amountCents;
     this.name = data['name'] ?? this.name;
     this.payed = data['payed'] ?? this.payed;
     this.paymentDay = data['payment_day'] ?? this.paymentDay;
@@ -62,7 +61,7 @@ class BillModel extends ChangeNotifier with AmountAttribute {
       'id': id,
       'account_id': accountId,
       'name': name,
-      'amount': amount,
+      'amount_cents': amountCents,
       'payed': payed,
       'payment_day': paymentDay,
       'type': type.toString().replaceAll('BillType.', ''),

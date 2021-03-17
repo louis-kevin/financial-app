@@ -30,9 +30,14 @@ class _FormAccountPageState extends State<FormAccountPage> {
   void save() async {
     if (!formKey.currentState.saveAndValidate()) return;
 
-    Map data = formKey.currentState.value;
+    Map<String, dynamic> data = Map.from(formKey.currentState.value);
 
-    data['color'] = currentColor.value;
+    Map<String, dynamic> dataToAdd = {
+      'color': currentColor.value,
+      'amount_cents': data.remove('amount')
+    };
+
+    data.addAll(dataToAdd);
 
     var model = widget.account ?? AccountModel();
 

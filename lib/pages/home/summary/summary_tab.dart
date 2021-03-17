@@ -1,45 +1,52 @@
-import 'package:financialapp/pages/home/summary/days_until_income.dart';
-import 'package:financialapp/pages/home/summary/money_per_day_card.dart';
-import 'package:financialapp/pages/home/summary/total_days_until_income.dart';
-import 'package:financialapp/pages/home/summary/totals_cards.dart';
+import 'package:financialapp/states/dashboard_state.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'account_cards.dart';
+import 'days_until_income.dart';
+import 'money_per_day_card.dart';
+import 'total_days_until_income.dart';
+import 'totals_cards.dart';
 
-class SummaryTab extends StatefulWidget {
-  @override
-  _SummaryTabState createState() => _SummaryTabState();
-}
+class SummaryTab extends StatelessWidget {
+  Future<void> refresh(BuildContext context) async {
+    return context.read<DashboardState>().fetchDashboard();
+  }
 
-class _SummaryTabState extends State<SummaryTab> {
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: <Widget>[
-        AccountCards(),
-        SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: MoneyPerDayCard(),
-              ),
-              Container(
-                height: 170,
-                child: TotalsCards(),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: DaysUntilIncome(),
-              ),
-              Container(
-                height: 80,
-                child: TotalDaysUntilIncome(),
-              )
-            ],
+    return RefreshIndicator(
+      onRefresh: () => refresh(context),
+      child: CustomScrollView(
+        slivers: <Widget>[
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                Container(
+                  height: 100,
+                  child: AccountCards(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: MoneyPerDayCard(),
+                ),
+                Container(
+                  height: 170,
+                  child: TotalsCards(),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DaysUntilIncome(),
+                ),
+                Container(
+                  height: 80,
+                  child: TotalDaysUntilIncome(),
+                )
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

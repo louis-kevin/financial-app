@@ -2,11 +2,15 @@ import 'package:dio/dio.dart';
 import 'package:financialapp/models/user_model.dart';
 import 'package:financialapp/services/base_service.dart';
 
-class AuthService extends BaseService {
+class UserService extends BaseService {
   Future<UserModel> me() async {
     Response response = await get('user/me');
 
     return UserModel.fromJson(response.data);
+  }
+
+  Future<Response> fetchDashboard() {
+    return get('user/dashboard');
   }
 
   Future<UserConfig> updateSettings(Map data) async {
