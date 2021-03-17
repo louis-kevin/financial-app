@@ -20,8 +20,7 @@ class _AccountsPageState extends State<AccountsPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<AccountState>(context, listen: false).fetchAccounts());
+    Future.microtask(() => context.read<AccountState>().fetchAccounts());
   }
 
   @override

@@ -5,7 +5,6 @@ import 'package:financialapp/shared/typography/display1_text.dart';
 import 'package:financialapp/states/account_state.dart';
 import 'package:financialapp/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class AccountRemovalDialog extends StatelessWidget {
   final AccountModel account;
@@ -15,7 +14,7 @@ class AccountRemovalDialog extends StatelessWidget {
   removeAccount(context) {
     Navigator.of(context).pop(true);
 
-    var state = Provider.of<AccountState>(context, listen: false);
+    var state = context.read<AccountState>();
 
     state.deleteAccount(account);
   }

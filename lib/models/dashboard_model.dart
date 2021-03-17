@@ -19,7 +19,7 @@ class DashboardModel {
 
   String get overheadPerDayMonetized => overheadPerDay.monetize;
 
-  String get totalRemainingDebitMonetized => totalAmountCents.monetize;
+  String get totalRemainingDebitMonetized => totalAmount.monetize;
 
   String get lastPaymentFormatted => lastPayment.dateLocalized;
 

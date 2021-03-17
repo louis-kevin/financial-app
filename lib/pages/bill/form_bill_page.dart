@@ -35,7 +35,7 @@ class _FormBillPageState extends State<FormBillPage> {
   void save() async {
     if (!formKey.currentState.saveAndValidate()) return;
 
-    var state = Provider.of<BillState>(context, listen: false);
+    var state = context.read<BillState>();
 
     var data = Map.from(formKey.currentState.value);
 

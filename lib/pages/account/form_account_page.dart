@@ -43,7 +43,7 @@ class _FormAccountPageState extends State<FormAccountPage> {
 
     model.fill(data);
 
-    var state = Provider.of<AccountState>(context, listen: false);
+    var state = context.read<AccountState>();
 
     await state.saveAccount(model);
 
@@ -74,7 +74,7 @@ class _FormAccountPageState extends State<FormAccountPage> {
   removeAccount() {
     Navigator.of(context).pop();
 
-    var state = Provider.of<AccountState>(context, listen: false);
+    var state = context.read<AccountState>();
 
     state.deleteAccount(widget.account);
   }

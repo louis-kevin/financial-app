@@ -15,6 +15,12 @@ class SummaryTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var dashboard = context.watch<DashboardState>().dashboard;
+    if (dashboard == null) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return RefreshIndicator(
       onRefresh: () => refresh(context),
       child: CustomScrollView(

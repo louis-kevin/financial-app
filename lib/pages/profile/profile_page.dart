@@ -16,34 +16,31 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AuthState>(
-      builder: (_, state, __) {
-        return FormBuilder(
-          key: formKey,
-          initialValue: state.user?.toJson() ?? {},
-          child: BaseBackButtonPage(
-            titleKey: ProfilePageTextKeys.title,
-            content: <Widget>[
-              SizedBox(
-                height: 20,
-              ),
-              NameInput(context),
-              SizedBox(
-                height: 20,
-              ),
-              EmailInput(context),
-              SizedBox(
-                height: 20,
-              ),
-              PasswordInput(context),
-            ],
-            bottom: BaseButton(
-              onPressed: save,
-              textKey: ProfilePageTextKeys.btnSave,
-            ),
+    var state = context.watch<AuthState>();
+    return FormBuilder(
+      key: formKey,
+      initialValue: state.user?.toJson() ?? {},
+      child: BaseBackButtonPage(
+        titleKey: ProfilePageTextKeys.title,
+        content: <Widget>[
+          SizedBox(
+            height: 20,
           ),
-        );
-      },
+          NameInput(context),
+          SizedBox(
+            height: 20,
+          ),
+          EmailInput(context),
+          SizedBox(
+            height: 20,
+          ),
+          PasswordInput(context),
+        ],
+        bottom: BaseButton(
+          onPressed: save,
+          textKey: ProfilePageTextKeys.btnSave,
+        ),
+      ),
     );
   }
 }

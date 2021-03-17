@@ -15,15 +15,15 @@ class TotalDaysUntilIncome extends StatelessWidget {
       children: [
         // buildTotalDaysUntilIncome(
         //   SummaryTabPageTextKeys.holidays,
-        //   state.dashboard?.holidays,
+        //   state.dashboard.holidays,
         // ),
         buildTotalDaysUntilIncome(
           SummaryTabPageTextKeys.businessDays,
-          state.dashboard?.weekdaysUntilPayment,
+          state.dashboard.weekdaysUntilPayment,
         ),
         buildTotalDaysUntilIncome(
           SummaryTabPageTextKeys.weekendDays,
-          state.dashboard?.weekendUntilPayment,
+          state.dashboard.weekendUntilPayment,
         ),
       ],
     );

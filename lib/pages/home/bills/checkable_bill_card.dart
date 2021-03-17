@@ -20,16 +20,16 @@ class CheckableBillCard extends StatefulWidget {
 class _CheckableBillCardState extends State<CheckableBillCard> {
   Timer _debounce;
 
-  void goToAddBill(context) {
+  void goToAddBill(BuildContext context) {
     Navigator.of(context).pushNamed(
       RouterManager.BILL,
       arguments: RouteArguments(
-        model: Provider.of<BillModel>(context, listen: false),
+        model: context.read<BillModel>(),
         transitionBuilder: (page) {
           return MaterialPageRoute(
             builder: (_) {
               return ChangeNotifierProvider.value(
-                value: Provider.of<BillState>(context, listen: false),
+                value: context.read<BillState>(),
                 child: page,
               );
             },
@@ -51,7 +51,7 @@ class _CheckableBillCardState extends State<CheckableBillCard> {
   }
 
   updateBill(BillModel bill) {
-    var state = Provider.of<BillState>(context, listen: false);
+    var state = context.read<BillState>();
     state.saveBill(bill);
   }
 

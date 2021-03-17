@@ -15,7 +15,9 @@ class SettingsLastStepPage extends StatelessWidget {
 
   nextPage(BuildContext context, bool workInWHolidays) {
     userConfig.workInHolidays = workInWHolidays;
-    var state = Provider.of<AuthState>(context, listen: false);
+
+    var state = context.read<AuthState>();
+
     state.updateSettings(userConfig);
 
     if (state.hasErrors) return;

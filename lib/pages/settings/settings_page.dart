@@ -66,7 +66,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    var authState = Provider.of<AuthState>(context);
+    var authState = context.watch<AuthState>();
 
     if (authState.user?.config != null) {
       userConfig = authState.user.config;

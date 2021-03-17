@@ -37,19 +37,16 @@ class _AccountsTabBarState extends State<AccountsTabBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AccountState>(
-      builder: (_, state, __) {
-        return CarouselSlider(
-          carouselController: carouselController,
-          options: CarouselOptions(
-            height: 60.0,
-            enableInfiniteScroll: false,
-            viewportFraction: 0.4,
-            onPageChanged: changeTab,
-          ),
-          items: buildAccounts(state.accounts),
-        );
-      },
+    var state = context.watch<AccountState>();
+    return CarouselSlider(
+      carouselController: carouselController,
+      options: CarouselOptions(
+        height: 60.0,
+        enableInfiniteScroll: false,
+        viewportFraction: 0.4,
+        onPageChanged: changeTab,
+      ),
+      items: buildAccounts(state.accounts),
     );
   }
 

@@ -28,7 +28,7 @@ class SignUpTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authState = Provider.of<AuthState>(context);
+    final authState = context.watch<AuthState>();
     return FormBuilder(
       key: formKey,
       child: BaseBackButtonPage(

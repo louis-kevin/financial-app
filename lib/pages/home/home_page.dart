@@ -30,8 +30,8 @@ class _HomePageState extends State<HomePage>
   void initState() {
     super.initState();
     Future.microtask(() {
-      Provider.of<DashboardState>(context, listen: false).fetchDashboard();
-      Provider.of<AccountState>(context, listen: false).fetchAccounts();
+      context.read<DashboardState>().fetchDashboard();
+      context.read<AccountState>().fetchAccounts();
     });
   }
 

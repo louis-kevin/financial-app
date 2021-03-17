@@ -36,27 +36,25 @@ class _BillsTabState extends State<BillsTab>
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AccountState>(
-      builder: (_, state, __) {
-        if (state.accounts.isEmpty) {
-          return buildAccountsEmpty();
-        }
-        return Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: AccountsTabBar(onChangeTab: changeTab),
-            ),
-            Expanded(
-              child: PageView(
-                controller: pageController,
-                physics: NeverScrollableScrollPhysics(),
-                children: state.accounts.map(buildAccount).toList(),
-              ),
-            )
-          ],
-        );
-      },
+    var state = context.watch<AccountState>();
+    if (state.accounts.isEmpty) {
+      return buildAccountsEmpty();
+    }
+
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: AccountsTabBar(onChangeTab: changeTab),
+        ),
+        Expanded(
+          child: PageView(
+            controller: pageController,
+            physics: NeverScrollableScrollPhysics(),
+            children: state.accounts.map(buildAccount).toList(),
+          ),
+        )
+      ],
     );
   }
 

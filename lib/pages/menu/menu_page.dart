@@ -28,8 +28,7 @@ class MenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var authState = Provider.of<AuthState>(context);
-    context.watch<AuthState>();
+    var authState = context.watch<AuthState>();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

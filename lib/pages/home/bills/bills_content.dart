@@ -46,7 +46,7 @@ class _BillsContentState extends State<BillsContent> {
   }
 
   Future<List<BillModel>> fetchBills() {
-    var state = Provider.of<BillState>(context, listen: false);
+    var state = context.read<BillState>();
     color = state.account.color;
 
     return state.fetchBills();
@@ -54,50 +54,48 @@ class _BillsContentState extends State<BillsContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BillState>(
-      builder: (_, state, __) {
-        bills = state.bills;
+    var state = context.watch<BillState>();
+    var bills = state.bills;
+    var account = state.account;
 
-        if (bills == null) {
-          return Center(
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation(Colors.white),
+    if (bills == null) {
+      return Center(
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation(Colors.white),
+        ),
+      );
+    }
+    List<Widget> content = [
+      SliverList(
+        delegate: SliverChildListDelegate([
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 4,
+              vertical: 8,
             ),
-          );
-        }
-        List<Widget> content = [
-          SliverList(
-            delegate: SliverChildListDelegate([
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 4,
-                  vertical: 8,
-                ),
-                child: ChangeNotifierProvider.value(
-                  value: state.account,
-                  child: BillAccountSummary(),
-                ),
-              ),
-            ]),
-          ),
-        ];
-
-        if (this.bills.isEmpty) {
-          content.add(buildEmptyBills());
-        } else {
-          content.addAll(buildBills());
-        }
-
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: RefreshIndicator(
-            onRefresh: fetchBills,
-            child: CustomScrollView(
-              slivers: content,
+            child: ChangeNotifierProvider.value(
+              value: account,
+              child: BillAccountSummary(),
             ),
           ),
-        );
-      },
+        ]),
+      ),
+    ];
+
+    if (this.bills.isEmpty) {
+      content.add(buildEmptyBills());
+    } else {
+      content.addAll(buildBills());
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: RefreshIndicator(
+        onRefresh: fetchBills,
+        child: CustomScrollView(
+          slivers: content,
+        ),
+      ),
     );
   }
 

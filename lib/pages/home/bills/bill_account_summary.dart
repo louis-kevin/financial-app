@@ -11,25 +11,24 @@ class BillAccountSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AccountModel>(
-      builder: (_, account, __) => Row(
-        children: <Widget>[
-          Expanded(
-            child: buildSummaryAccount(
-              context,
-              BillsTabPageTextKeys.titleToPayCard,
-              0, // TODO Fix amount to pay
-            ),
+    var account = context.watch<AccountModel>();
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: buildSummaryAccount(
+            context,
+            BillsTabPageTextKeys.titleToPayCard,
+            0, // TODO Fix amount to pay
           ),
-          Expanded(
-            child: buildSummaryAccount(
-              context,
-              BillsTabPageTextKeys.titleAccountMoneyCard,
-              account.amount,
-            ),
+        ),
+        Expanded(
+          child: buildSummaryAccount(
+            context,
+            BillsTabPageTextKeys.titleAccountMoneyCard,
+            account.amount,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

@@ -19,7 +19,7 @@ class _TotalsCardsState extends State<TotalsCards> {
   Widget build(BuildContext context) {
     return Consumer<DashboardState>(
       builder: (_, state, __) {
-        var hasAccounts = state.dashboard?.hasAccounts;
+        var hasAccounts = state.dashboard.hasAccounts;
         if (hasAccounts == null || !hasAccounts) return Container();
 
         return Column(
@@ -31,7 +31,7 @@ class _TotalsCardsState extends State<TotalsCards> {
                 children: <Widget>[
                   TotalsCard(
                     titleKey: SummaryTabPageTextKeys.titleTotalDebitCard,
-                    amount: state.dashboard?.totalAmount ?? 0,
+                    amount: state.dashboard.totalAmount ?? 0,
                   ),
                 ],
               ),

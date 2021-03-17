@@ -17,7 +17,7 @@ class AccountCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var state = context.watch<DashboardState>();
-    var accounts = state.dashboard?.accounts;
+    var accounts = state.dashboard.accounts;
 
     if (accounts == null || accounts.isEmpty) {
       return buildEmptyAccounts(context);

@@ -12,16 +12,16 @@ class BillCard extends StatelessWidget {
 
   const BillCard({Key key, this.color}) : super(key: key);
 
-  void goToAddBill(context) {
+  void goToAddBill(BuildContext context) {
     Navigator.of(context).pushNamed(
       RouterManager.BILL,
       arguments: RouteArguments(
-        model: Provider.of<BillModel>(context, listen: false),
+        model: context.read<BillModel>(),
         transitionBuilder: (page) {
           return MaterialPageRoute(
             builder: (_) {
               return ChangeNotifierProvider.value(
-                value: Provider.of<BillState>(context, listen: false),
+                value: context.read<BillState>(),
                 child: page,
               );
             },
@@ -33,37 +33,33 @@ class BillCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BillModel>(
-      builder: (_, bill, __) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GestureDetector(
-            onLongPress: () => goToAddBill(context),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(7)),
-                color: Colors.white,
-              ),
-              padding:
-                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SubheadText(
-                    bill.name,
-                    textColor: color,
-                  ),
-                  SubtitleText(
-                    bill.amountMonetized,
-                    textColor: color,
-                  ),
-                ],
-              ),
-            ),
+    var bill = context.watch<BillModel>();
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onLongPress: () => goToAddBill(context),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(7)),
+            color: Colors.white,
           ),
-        );
-      },
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SubheadText(
+                bill.name,
+                textColor: color,
+              ),
+              SubtitleText(
+                bill.amountMonetized,
+                textColor: color,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

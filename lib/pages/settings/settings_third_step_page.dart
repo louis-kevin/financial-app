@@ -39,7 +39,7 @@ class _SettingsThirdStepPageState extends State<SettingsThirdStepPage> {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<AuthState>(context).user;
+    final user = context.watch<AuthState>().user;
 
     return FormBuilder(
       key: formKey,

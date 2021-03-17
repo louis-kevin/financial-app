@@ -11,21 +11,18 @@ class TotalDebitAppBarHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<DashboardState>(
-      builder: (_, state, __) {
-        return GestureDetector(
-          onTap: () => goToUpdateAccountMoney(context),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Center(
-              child: HeadlineText(
-                state.dashboard?.totalRemainingDebitMonetized ?? '',
-                textColor: Colors.white,
-              ),
-            ),
+    var state = context.watch<DashboardState>();
+    return GestureDetector(
+      onTap: () => goToUpdateAccountMoney(context),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: HeadlineText(
+            state.dashboard?.totalRemainingDebitMonetized ?? '',
+            textColor: Colors.white,
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

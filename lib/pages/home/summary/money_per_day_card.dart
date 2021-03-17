@@ -10,7 +10,7 @@ class MoneyPerDayCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<DashboardState>(
       builder: (_, state, __) {
-        var hasAccounts = state.dashboard?.hasAccounts;
+        var hasAccounts = state.dashboard.hasAccounts;
         if (hasAccounts == null || !hasAccounts) return Container();
 
         return Container(
@@ -37,7 +37,7 @@ class MoneyPerDayCard extends StatelessWidget {
                     textColor: Colors.white,
                   ),
                   SubtitleText(
-                    state.dashboard?.overheadPerDayMonetized ?? '',
+                    state.dashboard.overheadPerDayMonetized ?? '',
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
