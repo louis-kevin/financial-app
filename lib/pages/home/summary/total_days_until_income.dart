@@ -8,26 +8,24 @@ import 'package:provider/provider.dart';
 class TotalDaysUntilIncome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<DashboardState>(
-      builder: (_, state, __) {
-        return ListView(
-          scrollDirection: Axis.horizontal,
-          children: [
-            buildTotalDaysUntilIncome(
-              SummaryTabPageTextKeys.holidays,
-              state.dashboard?.holidays,
-            ),
-            buildTotalDaysUntilIncome(
-              SummaryTabPageTextKeys.businessDays,
-              state.dashboard?.businessDays,
-            ),
-            buildTotalDaysUntilIncome(
-              SummaryTabPageTextKeys.weekendDays,
-              state.dashboard?.weekendDays,
-            ),
-          ],
-        );
-      },
+    var state = context.watch<DashboardState>();
+
+    return ListView(
+      scrollDirection: Axis.horizontal,
+      children: [
+        // buildTotalDaysUntilIncome(
+        //   SummaryTabPageTextKeys.holidays,
+        //   state.dashboard?.holidays,
+        // ),
+        buildTotalDaysUntilIncome(
+          SummaryTabPageTextKeys.businessDays,
+          state.dashboard?.weekdaysUntilPayment,
+        ),
+        buildTotalDaysUntilIncome(
+          SummaryTabPageTextKeys.weekendDays,
+          state.dashboard?.weekendUntilPayment,
+        ),
+      ],
     );
   }
 

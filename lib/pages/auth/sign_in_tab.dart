@@ -1,6 +1,6 @@
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/pages/auth/recovery_password_page.dart';
-import 'package:financialapp/routes/router.dart';
+import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/base_button.dart';
 import 'package:financialapp/shared/inputs/email_input.dart';
 import 'package:financialapp/shared/inputs/password_input.dart';
@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 class SignInTab extends StatelessWidget {
   final formKey = GlobalKey<FormBuilderState>();
 
-  save(context, authState) async {
+  save(context, AuthState authState) async {
     if (!formKey.currentState.saveAndValidate()) return;
 
     await authState.login(formKey.currentState.value);
@@ -25,13 +25,13 @@ class SignInTab extends StatelessWidget {
 
     if (authState.user.needsConfig) {
       return navigator.pushNamedAndRemoveUntil(
-        Router.SETTINGS,
+        RouterManager.SETTINGS,
         (Route<dynamic> route) => false,
       );
     }
 
     navigator.pushNamedAndRemoveUntil(
-      Router.HOME,
+      RouterManager.HOME,
       (Route<dynamic> route) => false,
     );
   }
@@ -59,6 +59,7 @@ class SignInTab extends StatelessWidget {
         hasAppBar: false,
         content: <Widget>[
           EmailInput(
+            context,
             errorMessage: authState.getErrorByField('email'),
             required: true,
           ),
@@ -66,6 +67,7 @@ class SignInTab extends StatelessWidget {
             height: 20,
           ),
           PasswordInput(
+            context,
             errorMessage: authState.getErrorByField('password'),
             required: true,
           ),

@@ -41,7 +41,7 @@ var money = {
 
 var settingsPage = {
   SettingsPageTextKeys.btnNext: 'PRÓXIMO',
-  SettingsPageTextKeys.firstTitle: 'Vamos no  conhecer',
+  SettingsPageTextKeys.firstTitle: 'Vamos nos conhecer',
   SettingsPageTextKeys.firstSubtitle:
       'Qual dia você geralmente recebe seu salário?',
   SettingsPageTextKeys.selectionWorkDay: 'dia útil',

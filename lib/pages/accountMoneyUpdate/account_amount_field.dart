@@ -21,8 +21,9 @@ class AccountAmountField extends StatelessWidget {
             ),
             Expanded(
               child: AmountInput(
-                value: account.amount,
-                attribute: account.id.toString(),
+                context,
+                value: account?.amount ?? 0,
+                name: account.id.toString(),
                 decoration: InputDecoration(),
               ),
             )

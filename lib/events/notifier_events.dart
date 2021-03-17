@@ -35,8 +35,8 @@ class FcmTokenUpdated {
 class ContentNotFound {}
 
 class TotalAmountUpdate {
-  double oldAmount;
-  double newAmount;
+  int oldAmount;
+  int newAmount;
 
   TotalAmountUpdate({this.oldAmount, this.newAmount});
 }

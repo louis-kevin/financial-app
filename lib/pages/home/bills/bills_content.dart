@@ -3,7 +3,7 @@ import 'package:financialapp/models/bill_model.dart';
 import 'package:financialapp/pages/home/bills/bill_account_summary.dart';
 import 'package:financialapp/pages/home/bills/bill_card.dart';
 import 'package:financialapp/pages/home/bills/checkable_bill_card.dart';
-import 'package:financialapp/routes/router.dart';
+import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/typography/display1_text.dart';
 import 'package:financialapp/states/bill_state.dart';
 import 'package:financialapp/theme.dart';
@@ -36,7 +36,7 @@ class _BillsContentState extends State<BillsContent> {
   }
 
   void goToAddBill() {
-    Navigator.of(context).pushNamed(Router.BILL);
+    Navigator.of(context).pushNamed(RouterManager.BILL);
   }
 
   @override

@@ -1,15 +1,27 @@
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/models/account_model.dart';
 import 'package:financialapp/pages/accounts/account_item_list.dart';
-import 'package:financialapp/routes/router.dart';
+import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/layout/base_back_button_page.dart';
 import 'package:financialapp/states/account_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AccountsPage extends StatelessWidget {
+class AccountsPage extends StatefulWidget {
+  @override
+  _AccountsPageState createState() => _AccountsPageState();
+}
+
+class _AccountsPageState extends State<AccountsPage> {
   goToFormAccount(BuildContext context) {
-    Navigator.of(context).pushNamed(Router.ACCOUNT);
+    Navigator.of(context).pushNamed(RouterManager.ACCOUNT);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() =>
+        Provider.of<AccountState>(context, listen: false).fetchAccounts());
   }
 
   @override

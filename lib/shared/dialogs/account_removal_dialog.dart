@@ -26,13 +26,13 @@ class AccountRemovalDialog extends StatelessWidget {
       backgroundColor: DefaultColors.backgroundColor,
       title: Display1Text.key(DialogsTextKeys.accountRemovalTitle),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           child: Body2Text.key(
             DialogsTextKeys.btnCancel,
           ),
           onPressed: () => Navigator.of(context).pop(false),
         ),
-        FlatButton(
+        TextButton(
           child: Body2Text.key(
             DialogsTextKeys.btnYes,
             style: TextStyle(color: Colors.redAccent),

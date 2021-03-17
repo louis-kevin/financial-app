@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:financialapp/models/account_model.dart';
-import 'package:financialapp/routes/router.dart';
 import 'package:financialapp/routes/router_arguments.dart';
+import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/typography/display2_text.dart';
 import 'package:financialapp/states/account_state.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class _AccountsTabBarState extends State<AccountsTabBar> {
 
   goToAccountForm(AccountModel account) {
     Navigator.of(context).pushNamed(
-      Router.ACCOUNT,
+      RouterManager.ACCOUNT,
       arguments: RouteArguments(model: account),
     );
   }

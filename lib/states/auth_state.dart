@@ -1,22 +1,23 @@
-import 'package:dio/dio.dart';
 import 'package:financialapp/events/notifier.dart';
 import 'package:financialapp/events/notifier_events.dart';
 import 'package:financialapp/models/user_model.dart';
-import 'package:financialapp/services/auth_service.dart';
+import 'package:financialapp/services/user_service.dart';
 import 'package:financialapp/states/base_state.dart';
+
+typedef AuthenticationCall = Future<UserModel> Function();
 
 class AuthState extends BaseState {
   bool logged;
 
   UserModel user;
 
-  AuthService authService = AuthService();
+  UserService authService = UserService();
 
   AuthState() {
-    Notifier()..listen((event) => logout());
+    Notifier()..listen<Logout>((event) => logout());
   }
 
-  checkUser() async {
+  Future<void> checkUser() async {
     user = await _getUser();
 
     logged = user != null;
@@ -27,21 +28,15 @@ class AuthState extends BaseState {
   }
 
   Future<void> login(Map data) {
-    return _authenticate(() {
-      return authService.login(data);
-    });
+    return _authenticate(() async => await authService.login(data));
   }
 
   Future<void> register(Map data) {
-    return _authenticate(() {
-      return authService.register(data);
-    });
+    return _authenticate(() async => await authService.register(data));
   }
 
   Future<void> updateSettings(UserConfig userConfig) async {
-    Response response = await authService.updateSettings(userConfig.toJson());
-
-    var userConfigModel = UserConfig.fromJson(response.data);
+    var userConfigModel = await authService.updateSettings(userConfig.toJson());
 
     user?.config = userConfigModel;
   }
@@ -50,18 +45,16 @@ class AuthState extends BaseState {
     if (!await authService.hasToken) return null;
 
     try {
-      Response response = await authService.me();
-      return UserModel.fromJson(response.data);
+      return await authService.me();
     } catch (e) {
+      Notifier()..fire(TokenExpired());
       return null;
     }
   }
 
-  _authenticate(Function authenticationCall) async {
+  _authenticate(AuthenticationCall authenticationCall) async {
     return handleAsync(() async {
-      Response response = await authenticationCall();
-
-      var user = UserModel.fromJson(response.data);
+      UserModel user = await authenticationCall();
 
       this.user = user;
 

@@ -46,18 +46,18 @@ var settingsPage = {
       'Which day do you usually receive your salary?',
   SettingsPageTextKeys.selectionWorkDay: 'business days',
   SettingsPageTextKeys.selectionAllDays: 'calendar days',
-  SettingsPageTextKeys.secondTitle: 'Salary in weekends and holydays',
+  SettingsPageTextKeys.secondTitle: 'Salary in weekends and holidays',
   SettingsPageTextKeys.secondSubtitle:
-      'When the %sᵒ %s ends up in a weekend or holyday, what happens?',
-  SettingsPageTextKeys.selectionDayAfter: 'I receive in the next bussiness day',
+      'When the %sᵒ %s ends up in a weekend or holidays, what happens?',
+  SettingsPageTextKeys.selectionDayAfter: 'I receive in the next business day',
   SettingsPageTextKeys.selectionDayBefore: 'I receive in the upfront day',
   SettingsPageTextKeys.calendarDay: 'calendar day',
   SettingsPageTextKeys.businessDay: 'business day',
   SettingsPageTextKeys.thirdTitle: 'Still about income',
   SettingsPageTextKeys.thirdSubtitle:
       "To predict some things and set up some graphics, we need to know: how much do you earn on average? \nOkay not wanting to answer",
-  SettingsPageTextKeys.fourthTitle: 'About holydays',
-  SettingsPageTextKeys.fourthSubtitle: 'Do you rest on holydays?',
+  SettingsPageTextKeys.fourthTitle: 'About holidays',
+  SettingsPageTextKeys.fourthSubtitle: 'Do you rest on holidays?',
   SettingsPageTextKeys.btnYes: 'Yes',
   SettingsPageTextKeys.btnNo: 'No',
 };
@@ -73,7 +73,7 @@ var summaryTabPage = {
   SummaryTabPageTextKeys.titleTotalDebitCard: 'TOTAL REMAINING DEBT',
   SummaryTabPageTextKeys.titleTotalCreditCard: 'TOTAL REMAINING CREDIT',
   SummaryTabPageTextKeys.titleDaysUntilNextIncomeCard: 'DAYS UNTIL NEXT INCOME',
-  SummaryTabPageTextKeys.holidays: 'HOLYDAYS',
+  SummaryTabPageTextKeys.holidays: 'HOLIDAYS',
   SummaryTabPageTextKeys.businessDays: 'BUSINESS DAYS',
   SummaryTabPageTextKeys.weekendDays: 'WEEKEND DAYS',
 };
@@ -132,7 +132,7 @@ var accountMoneyUpdate = {
 
 var dialogs = {
   DialogsTextKeys.accountRemovalTitle:
-      'Do you realy want to remove this account?',
+      'Do you really want to remove this account?',
   DialogsTextKeys.btnYes: 'YES',
   DialogsTextKeys.btnNo: 'NO',
   DialogsTextKeys.btnCancel: 'CANCEL',

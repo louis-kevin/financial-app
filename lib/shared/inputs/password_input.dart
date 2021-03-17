@@ -4,16 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class PasswordInput extends FormBuilderTextField {
-  PasswordInput({
+  PasswordInput(
+    BuildContext context, {
     Key key,
     InputDecoration decoration,
     TextStyle style,
-    String attribute,
+    String name,
     String errorMessage,
     List<FormFieldValidator> validators,
     bool required = false,
   }) : super(
-          attribute: attribute ?? 'password',
+          name: name ?? 'password',
           key: key,
           keyboardType: TextInputType.visiblePassword,
           obscureText: true,
@@ -27,10 +28,12 @@ class PasswordInput extends FormBuilderTextField {
                 labelText: LabelTextKeys.password.i18n,
                 errorText: errorMessage,
               ),
-          validators: (validators ?? [])
-            ..addAll([
-              if (required) FormBuilderValidators.required(),
-              FormBuilderValidators.minLength(6)
-            ]),
+          validator: FormBuilderValidators.compose(
+            (validators ?? [])
+              ..addAll([
+                if (required) FormBuilderValidators.required(context),
+                FormBuilderValidators.minLength(context, 6)
+              ]),
+          ),
         );
 }

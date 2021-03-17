@@ -32,18 +32,18 @@ enum IncomeOption { nextWorkDay, previousDay }
 class UserConfig {
   int day;
   DayType dayType;
-  num income;
+  int incomeCents;
   IncomeOption incomeOption;
   bool workInHolidays;
 
   UserConfig.empty() {
     this.day = 0;
-    this.income = 0;
+    this.incomeCents = 0;
   }
 
   UserConfig.fromJson(Map<String, dynamic> json) {
     this.day = json['day'];
-    this.income = json['income'] ?? (json['income_cents'] / 100);
+    this.incomeCents = json['income_cents'];
     this.workInHolidays = json['work_in_holidays'];
 
     this.dayType = DayType.values.firstWhere((value) =>
@@ -54,11 +54,13 @@ class UserConfig {
         ReCase(json['income_option']).snakeCase);
   }
 
+  double get income => incomeCents / 100;
+
   Map<String, dynamic> toJson() {
     var data = {
       'day': this.day,
       'day_type': ReCase(describeEnum(this.dayType)).snakeCase,
-      'income': this.income,
+      'income_cents': this.incomeCents,
       'income_option': ReCase(describeEnum(this.incomeOption)).snakeCase,
       'work_in_holidays': this.workInHolidays
     };

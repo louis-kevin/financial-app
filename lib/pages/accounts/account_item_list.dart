@@ -1,6 +1,6 @@
 import 'package:financialapp/models/account_model.dart';
-import 'package:financialapp/routes/router.dart';
 import 'package:financialapp/routes/router_arguments.dart';
+import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/dialogs/account_removal_dialog.dart';
 import 'package:financialapp/shared/typography/display1_text.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 class AccountItemList extends StatelessWidget {
   void goToFormAccount(BuildContext context, AccountModel account) {
     Navigator.of(context).pushNamed(
-      Router.ACCOUNT,
+      RouterManager.ACCOUNT,
       arguments: RouteArguments(model: account),
     );
   }
@@ -17,9 +17,7 @@ class AccountItemList extends StatelessWidget {
   deleteAccount(BuildContext context, AccountModel account) {
     showDialog(
       context: context,
-      child: AccountRemovalDialog(
-        account: account,
-      ),
+      builder: (_) => AccountRemovalDialog(account: account),
     );
   }
 

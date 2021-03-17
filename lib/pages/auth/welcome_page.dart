@@ -1,5 +1,5 @@
 import 'package:financialapp/locale/locale_keys.dart';
-import 'package:financialapp/routes/router.dart';
+import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/base_button.dart';
 import 'package:financialapp/shared/typography/body2_text.dart';
 import 'package:financialapp/shared/typography/display4_text.dart';
@@ -15,7 +15,7 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage> {
   goToAuthPage(context) {
-    Navigator.of(context).pushNamed(Router.AUTH);
+    Navigator.of(context).pushNamed(RouterManager.AUTH);
   }
 
   bool locale = true;

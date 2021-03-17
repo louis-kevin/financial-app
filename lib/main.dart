@@ -2,12 +2,13 @@ import 'dart:ui' as ui;
 
 import 'package:financialapp/config.dart';
 import 'package:financialapp/routes/navigator.dart';
-import 'package:financialapp/routes/router.dart';
+import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/states/account_state.dart';
 import 'package:financialapp/states/auth_state.dart';
 import 'package:financialapp/states/dashboard_state.dart';
 import 'package:financialapp/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:i18n_extension/i18n_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -18,14 +19,17 @@ var config = Config();
 
 void main() => runApp(
       FutureBuilder(
-        future: config.load(),
+        future: Future.wait([
+          config.load(),
+          GetStorage.init(),
+        ]),
         builder: (_, data) {
           if (!data.hasData)
             return Container(
               color: DefaultColors.backgroundColor,
             );
           return I18n(
-            initialLocale: Locale('en'),
+            initialLocale: Locale('pt-br'),
             child: MyApp(),
           );
         },
@@ -38,12 +42,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  AuthState authState;
+  var authState = AuthState();
 
   @override
   void initState() {
+    authState.checkUser();
+
     super.initState();
-    authState = AuthState()..checkUser();
   }
 
   @override
@@ -69,8 +74,8 @@ class _MyAppState extends State<MyApp> {
           const Locale('en'),
           const Locale('pt-br'),
         ],
-        onGenerateRoute: Router.generateRoute,
-        initialRoute: Router.SPLASH,
+        onGenerateRoute: RouterManager.generateRoute,
+        initialRoute: RouterManager.SPLASH,
       ),
     );
   }

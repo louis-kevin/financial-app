@@ -1,7 +1,7 @@
+import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/locale/messages/messages_en.dart';
 import 'package:financialapp/locale/messages/messages_pt-br.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:i18n_extension/i18n_extension.dart';
 import 'package:intl/intl.dart';
 
@@ -31,6 +31,8 @@ extension Localization on String {
 
 extension LocalizationNumber on num {
   String get monetize {
+    if (this == null) return '0';
+
     _controller.updateValue(this.toDouble());
 
     String text = _controller.text;

@@ -1,32 +1,38 @@
 import 'package:financialapp/events/notifier.dart';
 import 'package:financialapp/events/notifier_events.dart';
 import 'package:financialapp/locale/locale_keys.dart';
-import 'package:financialapp/routes/router.dart';
+import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/typography/display1_text.dart';
 import 'package:financialapp/shared/typography/headline_text.dart';
 import 'package:financialapp/shared/typography/subhead_text.dart';
+import 'package:financialapp/states/auth_state.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MenuPage extends StatelessWidget {
   void goToAccountsPage(context) {
-    Navigator.of(context).pushNamed(Router.ACCOUNTS);
+    Navigator.of(context).pushNamed(RouterManager.ACCOUNTS);
   }
 
   void goToProfilePage(context) {
-    Navigator.of(context).pushNamed(Router.PROFILE);
+    Navigator.of(context).pushNamed(RouterManager.PROFILE);
   }
 
   void gotToSettingsPage(context) {
-    Navigator.of(context).pushNamed(Router.SETTINGS);
+    Navigator.of(context).pushNamed(RouterManager.SETTINGS);
   }
 
-  goToWelcomePage(context) {
+  void goToWelcomePage(context) {
     Notifier()..fire(Logout());
   }
 
   @override
   Widget build(BuildContext context) {
+    var authState = Provider.of<AuthState>(context);
+    context.watch<AuthState>();
+
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Center(
           child: Column(
@@ -40,8 +46,8 @@ class MenuPage extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: CircleAvatar(),
                     ),
-                    Display1Text('Kevin Louis'),
-                    SubheadText('@keviinlouis')
+                    Display1Text(authState.user?.name ?? ''),
+                    SubheadText(authState.user?.email ?? '')
                   ],
                 ),
               ),

@@ -17,7 +17,8 @@ class AccountMoneyUpdatePage extends StatelessWidget {
     Map data = formKey.currentState.value;
 
     data.forEach((id, amount) {
-      accountState.updateAccountAmount(int.parse(id), amount);
+      var amountCents = int.parse((amount * 100).toString());
+      accountState.updateAccountAmount(int.parse(id), amountCents);
     });
 
     Navigator.of(context).pop();

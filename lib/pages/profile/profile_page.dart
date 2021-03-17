@@ -27,15 +27,15 @@ class ProfilePage extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              NameInput(),
+              NameInput(context),
               SizedBox(
                 height: 20,
               ),
-              EmailInput(),
+              EmailInput(context),
               SizedBox(
                 height: 20,
               ),
-              PasswordInput(),
+              PasswordInput(context),
             ],
             bottom: BaseButton(
               onPressed: save,
