@@ -1,3 +1,5 @@
+import 'package:extended_masked_text/extended_masked_text.dart';
+import 'package:financialapp/locale/locale_i18n.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/models/bill_model.dart';
 import 'package:financialapp/shared/base_button.dart';
@@ -22,7 +24,8 @@ class FormBillPage extends StatefulWidget {
 }
 
 class _FormBillPageState extends State<FormBillPage> {
-  final formKey = GlobalKey<FormBuilderState>();
+  var formKey;
+  var controller;
 
   int selectedDay = 1;
   BillType billType = BillType.once;
@@ -37,10 +40,10 @@ class _FormBillPageState extends State<FormBillPage> {
 
     var state = context.read<BillState>();
 
-    var data = Map.from(formKey.currentState.value);
+    Map<String, dynamic> data = Map.from(formKey.currentState.value);
 
-    var dataToAdd = {
-      'type': billType.toString().replaceAll('BillType.', ''),
+    Map<String, dynamic> dataToAdd = {
+      'repetition_type': billType.toString().replaceAll('BillType.', ''),
       'payment_day': selectedDay,
       'account_id': state.account.id,
       'payed': false,
@@ -49,11 +52,7 @@ class _FormBillPageState extends State<FormBillPage> {
 
     data.addAll(dataToAdd);
 
-    var model = BillModel();
-
-    if (widget.model != null) {
-      model = widget.model;
-    }
+    var model = widget.model ?? BillModel();
 
     model.fill(data);
 
@@ -66,8 +65,14 @@ class _FormBillPageState extends State<FormBillPage> {
   void initState() {
     if (widget.model != null) {
       selectedDay = widget.model.paymentDay;
-      billType = widget.model.type;
+      billType = widget.model.repetitionType;
     }
+    formKey = GlobalKey<FormBuilderState>();
+    controller = MoneyMaskedTextController(
+      decimalSeparator: MoneyTextKeys.decimalSeparator.i18n,
+      thousandSeparator: MoneyTextKeys.thousandSeparator.i18n,
+      leftSymbol: MoneyTextKeys.leftSymbol.i18n,
+    );
     super.initState();
   }
 
@@ -86,7 +91,9 @@ class _FormBillPageState extends State<FormBillPage> {
             height: 20,
           ),
           BillTypesSelector(
-              onChange: onChangeBillType, initialValue: widget.model?.type),
+            onChange: onChangeBillType,
+            initialValue: widget.model?.repetitionType,
+          ),
           SizedBox(
             height: 20,
           ),
@@ -97,6 +104,7 @@ class _FormBillPageState extends State<FormBillPage> {
           AmountInput(
             context,
             value: widget.model?.amount ?? 0,
+            controller: controller,
           ),
           SizedBox(
             height: 20,

@@ -9,11 +9,13 @@ class RouteArguments {
   dynamic model;
   RouterTransitions transitions;
   TransitionBuilder transitionBuilder;
+  Function state;
 
   RouteArguments({
     this.id,
     this.transitions = RouterTransitions.normal,
     this.model,
     this.transitionBuilder,
+    this.state,
   });
 }

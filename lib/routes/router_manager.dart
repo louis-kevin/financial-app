@@ -53,7 +53,7 @@ class RouterManager {
     MENU: (arguments) => MenuPage(),
     ACCOUNTS: (arguments) => AccountsPage(),
     PROFILE: (arguments) => ProfilePage(),
-    SETTINGS: (RouteArguments arguments) => SettingsPage(),
+    SETTINGS: (arguments) => SettingsPage(),
     ACCOUNT_MONEY_UPDATE: (arguments) => AccountMoneyUpdatePage(),
   };
 
@@ -93,6 +93,12 @@ class RouterManager {
   static findRoute(String name, RouteArguments arguments) {
     if (!routes.containsKey(name)) throw 'Route not founded';
 
-    return routes[name](arguments);
+    var page = routes[name](arguments);
+
+    if (arguments.state != null) {
+      page = arguments.state(page);
+    }
+
+    return page;
   }
 }

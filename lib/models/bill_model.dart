@@ -16,7 +16,7 @@ class BillModel extends ChangeNotifier with AmountCentsAttribute {
   int id;
   int amountCents;
   String name;
-  BillType type;
+  BillType repetitionType;
   int paymentDay;
   bool _payed;
 
@@ -33,7 +33,7 @@ class BillModel extends ChangeNotifier with AmountCentsAttribute {
     this.id,
     this.amountCents,
     this.name,
-    this.type,
+    this.repetitionType,
     this.paymentDay,
     bool payed = false,
   }) : _payed = payed;
@@ -49,11 +49,12 @@ class BillModel extends ChangeNotifier with AmountCentsAttribute {
     this.name = data['name'] ?? this.name;
     this.payed = data['payed'] ?? this.payed;
     this.paymentDay = data['payment_day'] ?? this.paymentDay;
-    this.type = data.containsKey('type')
+    this.repetitionType = data.containsKey('repetition_type')
         ? BillType.values.firstWhere((item) {
-            return item.toString().replaceAll('BillType.', '') == data['type'];
+            return item.toString().replaceAll('BillType.', '') ==
+                data['repetition_type'];
           })
-        : this.type;
+        : this.repetitionType;
   }
 
   Map<String, dynamic> toJson() {
@@ -64,7 +65,7 @@ class BillModel extends ChangeNotifier with AmountCentsAttribute {
       'amount_cents': amountCents,
       'payed': payed,
       'payment_day': paymentDay,
-      'type': type.toString().replaceAll('BillType.', ''),
+      'repetition_type': repetitionType.toString().replaceAll('BillType.', ''),
     };
 
     return data;

@@ -34,6 +34,7 @@ class BillState extends BaseState {
 
   saveBill(BillModel model) async {
     model.busy = true;
+
     Function async = () async {
       bool modelExists = model.id != null;
 

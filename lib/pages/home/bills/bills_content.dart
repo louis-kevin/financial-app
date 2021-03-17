@@ -3,6 +3,7 @@ import 'package:financialapp/models/bill_model.dart';
 import 'package:financialapp/pages/home/bills/bill_account_summary.dart';
 import 'package:financialapp/pages/home/bills/bill_card.dart';
 import 'package:financialapp/pages/home/bills/checkable_bill_card.dart';
+import 'package:financialapp/routes/router_arguments.dart';
 import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/typography/display1_text.dart';
 import 'package:financialapp/states/bill_state.dart';
@@ -36,7 +37,17 @@ class _BillsContentState extends State<BillsContent> {
   }
 
   void goToAddBill() {
-    Navigator.of(context).pushNamed(RouterManager.BILL);
+    var state = context.read<BillState>();
+
+    Navigator.of(context).pushNamed(
+      RouterManager.BILL,
+      arguments: RouteArguments(
+        state: (page) => ChangeNotifierProvider.value(
+          value: state,
+          child: page,
+        ),
+      ),
+    );
   }
 
   @override
@@ -155,13 +166,13 @@ class _BillsContentState extends State<BillsContent> {
 
   buildOnce() {
     List<BillModel> onceBills =
-        bills.where((item) => item.type == BillType.once).toList();
+        bills.where((item) => item.repetitionType == BillType.once).toList();
     return buildCheckableCards(onceBills);
   }
 
   Widget buildDaily() {
     List<BillModel> dailyBills =
-        bills.where((item) => item.type == BillType.daily).toList();
+        bills.where((item) => item.repetitionType == BillType.daily).toList();
 
     return SliverList(
       delegate: SliverChildListDelegate(
@@ -179,7 +190,7 @@ class _BillsContentState extends State<BillsContent> {
 
   Widget buildMonthly() {
     List<BillModel> monthlyBills =
-        bills.where((item) => item.type == BillType.monthly).toList();
+        bills.where((item) => item.repetitionType == BillType.monthly).toList();
 
     return buildCheckableCards(monthlyBills);
   }
