@@ -45,9 +45,8 @@ class _AccountsPageState extends State<AccountsPage> {
   }
 
   Widget buildAccount(AccountModel account) {
-    return ChangeNotifierProvider.value(
-      value: account,
-      child: AccountItemList(),
+    return AccountItemList(
+      account: account,
     );
   }
 }

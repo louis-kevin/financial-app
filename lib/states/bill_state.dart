@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:financialapp/events/notifier.dart';
+import 'package:financialapp/events/notifier_events.dart';
 import 'package:financialapp/models/account_model.dart';
 import 'package:financialapp/models/bill_model.dart';
 import 'package:financialapp/services/bill_service.dart';
@@ -22,8 +24,6 @@ class BillState extends BaseState {
 
       bills = data.map((bill) => BillModel.fromJson((bill))).toList();
 
-      account.addBills(bills);
-
       notifyListeners();
 
       return bills;
@@ -33,8 +33,6 @@ class BillState extends BaseState {
   }
 
   saveBill(BillModel model) async {
-    model.busy = true;
-
     Function async = () async {
       bool modelExists = model.id != null;
 
@@ -43,19 +41,13 @@ class BillState extends BaseState {
 
       model.fill(response.data);
 
-      account.addOrUpdateBill(model);
-
       if (!modelExists) {
         bills.add(model);
         notifyListeners();
       }
     };
 
-    Function runAlways = () {
-      model.busy = false;
-    };
-
-    return handleAsync(async, runAlways: runAlways);
+    return handleAsync(async);
   }
 
   BillModel findById(int id) {
@@ -74,5 +66,25 @@ class BillState extends BaseState {
     BillModel bill = bills.removeAt(oldIndex);
     bills.insert(newIndex, bill);
     notifyListeners();
+  }
+
+  void updatePayed(BillModel bill, bool value) {
+    var billInList = bills.firstWhere((item) => item.id == bill.id);
+
+    billInList.payed = value;
+
+    saveBill(billInList);
+
+    int newAccountAmount = account.totalAmountCents;
+
+    if (billInList.payed) {
+      newAccountAmount -= billInList.amountCents;
+    } else {
+      newAccountAmount += billInList.amountCents;
+    }
+
+    account.totalAmountCents = newAccountAmount;
+
+    Notifier()..fire(AccountUpdated(account));
   }
 }

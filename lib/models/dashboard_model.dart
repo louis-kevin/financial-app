@@ -11,8 +11,6 @@ class DashboardModel {
   int weekendUntilPayment;
   double percentageUntilIncome = 0;
 
-  List<AccountModel> accounts = [];
-
   double get overheadPerDay => overheadPerDayCents / 100;
 
   double get totalAmount => totalAmountCents / 100;
@@ -27,8 +25,6 @@ class DashboardModel {
 
   String get todayFormatted => DateTime.now().dateLocalized;
 
-  bool get hasAccounts => accounts != null && accounts.isNotEmpty;
-
   DashboardModel.fromJson(Map<String, dynamic> json) {
     this.overheadPerDayCents = json['overhead_per_day_cents'];
     this.totalAmountCents = json['total_amount_cents'];
@@ -38,12 +34,15 @@ class DashboardModel {
     this.weekdaysUntilPayment = json['weekdays_until_payment'];
     this.weekendUntilPayment = json['weekend_until_payment'];
     this.percentageUntilIncome = json['percentage_until_income'].toDouble();
+  }
 
-    var accounts = json['accounts'] as List;
+  void calculateTotalAmountCents(List<AccountModel> accounts) {
+    var newAmount = 0;
 
-    this.accounts = accounts
-        .map((account) => AccountModel.fromJson(account))
-        .cast<AccountModel>()
-        .toList();
+    accounts.forEach((element) {
+      newAmount += element.totalAmountCents;
+    });
+
+    this.totalAmountCents = newAmount;
   }
 }

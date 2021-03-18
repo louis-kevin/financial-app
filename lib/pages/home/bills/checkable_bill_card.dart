@@ -10,8 +10,9 @@ import 'package:provider/provider.dart';
 
 class CheckableBillCard extends StatefulWidget {
   final Color color;
+  final BillModel bill;
 
-  const CheckableBillCard({Key key, this.color}) : super(key: key);
+  const CheckableBillCard({Key key, this.color, this.bill}) : super(key: key);
 
   @override
   _CheckableBillCardState createState() => _CheckableBillCardState();
@@ -24,7 +25,7 @@ class _CheckableBillCardState extends State<CheckableBillCard> {
     Navigator.of(context).pushNamed(
       RouterManager.BILL,
       arguments: RouteArguments(
-        model: context.read<BillModel>(),
+        model: widget.bill,
         state: (page) => ChangeNotifierProvider.value(
           value: context.read<BillState>(),
           child: page,
@@ -34,8 +35,6 @@ class _CheckableBillCardState extends State<CheckableBillCard> {
   }
 
   onChange(BillModel bill, value) {
-    if (bill.busy) return;
-
     bill.payed = value;
 
     if (_debounce?.isActive ?? false) _debounce.cancel();
@@ -51,16 +50,12 @@ class _CheckableBillCardState extends State<CheckableBillCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<BillModel>(
-      builder: (_, bill, __) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: GestureDetector(
-            onLongPress: () => goToEditBill(context),
-            child: buildCard(bill),
-          ),
-        );
-      },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onLongPress: () => goToEditBill(context),
+        child: buildCard(widget.bill),
+      ),
     );
   }
 

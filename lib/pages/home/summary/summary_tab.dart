@@ -1,3 +1,4 @@
+import 'package:financialapp/states/account_state.dart';
 import 'package:financialapp/states/dashboard_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +11,9 @@ import 'totals_cards.dart';
 
 class SummaryTab extends StatelessWidget {
   Future<void> refresh(BuildContext context) async {
-    return context.read<DashboardState>().fetchDashboard();
+    context.read<DashboardState>().fetchDashboard();
+    context.read<AccountState>().fetchAccounts();
+    return;
   }
 
   @override
@@ -36,11 +39,10 @@ class SummaryTab extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: MoneyPerDayCard(),
                 ),
-                if (dashboard.hasAccounts)
-                  Container(
-                    height: 170,
-                    child: TotalsCards(),
-                  ),
+                Container(
+                  height: 170,
+                  child: TotalsCards(),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: DaysUntilIncome(),

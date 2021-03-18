@@ -15,7 +15,22 @@ class AccountState extends BaseState {
   List<AccountModel> accounts = [];
 
   AccountState() {
-    Notifier()..listen<AccountsUpdated>((event) => fetchAccounts());
+    Notifier()
+      ..listen<AccountsUpdated>((AccountsUpdated event) {
+        if (event.accounts.isNotEmpty) {
+          this.accounts = event.accounts;
+          notifyListeners();
+          return null;
+        }
+
+        fetchAccounts();
+      })
+      ..listen<AccountUpdated>((AccountUpdated event) {
+        var account = event.account;
+        var index = accounts.indexWhere((element) => element.id == account.id);
+        accounts[index] = account;
+        Notifier()..fire(AccountsUpdated(accounts: accounts));
+      });
   }
 
   Future<List<AccountModel>> fetchAccounts() async {
@@ -31,6 +46,7 @@ class AccountState extends BaseState {
 
       return accounts;
     };
+
     var runAlways = () {
       busy = false;
     };
@@ -40,8 +56,6 @@ class AccountState extends BaseState {
 
   saveAccount(AccountModel model) async {
     var async = () async {
-      model.busy = true;
-
       bool modelExists = model.id != null;
 
       Response response =
@@ -52,23 +66,28 @@ class AccountState extends BaseState {
       if (!modelExists) accounts.add(model);
     };
 
-    var runAlways = () {
-      model.busy = false;
-    };
-
-    return handleAsync(async, runAlways: runAlways);
+    return handleAsync(async);
   }
 
-  updateAccountAmount(int id, int amountCents) async {
-    var model = findById(id);
+  updateAccountsAmount(Map<dynamic, int> accountsData) {
+    List<Map<String, dynamic>> accountsUpdated = [];
 
-    if (model.amount == amountCents) return;
+    accountsData.forEach((id, amountCents) {
+      accountsUpdated.add({'id': int.parse(id), 'amount_cents': amountCents});
+    });
 
-    model.amountCents = amountCents;
+    var async = () async {
+      Response response = await accountService.updateAmounts(accountsUpdated);
 
-    saveAccount(model);
+      var data = response.data as List;
 
-    notifyListeners();
+      var accounts =
+          data.map((account) => AccountModel.fromJson(account)).toList();
+
+      Notifier()..fire(AccountsUpdated(accounts: accounts));
+    };
+
+    return handleAsync(async);
   }
 
   AccountModel findById(int id) {

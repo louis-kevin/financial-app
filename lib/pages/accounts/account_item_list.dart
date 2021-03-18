@@ -7,6 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AccountItemList extends StatelessWidget {
+  final AccountModel account;
+
+  const AccountItemList({Key key, this.account}) : super(key: key);
+
   void goToFormAccount(BuildContext context, AccountModel account) {
     Navigator.of(context).pushNamed(
       RouterManager.ACCOUNT,

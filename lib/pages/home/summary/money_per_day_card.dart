@@ -8,47 +8,42 @@ import 'package:provider/provider.dart';
 class MoneyPerDayCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<DashboardState>(
-      builder: (_, state, __) {
-        var hasAccounts = state.dashboard.hasAccounts;
-        if (hasAccounts == null || !hasAccounts) return Container();
+    var state = context.watch<DashboardState>();
 
-        return Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(15)),
-            color: Color(0xFF363D50),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+        color: Color(0xFF363D50),
+      ),
+      padding: const EdgeInsets.all(12.0),
+      child: Row(
+        children: <Widget>[
+          Icon(
+            Icons.attach_money,
+            color: Colors.white,
           ),
-          padding: const EdgeInsets.all(12.0),
-          child: Row(
+          SizedBox(
+            width: 10,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Icon(
-                Icons.attach_money,
-                color: Colors.white,
+              Body2Text.key(
+                SummaryTabPageTextKeys.titleMoneyPerDayCard,
+                textColor: Colors.white,
               ),
-              SizedBox(
-                width: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Body2Text.key(
-                    SummaryTabPageTextKeys.titleMoneyPerDayCard,
-                    textColor: Colors.white,
-                  ),
-                  SubtitleText(
-                    state.dashboard.overheadPerDayMonetized ?? '',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+              SubtitleText(
+                state.dashboard.overheadPerDayMonetized ?? '',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 }

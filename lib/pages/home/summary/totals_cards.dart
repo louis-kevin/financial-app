@@ -17,29 +17,23 @@ class _TotalsCardsState extends State<TotalsCards> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<DashboardState>(
-      builder: (_, state, __) {
-        var hasAccounts = state.dashboard.hasAccounts;
-        if (hasAccounts == null || !hasAccounts) return Container();
-
-        return Column(
-          children: <Widget>[
-            Expanded(
-              child: PageView(
-                onPageChanged: (page) => setState(() => totalCardIndex = page),
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  TotalsCard(
-                    titleKey: SummaryTabPageTextKeys.titleTotalDebitCard,
-                    amount: state.dashboard.totalAmount ?? 0,
-                  ),
-                ],
+    var state = context.watch<DashboardState>();
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: PageView(
+            onPageChanged: (page) => setState(() => totalCardIndex = page),
+            scrollDirection: Axis.horizontal,
+            children: <Widget>[
+              TotalsCard(
+                titleKey: SummaryTabPageTextKeys.titleTotalDebitCard,
+                amount: state.dashboard.totalAmount ?? 0,
               ),
-            ),
-            buildIndicators()
-          ],
-        );
-      },
+            ],
+          ),
+        ),
+        buildIndicators()
+      ],
     );
   }
 

@@ -9,14 +9,15 @@ import 'package:provider/provider.dart';
 
 class BillCard extends StatelessWidget {
   final Color color;
+  final BillModel bill;
 
-  const BillCard({Key key, this.color}) : super(key: key);
+  const BillCard({Key key, this.color, this.bill}) : super(key: key);
 
   void goToAddBill(BuildContext context) async {
     await Navigator.of(context).pushNamed(
       RouterManager.BILL,
       arguments: RouteArguments(
-        model: context.read<BillModel>(),
+        model: bill,
         state: (page) => ChangeNotifierProvider.value(
           value: context.read<BillState>(),
           child: page,
@@ -27,7 +28,6 @@ class BillCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var bill = context.watch<BillModel>();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(

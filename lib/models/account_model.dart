@@ -1,27 +1,8 @@
 import 'package:financialapp/locale/locale_i18n.dart';
-import 'package:financialapp/models/bill_model.dart';
 import 'package:financialapp/models/mixins/amount_attribute.dart';
 import 'package:flutter/material.dart';
 
-class AccountModel extends ChangeNotifier with AmountCentsAttribute {
-  bool _busy = false;
-
-  bool get busy => _busy;
-
-  set busy(bool busy) {
-    _busy = busy;
-    notifyListeners();
-  }
-
-  bool _loadingBills = false;
-
-  bool get loadingBills => _loadingBills;
-
-  set loadingBills(bool loadingBills) {
-    _loadingBills = loadingBills;
-    notifyListeners();
-  }
-
+class AccountModel with AmountCentsAttribute {
   int id;
   String name;
   Color color;
@@ -29,11 +10,15 @@ class AccountModel extends ChangeNotifier with AmountCentsAttribute {
   int amountCents;
   int totalAmountCents;
 
+  int get toPayCents => amountCents - totalAmountCents;
+
+  double get toPay => toPayCents / 100;
+
+  String get toPayMonetized => toPay.monetize;
+
   double get totalAmount => totalAmountCents / 100;
 
   String get totalAmountMonetized => totalAmount.monetize;
-
-  List<BillModel> bills = [];
 
   AccountModel({this.id, this.name, this.color, this.amountCents});
 
@@ -53,6 +38,7 @@ class AccountModel extends ChangeNotifier with AmountCentsAttribute {
     }
 
     if (data.containsKey('total_amount_cents')) {
+      print(data['total_amount_cents']);
       this.totalAmountCents = int.parse(data['total_amount_cents'].toString());
     }
   }
@@ -68,32 +54,4 @@ class AccountModel extends ChangeNotifier with AmountCentsAttribute {
 
     return data;
   }
-
-  needUpdate(AccountModel accountModel) {
-    return accountModel.name != name ||
-        accountModel.amountCents != amountCents ||
-        accountModel.color != color;
-  }
-
-  void addBill(BillModel bill) {
-    this.bills.add(bill);
-  }
-
-  void updateBill(BillModel bill) {
-    int index = bills.indexWhere((item) => item.id == bill.id);
-    bills[index] = bill;
-  }
-
-  void addOrUpdateBill(BillModel bill) {
-    updateBillSum(callback: () {
-      if (bill.id == null) return this.addBill(bill);
-//      this.updateBill(bill);
-    });
-  }
-
-  void addBills(List<BillModel> bills) {
-    updateBillSum(callback: () => this.bills = bills);
-  }
-
-  void updateBillSum({Function callback}) {}
 }

@@ -1,8 +1,7 @@
-import 'package:financialapp/locale/locale_i18n.dart';
 import 'package:financialapp/locale/locale_keys.dart';
-import 'package:financialapp/models/account_model.dart';
 import 'package:financialapp/shared/typography/body2_text.dart';
 import 'package:financialapp/shared/typography/subtitle_text.dart';
+import 'package:financialapp/states/bill_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,28 +10,29 @@ class BillAccountSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var account = context.watch<AccountModel>();
+    var account = context.watch<BillState>().account;
     return Row(
       children: <Widget>[
         Expanded(
           child: buildSummaryAccount(
-            context,
-            BillsTabPageTextKeys.titleToPayCard,
-            0, // TODO Fix amount to pay
-          ),
+              context,
+              BillsTabPageTextKeys.titleToPayCard,
+              account.toPayMonetized,
+              Colors.red),
         ),
         Expanded(
           child: buildSummaryAccount(
-            context,
-            BillsTabPageTextKeys.titleAccountMoneyCard,
-            account.amount,
-          ),
+              context,
+              BillsTabPageTextKeys.titleAccountMoneyCard,
+              account.amountMonetized,
+              Colors.green),
         ),
       ],
     );
   }
 
-  Widget buildSummaryAccount(context, String titleKey, double amount) {
+  Widget buildSummaryAccount(
+      context, String titleKey, String amountMonetized, Color color) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -47,11 +47,11 @@ class BillAccountSummary extends StatelessWidget {
           children: <Widget>[
             Body2Text.key(
               titleKey,
-              textColor: Colors.white,
+              textColor: color,
             ),
             SubtitleText(
-              amount.monetize,
-              textColor: Colors.white,
+              amountMonetized,
+              textColor: color,
             ),
           ],
         ),

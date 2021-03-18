@@ -10,14 +10,15 @@ class DashboardState extends ChangeNotifier {
   UserService service = UserService();
 
   DashboardState() {
-    Notifier()..listen<TotalAmountUpdate>(updateTotalAmount);
-    Notifier()..listen<AccountsUpdated>((event) => fetchDashboard());
-  }
-
-  updateTotalAmount(TotalAmountUpdate event) {
-    if (event.oldAmount != null) dashboard.totalAmountCents -= event.oldAmount;
-    dashboard.totalAmountCents += event.newAmount;
-    notifyListeners();
+    Notifier()
+      ..listen<AccountsUpdated>((AccountsUpdated event) {
+        if (event.accounts.isNotEmpty) {
+          dashboard.calculateTotalAmountCents(event.accounts);
+          notifyListeners();
+          return null;
+        }
+        return fetchDashboard();
+      });
   }
 
   Future<void> fetchDashboard() async {

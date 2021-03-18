@@ -20,7 +20,7 @@ class _BillsTabState extends State<BillsTab>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   PageController pageController = PageController();
 
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
 
   changeTab(int index) {
     pageController.animateToPage(

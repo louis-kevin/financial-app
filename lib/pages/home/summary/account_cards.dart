@@ -4,7 +4,7 @@ import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/typography/display1_text.dart';
 import 'package:financialapp/shared/typography/subhead_text.dart';
 import 'package:financialapp/shared/typography/subtitle_text.dart';
-import 'package:financialapp/states/dashboard_state.dart';
+import 'package:financialapp/states/account_state.dart';
 import 'package:financialapp/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +16,8 @@ class AccountCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var state = context.watch<DashboardState>();
-    var accounts = state.dashboard.accounts;
+    var state = context.watch<AccountState>();
+    var accounts = state.accounts;
 
     if (accounts == null || accounts.isEmpty) {
       return buildEmptyAccounts(context);
@@ -93,7 +93,7 @@ class AccountCard extends StatelessWidget {
                 ),
                 FittedBox(
                   child: SubtitleText(
-                    account.amountMonetized,
+                    account.totalAmountMonetized,
                     textColor: Colors.white,
                   ),
                 ),

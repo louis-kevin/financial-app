@@ -11,34 +11,30 @@ import 'package:provider/provider.dart';
 class AccountMoneyUpdatePage extends StatelessWidget {
   final formKey = GlobalKey<FormBuilderState>();
 
-  save(context, AccountState accountState) {
+  save(context, AccountState accountState) async {
     if (!formKey.currentState.saveAndValidate()) return;
 
-    Map data = formKey.currentState.value;
+    Map<dynamic, int> data = Map.from(formKey.currentState.value);
 
-    data.forEach((id, amountCents) {
-      accountState.updateAccountAmount(int.parse(id), amountCents);
-    });
+    await accountState.updateAccountsAmount(data);
 
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AccountState>(
-      builder: (_, state, __) {
-        return FormBuilder(
-          key: formKey,
-          child: BaseBackButtonPage(
-            titleKey: AccountMoneyUpdatePageTextKeys.title,
-            content: buildAccounts(state.accounts),
-            bottom: BaseButton(
-              textKey: AccountMoneyUpdatePageTextKeys.btnSave,
-              onPressed: () => save(context, state),
-            ),
-          ),
-        );
-      },
+    var state = context.watch<AccountState>();
+
+    return FormBuilder(
+      key: formKey,
+      child: BaseBackButtonPage(
+        titleKey: AccountMoneyUpdatePageTextKeys.title,
+        content: buildAccounts(state.accounts),
+        bottom: BaseButton(
+          textKey: AccountMoneyUpdatePageTextKeys.btnSave,
+          onPressed: () => save(context, state),
+        ),
+      ),
     );
   }
 

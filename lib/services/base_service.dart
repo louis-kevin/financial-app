@@ -149,7 +149,7 @@ class AuthenticationInterceptor extends InterceptorsWrapper {
   }
 
   void _checkIfHasTokenOnBody(data) {
-    if (data == null) return;
+    if (data == null || !(data is Map)) return;
 
     var token = data['token'];
 

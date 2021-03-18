@@ -24,21 +24,10 @@ class _BillsContentState extends State<BillsContent>
   @override
   bool get wantKeepAlive => true;
 
-  sumBills() {
-    var bills = context.read<BillState>().bills;
-    double sum = 0;
-    bills.forEach((item) => sum += item.amount);
-    return sum;
-  }
-
   void updateBill(BillModel bill, bool value) {
-    var bills = context.read<BillState>().bills;
+    BillState state = context.read<BillState>();
 
-    var billInList = bills.firstWhere((item) => item.id == bill.id);
-
-    billInList.payed = value;
-
-    setState(() {});
+    state.updatePayed(bill, value);
   }
 
   void goToAddBill() {
@@ -55,12 +44,6 @@ class _BillsContentState extends State<BillsContent>
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
-    Future.microtask(fetchBills);
-  }
-
   Future<List<BillModel>> fetchBills() {
     var state = context.read<BillState>();
     color = state.account.color;
@@ -69,10 +52,15 @@ class _BillsContentState extends State<BillsContent>
   }
 
   @override
+  void initState() {
+    super.initState();
+    Future.microtask(fetchBills);
+  }
+
+  @override
   Widget build(BuildContext context) {
     var state = context.watch<BillState>();
     var bills = state.bills;
-    var account = state.account;
 
     if (bills == null) {
       return Center(
@@ -90,10 +78,7 @@ class _BillsContentState extends State<BillsContent>
               horizontal: 4,
               vertical: 8,
             ),
-            child: ChangeNotifierProvider.value(
-              value: account,
-              child: BillAccountSummary(),
-            ),
+            child: BillAccountSummary(),
           ),
         ]),
       ),
@@ -191,10 +176,7 @@ class _BillsContentState extends State<BillsContent>
   }
 
   Widget buildDailyCard(BillModel bill) {
-    return ChangeNotifierProvider.value(
-      value: bill,
-      child: BillCard(color: color),
-    );
+    return BillCard(bill: bill, color: color);
   }
 
   Widget buildMonthly() {
@@ -214,10 +196,7 @@ class _BillsContentState extends State<BillsContent>
   }
 
   Widget buildCheckableCard(BillModel bill) {
-    return ChangeNotifierProvider.value(
-      value: bill,
-      child: CheckableBillCard(color: color),
-    );
+    return CheckableBillCard(bill: bill, color: color);
   }
 
   buildStickHeader(String titleKey, Function() buildChildren) {

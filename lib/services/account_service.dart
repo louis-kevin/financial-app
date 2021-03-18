@@ -17,4 +17,10 @@ class AccountService extends BaseService {
 
     return delete(url);
   }
+
+  Future<Response> updateAmounts(List<Map<String, dynamic>> data) {
+    String url = '/accounts';
+
+    return put(url, {'accounts': data});
+  }
 }

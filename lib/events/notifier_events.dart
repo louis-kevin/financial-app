@@ -1,3 +1,4 @@
+import 'package:financialapp/models/account_model.dart';
 import 'package:financialapp/models/user_model.dart';
 
 class TokenExpired {}
@@ -34,11 +35,14 @@ class FcmTokenUpdated {
 
 class ContentNotFound {}
 
-class TotalAmountUpdate {
-  int oldAmount;
-  int newAmount;
+class AccountsUpdated {
+  List<AccountModel> accounts = [];
 
-  TotalAmountUpdate({this.oldAmount, this.newAmount});
+  AccountsUpdated({this.accounts});
 }
 
-class AccountsUpdated {}
+class AccountUpdated {
+  AccountModel account;
+
+  AccountUpdated(this.account);
+}
