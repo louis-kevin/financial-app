@@ -2,17 +2,28 @@ import 'package:dio/dio.dart';
 import 'package:financialapp/events/notifier.dart';
 import 'package:financialapp/events/notifier_events.dart';
 import 'package:financialapp/models/account_model.dart';
-import 'package:financialapp/models/bill_model.dart';
 import 'package:financialapp/services/account_service.dart';
-import 'package:financialapp/services/bill_service.dart';
 import 'package:financialapp/states/base_state.dart';
 
 class AccountState extends BaseState {
   AccountService accountService = AccountService();
 
-  BillService billService = BillService();
+  List<AccountModel> _accounts = [];
 
-  List<AccountModel> accounts = [];
+  List<AccountModel> get accounts => _accounts;
+
+  set accounts(List<AccountModel> accounts) {
+    List<AccountModel> newData = accounts.map((AccountModel element) {
+      var index =
+          this._accounts.indexWhere((account) => element.id == account.id);
+      if (index <= -1) return element;
+      element.fill(this.accounts[index].toJson());
+      element.billState = this.accounts[index].billState;
+      return element;
+    }).toList();
+
+    this._accounts = newData;
+  }
 
   AccountState() {
     Notifier()
@@ -30,7 +41,7 @@ class AccountState extends BaseState {
       ..listen<AccountUpdated>((AccountUpdated event) {
         var account = event.account;
         var index = accounts.indexWhere((element) => element.id == account.id);
-        accounts[index] = account;
+        accounts[index].fill(account.toJson());
         Notifier()..fire(AccountsUpdated(accounts: accounts));
       });
   }
@@ -43,8 +54,10 @@ class AccountState extends BaseState {
 
       List data = response.data["data"];
 
-      accounts =
+      List<AccountModel> accounts =
           data.map((account) => AccountModel.fromJson((account))).toList();
+
+      this.accounts = accounts;
 
       return accounts;
     };
@@ -104,17 +117,5 @@ class AccountState extends BaseState {
     notifyListeners();
     await accountService.removeAccount(account.id);
     Notifier()..fire(AccountsUpdated());
-  }
-
-  Future<List<BillModel>> fetchBillsFromAccount(AccountModel account) async {
-    var async = () async {
-      Response response = await billService.fetchBillsByAccount(account.id);
-
-      var data = response.data as List<Map<String, dynamic>>;
-
-      return data.map((bill) => BillModel.fromJson(bill)).toList();
-    };
-
-    return handleAsync(async);
   }
 }

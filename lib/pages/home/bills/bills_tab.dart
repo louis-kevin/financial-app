@@ -21,7 +21,7 @@ class _BillsTabState extends State<BillsTab>
   PageController pageController = PageController();
   List<BillState> bills = [];
 
-  bool get wantKeepAlive => false;
+  bool get wantKeepAlive => true;
 
   changeTab(int index) {
     pageController.animateToPage(

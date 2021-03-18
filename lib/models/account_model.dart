@@ -11,6 +11,10 @@ class AccountModel with AmountCentsAttribute {
   int totalAmountCents;
   BillState _billState;
 
+  set billState(BillState value) {
+    _billState = value;
+  }
+
   BillState get billState {
     if (_billState == null) _billState = BillState(this);
     return _billState;
@@ -29,7 +33,7 @@ class AccountModel with AmountCentsAttribute {
     fill(data);
   }
 
-  void fill(Map<String, dynamic> data) {
+  AccountModel fill(Map<String, dynamic> data) {
     this.id = data['id'] ?? this.id;
     this.name = data['name'] ?? this.name;
 
@@ -43,6 +47,8 @@ class AccountModel with AmountCentsAttribute {
     if (data.containsKey('total_amount_cents')) {
       this.totalAmountCents = int.parse(data['total_amount_cents'].toString());
     }
+
+    return this;
   }
 
   Map<String, dynamic> toJson() {
