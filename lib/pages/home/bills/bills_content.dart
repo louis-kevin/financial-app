@@ -24,12 +24,6 @@ class _BillsContentState extends State<BillsContent>
   @override
   bool get wantKeepAlive => true;
 
-  void updateBill(BillModel bill, bool value) {
-    BillState state = context.read<BillState>();
-
-    state.updatePayed(bill, value);
-  }
-
   void goToAddBill() {
     var state = context.read<BillState>();
 
@@ -196,7 +190,10 @@ class _BillsContentState extends State<BillsContent>
   }
 
   Widget buildCheckableCard(BillModel bill) {
-    return CheckableBillCard(bill: bill, color: color);
+    return Provider.value(
+      value: bill,
+      child: CheckableBillCard(color: color),
+    );
   }
 
   buildStickHeader(String titleKey, Function() buildChildren) {

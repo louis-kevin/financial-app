@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:financialapp/models/bill_model.dart';
 import 'package:financialapp/routes/router_arguments.dart';
 import 'package:financialapp/routes/router_manager.dart';
@@ -8,24 +6,16 @@ import 'package:financialapp/states/bill_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class CheckableBillCard extends StatefulWidget {
+class CheckableBillCard extends StatelessWidget {
   final Color color;
-  final BillModel bill;
 
-  const CheckableBillCard({Key key, this.color, this.bill}) : super(key: key);
-
-  @override
-  _CheckableBillCardState createState() => _CheckableBillCardState();
-}
-
-class _CheckableBillCardState extends State<CheckableBillCard> {
-  Timer _debounce;
+  CheckableBillCard({Key key, this.color}) : super(key: key);
 
   void goToEditBill(BuildContext context) {
     Navigator.of(context).pushNamed(
       RouterManager.BILL,
       arguments: RouteArguments(
-        model: widget.bill,
+        model: context.read<BillModel>(),
         state: (page) => ChangeNotifierProvider.value(
           value: context.read<BillState>(),
           child: page,
@@ -34,18 +24,12 @@ class _CheckableBillCardState extends State<CheckableBillCard> {
     );
   }
 
-  onChange(BillModel bill, value) {
+  void onChange(BuildContext context, value) {
+    var bill = context.read<BillModel>();
     bill.payed = value;
 
-    if (_debounce?.isActive ?? false) _debounce.cancel();
-    _debounce = Timer(const Duration(seconds: 1), () {
-      updateBill(bill);
-    });
-  }
-
-  updateBill(BillModel bill) {
     var state = context.read<BillState>();
-    state.saveBill(bill);
+    state.updatePayed(bill, value);
   }
 
   @override
@@ -54,15 +38,17 @@ class _CheckableBillCardState extends State<CheckableBillCard> {
       padding: const EdgeInsets.all(8.0),
       child: GestureDetector(
         onLongPress: () => goToEditBill(context),
-        child: buildCard(widget.bill),
+        child: buildCard(context),
       ),
     );
   }
 
-  buildCard(BillModel bill) {
-    Color backgroundColor = bill.payed ? Color(0xFF272B3F) : widget.color;
+  buildCard(BuildContext context) {
+    var bill = context.watch<BillModel>();
 
-    Color textColor = bill.payed ? widget.color : Colors.white;
+    Color backgroundColor = bill.payed ? Color(0xFF272B3F) : color;
+
+    Color textColor = bill.payed ? color : Colors.white;
 
     return AnimatedContainer(
       duration: Duration(milliseconds: 200),
@@ -91,7 +77,7 @@ class _CheckableBillCardState extends State<CheckableBillCard> {
           Checkbox(
             tristate: false,
             value: bill.payed,
-            onChanged: (value) => onChange(bill, value),
+            onChanged: (value) => onChange(context, value),
             checkColor: backgroundColor,
             activeColor: textColor,
             focusColor: Colors.white,

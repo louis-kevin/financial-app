@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -5,6 +7,8 @@ class BaseState extends ChangeNotifier {
   Map<String, dynamic> errors = {};
 
   bool _busy = false;
+
+  Timer _debounce;
 
   bool get hasErrors => errors.isNotEmpty;
 
@@ -38,5 +42,11 @@ class BaseState extends ChangeNotifier {
       }
     }
     return null;
+  }
+
+  withDebounce(Function run) {
+    if (_debounce?.isActive ?? false) _debounce.cancel();
+
+    _debounce = Timer(const Duration(milliseconds: 1000), run);
   }
 }

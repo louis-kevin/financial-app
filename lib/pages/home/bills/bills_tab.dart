@@ -17,8 +17,9 @@ class BillsTab extends StatefulWidget {
 }
 
 class _BillsTabState extends State<BillsTab>
-    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin {
   PageController pageController = PageController();
+  List<BillState> bills = [];
 
   bool get wantKeepAlive => false;
 
@@ -32,6 +33,11 @@ class _BillsTabState extends State<BillsTab>
 
   goToAccountForm() async {
     Navigator.of(context).pushNamed(RouterManager.ACCOUNT);
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -59,9 +65,8 @@ class _BillsTabState extends State<BillsTab>
   }
 
   Widget buildAccount(AccountModel account) {
-    var state = BillState(account);
     return ChangeNotifierProvider.value(
-      value: state,
+      value: account.billState,
       child: BillsContent(),
     );
   }

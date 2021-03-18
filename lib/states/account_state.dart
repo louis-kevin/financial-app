@@ -24,7 +24,9 @@ class AccountState extends BaseState {
         }
 
         fetchAccounts();
-      })
+      });
+
+    Notifier()
       ..listen<AccountUpdated>((AccountUpdated event) {
         var account = event.account;
         var index = accounts.indexWhere((element) => element.id == account.id);

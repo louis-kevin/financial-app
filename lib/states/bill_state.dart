@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:financialapp/events/notifier.dart';
 import 'package:financialapp/events/notifier_events.dart';
@@ -32,7 +34,7 @@ class BillState extends BaseState {
     return handleAsync(async);
   }
 
-  saveBill(BillModel model) async {
+  Future<void> saveBill(BillModel model) async {
     Function async = () async {
       bool modelExists = model.id != null;
 
@@ -73,14 +75,28 @@ class BillState extends BaseState {
 
     billInList.payed = value;
 
-    saveBill(billInList);
+    updateAccountAmountByBill(billInList);
 
+    withDebounce(() {
+      saveBill(billInList).then((_) {
+        if (errors.isEmpty) return;
+
+        billInList.payed = false;
+        updateAccountAmountByBill(billInList);
+      }).catchError((error) {
+        billInList.payed = false;
+        updateAccountAmountByBill(billInList);
+      });
+    });
+  }
+
+  void updateAccountAmountByBill(BillModel bill) {
     int newAccountAmount = account.totalAmountCents;
 
-    if (billInList.payed) {
-      newAccountAmount -= billInList.amountCents;
+    if (bill.payed) {
+      newAccountAmount += bill.amountCents;
     } else {
-      newAccountAmount += billInList.amountCents;
+      newAccountAmount -= bill.amountCents;
     }
 
     account.totalAmountCents = newAccountAmount;

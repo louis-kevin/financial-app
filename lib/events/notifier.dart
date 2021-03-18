@@ -15,10 +15,12 @@ class Notifier {
   listen<T>(callback) {
     eventBus ??= EventBus();
     eventBus.on<T>().listen(callback);
+    return eventBus;
   }
 
   fire(dynamic event) {
     eventBus ??= EventBus();
     eventBus.fire(event);
+    return eventBus;
   }
 }
