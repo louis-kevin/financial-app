@@ -99,13 +99,13 @@ class _FormBillPageState extends State<FormBillPage> {
           SizedBox(
             height: 20,
           ),
-          buildPaymentDate(),
+          if (billType != BillType.daily) buildPaymentDate(),
           SizedBox(
             height: 20,
           ),
           AmountInput(
             context,
-            controller: controller,
+            controller,
           ),
           SizedBox(
             height: 20,

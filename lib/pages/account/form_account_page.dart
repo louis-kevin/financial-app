@@ -126,8 +126,7 @@ class _FormAccountPageState extends State<FormAccountPage> {
           SizedBox(height: 10),
           AmountInput(
             context,
-            controller:
-                controller, // TODO Check if there is a way to not pass a controller
+            controller, // TODO Check if there is a way to not pass a controller
           ),
           buildColorSelector(),
         ],

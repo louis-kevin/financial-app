@@ -1,3 +1,5 @@
+import 'package:extended_masked_text/extended_masked_text.dart';
+import 'package:financialapp/locale/locale_i18n.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/models/user_model.dart';
 import 'package:financialapp/pages/settings/settings_last_step_page.dart';
@@ -20,7 +22,8 @@ class SettingsThirdStepPage extends StatefulWidget {
 }
 
 class _SettingsThirdStepPageState extends State<SettingsThirdStepPage> {
-  final formKey = GlobalKey<FormBuilderState>();
+  GlobalKey<FormBuilderState> formKey;
+  MoneyMaskedTextController controller;
 
   nextPage() {
     if (!formKey.currentState.saveAndValidate()) return;
@@ -35,6 +38,17 @@ class _SettingsThirdStepPageState extends State<SettingsThirdStepPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    formKey = GlobalKey<FormBuilderState>();
+    controller = MoneyMaskedTextController(
+      decimalSeparator: MoneyTextKeys.decimalSeparator.i18n,
+      thousandSeparator: MoneyTextKeys.thousandSeparator.i18n,
+      leftSymbol: MoneyTextKeys.leftSymbol.i18n,
+    );
+    super.initState();
   }
 
   @override
@@ -54,6 +68,7 @@ class _SettingsThirdStepPageState extends State<SettingsThirdStepPage> {
           ),
           AmountInput(
             context,
+            controller,
             style: Theme.of(context).textTheme.display2,
             decoration: InputDecoration(),
             value: user?.config?.income ?? 0,

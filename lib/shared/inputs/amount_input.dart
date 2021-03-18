@@ -12,13 +12,13 @@ var _controller = MoneyMaskedTextController(
 
 class AmountInput extends FormBuilderTextField {
   AmountInput(
-    BuildContext context, {
+    BuildContext context,
+    MoneyMaskedTextController controller, {
     Key key,
     InputDecoration decoration,
     TextStyle style,
     double value,
     String name,
-    MoneyMaskedTextController controller,
     List<FormFieldValidator> validators,
     bool required = false,
   }) : super(
@@ -29,6 +29,7 @@ class AmountInput extends FormBuilderTextField {
                 decimalSeparator: MoneyTextKeys.decimalSeparator.i18n,
                 thousandSeparator: MoneyTextKeys.thousandSeparator.i18n,
                 leftSymbol: MoneyTextKeys.leftSymbol.i18n,
+                initialValue: value,
               ),
           keyboardType: TextInputType.number,
           textAlign: TextAlign.start,
