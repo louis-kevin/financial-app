@@ -134,6 +134,7 @@ var accountMoneyUpdate = {
 var dialogs = {
   DialogsTextKeys.accountRemovalTitle:
       'Do you really want to remove this account?',
+  DialogsTextKeys.billRemovalTitle: 'Do you really want to remove this bill?',
   DialogsTextKeys.btnYes: 'YES',
   DialogsTextKeys.btnNo: 'NO',
   DialogsTextKeys.btnCancel: 'CANCEL',

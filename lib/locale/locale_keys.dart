@@ -185,6 +185,7 @@ class AccountMoneyUpdatePageTextKeys {
 class DialogsTextKeys {
   static const key = 'dialogs';
   static const accountRemovalTitle = '$key.accountRemovalTitle';
+  static const billRemovalTitle = '$key.billRemovalTitle';
   static const btnYes = '$key.btnYes';
   static const btnNo = '$key.btnNo';
   static const btnCancel = '$key.btnCancel';

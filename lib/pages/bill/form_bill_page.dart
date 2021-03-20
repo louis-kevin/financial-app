@@ -3,6 +3,7 @@ import 'package:financialapp/locale/locale_i18n.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/models/bill_model.dart';
 import 'package:financialapp/shared/base_button.dart';
+import 'package:financialapp/shared/dialogs/bill_removal_dialog.dart';
 import 'package:financialapp/shared/inputs/amount_input.dart';
 import 'package:financialapp/shared/inputs/name_input.dart';
 import 'package:financialapp/shared/layout/base_back_button_page.dart';
@@ -61,12 +62,15 @@ class _FormBillPageState extends State<FormBillPage> {
     Navigator.pop(context);
   }
 
-  void delete() {
-    var state = context.read<BillState>();
+  void deleteDialog() async {
+    var result = await showDialog(
+      context: context,
+      builder: (_) => BillRemovalDialog(bill: widget.model),
+    ) as bool;
 
-    state.deleteBill(widget.model);
-
-    Navigator.pop(context);
+    if (result) {
+      Navigator.of(context).pop();
+    }
   }
 
   @override
@@ -123,7 +127,7 @@ class _FormBillPageState extends State<FormBillPage> {
           children: [
             if (widget.model?.id != null)
               BaseButton(
-                onPressed: delete,
+                onPressed: deleteDialog,
                 type: ButtonType.danger,
                 textKey: BillFormPageTextKeys.btnDelete,
               ),
