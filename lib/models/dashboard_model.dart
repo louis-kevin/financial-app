@@ -40,7 +40,6 @@ class DashboardModel {
     var newAmount = 0;
 
     accounts.forEach((element) {
-      // print("${element.name}: ${element.totalAmountCents}");
       newAmount += element.totalAmountCents;
     });
 

@@ -17,7 +17,6 @@ class AccountState extends BaseState {
       var index =
           this._accounts.indexWhere((account) => element.id == account.id);
       if (index <= -1) return element;
-      element.fill(this.accounts[index].toJson());
       element.billState = this.accounts[index].billState;
       return element;
     }).toList();

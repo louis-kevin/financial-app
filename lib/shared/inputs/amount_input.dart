@@ -4,12 +4,6 @@ import 'package:financialapp/locale/locale_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-var _controller = MoneyMaskedTextController(
-  decimalSeparator: MoneyTextKeys.decimalSeparator.i18n,
-  thousandSeparator: MoneyTextKeys.thousandSeparator.i18n,
-  leftSymbol: MoneyTextKeys.leftSymbol.i18n,
-);
-
 class AmountInput extends FormBuilderTextField {
   AmountInput(
     BuildContext context,
@@ -34,8 +28,8 @@ class AmountInput extends FormBuilderTextField {
           keyboardType: TextInputType.number,
           textAlign: TextAlign.start,
           valueTransformer: (value) {
-            _controller.text = value;
-            double numberValue = _controller.numberValue * 100;
+            controller.text = value;
+            double numberValue = controller.numberValue * 100;
             return numberValue.toInt();
           },
           validator: FormBuilderValidators.compose(

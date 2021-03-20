@@ -43,8 +43,6 @@ class AccountMoneyUpdatePage extends StatelessWidget {
   }
 
   Widget buildAccount(AccountModel account) {
-    return AccountAmountField(
-      account: account,
-    );
+    return AccountAmountField(account: account);
   }
 }

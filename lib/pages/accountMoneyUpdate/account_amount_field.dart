@@ -16,15 +16,18 @@ class AccountAmountField extends StatefulWidget {
 }
 
 class _AccountAmountFieldState extends State<AccountAmountField> {
-  MoneyMaskedTextController controller;
+  final controller = MoneyMaskedTextController(
+    decimalSeparator: MoneyTextKeys.decimalSeparator.i18n,
+    thousandSeparator: MoneyTextKeys.thousandSeparator.i18n,
+    leftSymbol: MoneyTextKeys.leftSymbol.i18n,
+  );
 
   @override
   void initState() {
-    controller = new MoneyMaskedTextController(
-        decimalSeparator: MoneyTextKeys.decimalSeparator.i18n,
-        thousandSeparator: MoneyTextKeys.thousandSeparator.i18n,
-        leftSymbol: MoneyTextKeys.leftSymbol.i18n,
-        initialValue: widget.account.amount);
+    controller.updateValue(widget.account.amount);
+    print(controller.numberValue);
+    print("${widget.account.name}: ${widget.account.amount}");
+
     super.initState();
   }
 
@@ -44,7 +47,6 @@ class _AccountAmountFieldState extends State<AccountAmountField> {
               child: AmountInput(
                 context,
                 controller,
-                value: widget.account.amount,
                 name: widget.account.id.toString(),
                 decoration: InputDecoration(),
               ),
