@@ -61,8 +61,14 @@ class BillState extends BaseState {
     );
   }
 
-  void deleteAccount(BillModel bill) {
+  void deleteBill(BillModel bill) {
     bills.remove(bill);
+    billService.removeBill(bill.id);
+    if (!bill.payed) {
+      account.totalAmountCents += bill.amountCents;
+      Notifier()..fire(AccountSaved(account));
+    }
+
     notifyListeners();
   }
 

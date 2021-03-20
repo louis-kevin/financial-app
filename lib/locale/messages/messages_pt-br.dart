@@ -98,6 +98,7 @@ var billFormPage = {
   BillFormPageTextKeys.selectionMonthly: 'Mensal',
   BillFormPageTextKeys.labelPaymentDay: 'Data de pagamento',
   BillFormPageTextKeys.btnSave: 'SALVAR',
+  BillFormPageTextKeys.btnDelete: 'DELETAR',
 };
 
 var accountsPage = {

@@ -141,6 +141,7 @@ class BillFormPageTextKeys {
   static const selectionMonthly = "$key.selectionMonthly";
   static const labelPaymentDay = "$key.labelPaymentDay";
   static const btnSave = '$key.btnSave';
+  static const btnDelete = '$key.btnDelete';
 }
 
 class AccountsPageTextKeys {

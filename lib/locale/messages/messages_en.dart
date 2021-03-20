@@ -96,6 +96,7 @@ var billFormPage = {
   BillFormPageTextKeys.selectionMonthly: 'Monthly',
   BillFormPageTextKeys.labelPaymentDay: 'Payment Day',
   BillFormPageTextKeys.btnSave: 'SAVE',
+  BillFormPageTextKeys.btnDelete: 'REMOVE',
 };
 
 var accountsPage = {

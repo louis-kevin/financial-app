@@ -61,6 +61,14 @@ class _FormBillPageState extends State<FormBillPage> {
     Navigator.pop(context);
   }
 
+  void delete() {
+    var state = context.read<BillState>();
+
+    state.deleteBill(widget.model);
+
+    Navigator.pop(context);
+  }
+
   @override
   void initState() {
     formKey = GlobalKey<FormBuilderState>();
@@ -111,9 +119,23 @@ class _FormBillPageState extends State<FormBillPage> {
             height: 20,
           ),
         ],
-        bottom: BaseButton(
-          onPressed: save,
-          textKey: BillFormPageTextKeys.btnSave,
+        bottom: Column(
+          children: [
+            if (widget.model?.id != null)
+              BaseButton(
+                onPressed: delete,
+                type: ButtonType.danger,
+                textKey: BillFormPageTextKeys.btnDelete,
+              ),
+            if (widget.model?.id != null)
+              SizedBox(
+                height: 20,
+              ),
+            BaseButton(
+              onPressed: save,
+              textKey: BillFormPageTextKeys.btnSave,
+            )
+          ],
         ),
       ),
     );
