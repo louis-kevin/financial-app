@@ -119,7 +119,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget buildDayTypeSelector() {
     int initialPage = userConfig?.dayType == DayType.allDays ? 1 : 0;
-    print(initialPage);
+
     return CarouselSlider(
       items: [
         buildDayTypeOption(
