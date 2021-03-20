@@ -45,6 +45,8 @@ class BillState extends BaseState {
 
       if (!modelExists) {
         bills.add(model);
+        account.totalAmountCents -= model.amountCents;
+        Notifier()..fire(AccountSaved(account));
         notifyListeners();
       }
     };
