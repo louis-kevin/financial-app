@@ -28,7 +28,7 @@ class FormAccountPage extends StatefulWidget {
 
 class _FormAccountPageState extends State<FormAccountPage> {
   var formKey;
-  var controller;
+  MoneyMaskedTextController controller;
 
   Color currentColor;
 
@@ -105,6 +105,7 @@ class _FormAccountPageState extends State<FormAccountPage> {
       thousandSeparator: MoneyTextKeys.thousandSeparator.i18n,
       leftSymbol: MoneyTextKeys.leftSymbol.i18n,
     );
+    controller.updateValue(widget.account.amount);
     super.initState();
     currentColor = widget.account?.color ?? Colors.blue;
   }
@@ -126,7 +127,7 @@ class _FormAccountPageState extends State<FormAccountPage> {
           SizedBox(height: 10),
           AmountInput(
             context,
-            controller, // TODO Check if there is a way to not pass a controller
+            controller,
           ),
           buildColorSelector(),
         ],

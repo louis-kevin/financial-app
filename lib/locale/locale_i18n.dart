@@ -33,11 +33,13 @@ extension LocalizationNumber on num {
   String get monetize {
     if (this == null) return '0';
 
-    _controller.updateValue(this.toDouble());
+    bool isNegative = this < 0;
+
+    _controller.updateValue(this.toDouble().abs());
 
     String text = _controller.text;
 
-    if (this < 0) {
+    if (isNegative) {
       String leftSymbol = MoneyTextKeys.leftSymbol.i18n;
       text = text.replaceFirst(leftSymbol, "$leftSymbol - ");
     }

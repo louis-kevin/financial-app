@@ -38,11 +38,13 @@ class ContentNotFound {}
 class AccountsUpdated {
   List<AccountModel> accounts = [];
 
+  bool get hasAccounts => accounts != null && accounts.isNotEmpty;
+
   AccountsUpdated({this.accounts});
 }
 
-class AccountUpdated {
+class AccountSaved {
   AccountModel account;
 
-  AccountUpdated(this.account);
+  AccountSaved(this.account);
 }

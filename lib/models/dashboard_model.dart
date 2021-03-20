@@ -40,9 +40,13 @@ class DashboardModel {
     var newAmount = 0;
 
     accounts.forEach((element) {
+      // print("${element.name}: ${element.totalAmountCents}");
       newAmount += element.totalAmountCents;
     });
 
     this.totalAmountCents = newAmount;
+
+    int daysUntilPayment = DateTime.now().difference(lastPayment).inDays;
+    overheadPerDayCents = (totalAmountCents / daysUntilPayment).round();
   }
 }

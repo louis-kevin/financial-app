@@ -85,6 +85,7 @@ class BillState extends BaseState {
         updateAccountAmountByBill(billInList);
       }).catchError((error) {
         billInList.payed = false;
+
         updateAccountAmountByBill(billInList);
       });
     });
@@ -101,6 +102,6 @@ class BillState extends BaseState {
 
     account.totalAmountCents = newAccountAmount;
 
-    Notifier()..fire(AccountUpdated(account));
+    Notifier()..fire(AccountSaved(account));
   }
 }

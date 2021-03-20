@@ -12,11 +12,12 @@ class DashboardState extends ChangeNotifier {
   DashboardState() {
     Notifier()
       ..listen<AccountsUpdated>((AccountsUpdated event) {
-        if (event.accounts.isNotEmpty) {
+        if (event.hasAccounts) {
           dashboard.calculateTotalAmountCents(event.accounts);
           notifyListeners();
           return null;
         }
+
         return fetchDashboard();
       });
   }

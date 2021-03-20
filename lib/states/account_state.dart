@@ -28,7 +28,7 @@ class AccountState extends BaseState {
   AccountState() {
     Notifier()
       ..listen<AccountsUpdated>((AccountsUpdated event) {
-        if (event.accounts.isNotEmpty) {
+        if (event.hasAccounts) {
           this.accounts = event.accounts;
           notifyListeners();
           return null;
@@ -38,10 +38,14 @@ class AccountState extends BaseState {
       });
 
     Notifier()
-      ..listen<AccountUpdated>((AccountUpdated event) {
+      ..listen<AccountSaved>((AccountSaved event) {
         var account = event.account;
         var index = accounts.indexWhere((element) => element.id == account.id);
-        accounts[index].fill(account.toJson());
+        if (index > -1) {
+          accounts[index].fill(account.toJson());
+        } else {
+          accounts.add(account);
+        }
         Notifier()..fire(AccountsUpdated(accounts: accounts));
       });
   }
@@ -69,22 +73,20 @@ class AccountState extends BaseState {
     return handleAsync<List<AccountModel>>(async, runAlways: runAlways);
   }
 
-  saveAccount(AccountModel model) async {
+  Future<void> saveAccount(AccountModel model) async {
     var async = () async {
-      bool modelExists = model.id != null;
-
       Response response =
           await accountService.saveAccount(model.toJson(), id: model.id);
 
       model.fill(response.data);
 
-      if (!modelExists) accounts.add(model);
+      Notifier()..fire(AccountSaved(model));
     };
 
-    return handleAsync(async);
+    handleAsync(async);
   }
 
-  updateAccountsAmount(Map<dynamic, int> accountsData) {
+  Future<void> updateAccountsAmount(Map<dynamic, int> accountsData) {
     List<Map<String, dynamic>> accountsUpdated = [];
 
     accountsData.forEach((id, amountCents) {
@@ -105,17 +107,17 @@ class AccountState extends BaseState {
     return handleAsync(async);
   }
 
+  Future<void> deleteAccount(AccountModel account) async {
+    accounts.remove(account);
+    notifyListeners();
+    await accountService.removeAccount(account.id);
+    Notifier()..fire(AccountsUpdated());
+  }
+
   AccountModel findById(int id) {
     return accounts.firstWhere(
       (account) => account.id == id,
       orElse: () => null,
     );
-  }
-
-  void deleteAccount(AccountModel account) async {
-    accounts.remove(account);
-    notifyListeners();
-    await accountService.removeAccount(account.id);
-    Notifier()..fire(AccountsUpdated());
   }
 }
