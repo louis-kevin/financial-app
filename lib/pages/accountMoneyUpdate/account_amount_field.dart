@@ -25,8 +25,6 @@ class _AccountAmountFieldState extends State<AccountAmountField> {
   @override
   void initState() {
     controller.updateValue(widget.account.amount);
-    print(controller.numberValue);
-    print("${widget.account.name}: ${widget.account.amount}");
 
     super.initState();
   }

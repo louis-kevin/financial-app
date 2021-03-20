@@ -110,7 +110,7 @@ class _SettingsPageState extends State<SettingsPage> {
       style: Theme.of(context).textTheme.display2,
       cursorColor: Colors.white,
       decoration: InputDecoration(
-        suffixText: 'ᵒ',
+        suffixText: '°',
         suffixStyle: Theme.of(context).textTheme.display2,
         fillColor: DefaultColors.backgroundColor,
       ),
@@ -118,6 +118,8 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget buildDayTypeSelector() {
+    int initialPage = userConfig?.dayType == DayType.allDays ? 1 : 0;
+    print(initialPage);
     return CarouselSlider(
       items: [
         buildDayTypeOption(
@@ -129,7 +131,7 @@ class _SettingsPageState extends State<SettingsPage> {
         viewportFraction: 0.2,
         height: 200,
         aspectRatio: 16 / 7,
-        initialPage: 0,
+        initialPage: initialPage,
         enableInfiniteScroll: false,
         onPageChanged: (value, _) => selectDayTypeOption(value),
         scrollDirection: Axis.vertical,
