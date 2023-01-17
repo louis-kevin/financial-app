@@ -1,7 +1,6 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/models/bill_model.dart';
-import 'package:financialapp/shared/typography/body2_text.dart';
-import 'package:financialapp/shared/typography/display1_text.dart';
 import 'package:financialapp/states/bill_state.dart';
 import 'package:financialapp/theme.dart';
 import 'package:flutter/material.dart';
@@ -24,16 +23,16 @@ class BillRemovalDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: DefaultColors.backgroundColor,
-      title: Display1Text.key(DialogsTextKeys.billRemovalTitle),
+      title: DisplaySmallText.key(DialogsTextKeys.billRemovalTitle),
       actions: <Widget>[
         TextButton(
-          child: Body2Text.key(
+          child: BodyMediumText.key(
             DialogsTextKeys.btnCancel,
           ),
           onPressed: () => Navigator.of(context).pop(false),
         ),
         TextButton(
-          child: Body2Text.key(
+          child: BodyMediumText.key(
             DialogsTextKeys.btnYes,
             style: TextStyle(color: Colors.redAccent),
           ),

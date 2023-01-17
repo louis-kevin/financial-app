@@ -1,7 +1,6 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/routes/router_manager.dart';
-import 'package:financialapp/shared/typography/body2_text.dart';
-import 'package:financialapp/shared/typography/subhead_text.dart';
 import 'package:financialapp/states/dashboard_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +34,7 @@ class _DaysUntilIncomeState extends State<DaysUntilIncome> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Body2Text.key(
+              BodyMediumText.key(
                 SummaryTabPageTextKeys.titleDaysUntilNextIncomeCard,
                 textColor: Theme.of(context).primaryColorDark,
               ),
@@ -54,7 +53,7 @@ class _DaysUntilIncomeState extends State<DaysUntilIncome> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  SubheadText(
+                  LabelLargeText(
                     dashboard.todayFormatted ?? '',
                     textColor: Theme.of(context).primaryColorDark,
                   ),
@@ -88,10 +87,10 @@ class _DaysUntilIncomeState extends State<DaysUntilIncome> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Body2Text(
+                BodyMediumText(
                   dashboard.lastPaymentFormatted ?? '',
                 ),
-                Body2Text(
+                BodyMediumText(
                   dashboard.nextPaymentFormatted ?? '',
                 ),
               ],

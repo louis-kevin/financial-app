@@ -1,10 +1,8 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/events/notifier.dart';
 import 'package:financialapp/events/notifier_events.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/routes/router_manager.dart';
-import 'package:financialapp/shared/typography/display1_text.dart';
-import 'package:financialapp/shared/typography/headline_text.dart';
-import 'package:financialapp/shared/typography/subhead_text.dart';
 import 'package:financialapp/states/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -45,8 +43,8 @@ class MenuPage extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: CircleAvatar(),
                     ),
-                    Display1Text(authState.user?.name ?? ''),
-                    SubheadText(authState.user?.email ?? '')
+                    DisplaySmallText(authState.user?.name ?? ''),
+                    LabelLargeText(authState.user?.email ?? '')
                   ],
                 ),
               ),
@@ -79,17 +77,17 @@ class MenuPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    SubheadText.key(MenuPageTextKeys.aboutUs),
+                    LabelLargeText.key(MenuPageTextKeys.aboutUs),
                     SizedBox(
                       height: 10,
                     ),
-                    SubheadText.key(MenuPageTextKeys.privacyPolicies),
+                    LabelLargeText.key(MenuPageTextKeys.privacyPolicies),
                     SizedBox(
                       height: 10,
                     ),
                     GestureDetector(
                       onTap: () => goToWelcomePage(context),
-                      child: SubheadText.key(MenuPageTextKeys.logout),
+                      child: LabelLargeText.key(MenuPageTextKeys.logout),
                     ),
                   ],
                 ),
@@ -123,7 +121,7 @@ class MenuPage extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          HeadlineText.key(
+          HeadlineMediumText.key(
             titleKey,
             textColor: Colors.white,
           )

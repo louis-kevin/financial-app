@@ -1,5 +1,5 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/routes/router_manager.dart';
-import 'package:financialapp/shared/typography/headline_text.dart';
 import 'package:financialapp/states/dashboard_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +17,7 @@ class TotalDebitAppBarHome extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Center(
-          child: HeadlineText(
+          child: HeadlineMediumText(
             state.dashboard?.totalRemainingDebitMonetized ?? '',
             textColor: Colors.white,
           ),

@@ -1,3 +1,4 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/models/bill_model.dart';
 import 'package:financialapp/pages/home/bills/bill_account_summary.dart';
@@ -5,7 +6,6 @@ import 'package:financialapp/pages/home/bills/bill_card.dart';
 import 'package:financialapp/pages/home/bills/checkable_bill_card.dart';
 import 'package:financialapp/routes/router_arguments.dart';
 import 'package:financialapp/routes/router_manager.dart';
-import 'package:financialapp/shared/typography/display1_text.dart';
 import 'package:financialapp/states/bill_state.dart';
 import 'package:financialapp/theme.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +53,7 @@ class _BillsContentState extends State<BillsContent>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     var state = context.watch<BillState>();
     var bills = state.bills;
 
@@ -111,7 +112,7 @@ class _BillsContentState extends State<BillsContent>
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Display1Text.key(
+            DisplaySmallText.key(
               titleKey,
               textColor: DefaultColors.subtitleColor,
             ),
@@ -132,16 +133,17 @@ class _BillsContentState extends State<BillsContent>
     return SliverList(
       delegate: SliverChildListDelegate([
         Center(
-          child: RaisedButton(
-            elevation: 0,
-            onPressed: goToAddBill,
-            color: DefaultColors.primaryColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
+          child: TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: DefaultColors.primaryColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(5),
+              ),
             ),
+            onPressed: goToAddBill,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Display1Text.key(BillsTabPageTextKeys.btnCreateBill),
+              child: DisplaySmallText.key(BillsTabPageTextKeys.btnCreateBill),
             ),
           ),
         )

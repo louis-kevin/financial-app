@@ -10,7 +10,6 @@ import 'package:financialapp/pages/profile/profile_page.dart';
 import 'package:financialapp/pages/settings/settings_page.dart';
 import 'package:financialapp/pages/splash/spalsh_page.dart';
 import 'package:financialapp/routes/router_arguments.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 enum Routes {

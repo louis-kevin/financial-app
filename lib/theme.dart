@@ -9,14 +9,14 @@ class DefaultColors {
 }
 
 var textTheme = TextTheme(
-  display4: TextStyle(fontSize: 52, color: Colors.white),
-  display3: TextStyle(fontSize: 40, color: Colors.white),
-  display2: TextStyle(fontSize: 29, color: Colors.white),
-  display1: TextStyle(fontSize: 24, color: Colors.white),
-  headline: TextStyle(fontSize: 20, color: DefaultColors.subtitleColor),
-  subtitle: TextStyle(fontSize: 18, color: DefaultColors.subtitleColor),
-  subhead: TextStyle(fontSize: 16, color: DefaultColors.subtitleColor),
-  body2: TextStyle(fontSize: 14, color: DefaultColors.subtitleColor),
+  displayLarge: TextStyle(fontSize: 52, color: Colors.white),
+  displayMedium: TextStyle(fontSize: 40, color: Colors.white),
+  displaySmall: TextStyle(fontSize: 29, color: Colors.white),
+  headlineMedium: TextStyle(fontSize: 24, color: Colors.white),
+  headlineSmall: TextStyle(fontSize: 20, color: DefaultColors.subtitleColor),
+  bodyMedium: TextStyle(fontSize: 18, color: DefaultColors.subtitleColor),
+  bodySmall: TextStyle(fontSize: 14, color: DefaultColors.subtitleColor),
+  labelLarge: TextStyle(fontSize: 16, color: DefaultColors.subtitleColor),
 );
 
 var inputDecoration = InputDecorationTheme(

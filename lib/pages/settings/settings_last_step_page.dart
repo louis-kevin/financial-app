@@ -1,9 +1,9 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/models/user_model.dart';
 import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/base_button.dart';
 import 'package:financialapp/shared/layout/base_back_button_page.dart';
-import 'package:financialapp/shared/typography/subtitle_text.dart';
 import 'package:financialapp/states/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +30,7 @@ class SettingsLastStepPage extends StatelessWidget {
     return BaseBackButtonPage(
       titleKey: SettingsPageTextKeys.fourthTitle,
       content: <Widget>[
-        SubtitleText.key(SettingsPageTextKeys.fourthSubtitle),
+        BodyMediumText.key(SettingsPageTextKeys.fourthSubtitle),
       ],
       bottom: Column(
         children: <Widget>[

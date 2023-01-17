@@ -1,9 +1,7 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/models/account_model.dart';
 import 'package:financialapp/routes/router_manager.dart';
-import 'package:financialapp/shared/typography/display1_text.dart';
-import 'package:financialapp/shared/typography/subhead_text.dart';
-import 'package:financialapp/shared/typography/subtitle_text.dart';
 import 'package:financialapp/states/account_state.dart';
 import 'package:financialapp/theme.dart';
 import 'package:flutter/material.dart';
@@ -39,16 +37,16 @@ class AccountCards extends StatelessWidget {
 
   Widget buildEmptyAccounts(context) {
     return Center(
-      child: RaisedButton(
-        elevation: 0,
+      child: TextButton(
         onPressed: () => goToAccountForm(context),
-        color: DefaultColors.primaryColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
-        ),
+        style: TextButton.styleFrom(
+            backgroundColor: DefaultColors.primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            )),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Display1Text.key(BillsTabPageTextKeys.btnCreateAccount),
+          child: DisplaySmallText.key(BillsTabPageTextKeys.btnCreateAccount),
         ),
       ),
     );
@@ -86,13 +84,13 @@ class AccountCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 FittedBox(
-                  child: SubheadText(
+                  child: LabelLargeText(
                     account.name,
                     textColor: Colors.white,
                   ),
                 ),
                 FittedBox(
-                  child: SubtitleText(
+                  child: BodyMediumText(
                     account.totalAmountMonetized,
                     textColor: Colors.white,
                   ),

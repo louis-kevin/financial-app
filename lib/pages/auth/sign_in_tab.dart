@@ -1,3 +1,4 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/pages/auth/recovery_password_page.dart';
 import 'package:financialapp/routes/router_manager.dart';
@@ -5,7 +6,6 @@ import 'package:financialapp/shared/base_button.dart';
 import 'package:financialapp/shared/inputs/email_input.dart';
 import 'package:financialapp/shared/inputs/password_input.dart';
 import 'package:financialapp/shared/layout/base_back_button_page.dart';
-import 'package:financialapp/shared/typography/body2_text.dart';
 import 'package:financialapp/states/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -78,7 +78,7 @@ class SignInTab extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: InkWell(
               onTap: () => goToRecoveryPasswordPage(context),
-              child: Body2Text.key(AuthPageTextKeys.forgotPassword),
+              child: BodyMediumText.key(AuthPageTextKeys.forgotPassword),
             ),
           )
         ],

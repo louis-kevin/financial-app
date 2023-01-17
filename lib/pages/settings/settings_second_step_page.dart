@@ -1,9 +1,9 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/locale/locale_i18n.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/models/user_model.dart';
 import 'package:financialapp/shared/base_button.dart';
 import 'package:financialapp/shared/layout/base_back_button_page.dart';
-import 'package:financialapp/shared/typography/subtitle_text.dart';
 import 'package:financialapp/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -40,8 +40,8 @@ class _SettingsSecondStepPageState extends State<SettingsSecondStepPage> {
     return BaseBackButtonPage(
       titleKey: SettingsPageTextKeys.secondTitle,
       content: <Widget>[
-        SubtitleText(
-          getSubtitleText(),
+        BodyMediumText(
+          getBodyMediumText(),
         ),
         buildOption(
             SettingsPageTextKeys.selectionDayAfter, IncomeOption.nextWorkDay),
@@ -57,7 +57,7 @@ class _SettingsSecondStepPageState extends State<SettingsSecondStepPage> {
 
   Widget buildOption(String titleKey, IncomeOption value) {
     return RadioListTile<IncomeOption>(
-      title: SubtitleText.key(
+      title: BodyMediumText.key(
         titleKey,
         textColor: Colors.white,
       ),
@@ -68,7 +68,7 @@ class _SettingsSecondStepPageState extends State<SettingsSecondStepPage> {
     );
   }
 
-  String getSubtitleText() {
+  String getBodyMediumText() {
     return SettingsPageTextKeys.secondSubtitle.i18n.fill([
       widget.userConfig.day,
       widget.userConfig.dayType == DayType.workDay

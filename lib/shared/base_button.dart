@@ -1,3 +1,4 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/locale/locale_i18n.dart';
 import 'package:flutter/material.dart';
 
@@ -50,15 +51,15 @@ class BaseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color color = _findButtonColor(context);
+    Color color = this.color ?? _findButtonColor(context);
 
-    return RaisedButton(
-      elevation: 0,
+    return TextButton(
       onPressed: onPressed,
-      color: this.color ?? color,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5),
-      ),
+      style: TextButton.styleFrom(
+          backgroundColor: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          )),
       child: buildContent(context),
     );
   }
@@ -75,12 +76,9 @@ class BaseButton extends StatelessWidget {
 
   Widget buildText(context) {
     return Center(
-      child: Text(
+      child: BodyMediumText(
         text ?? textKey.i18n,
-        style: Theme.of(context)
-            .textTheme
-            .body2
-            .apply(color: textColor ?? Colors.white),
+        textColor: textColor ?? Colors.white,
       ),
     );
   }

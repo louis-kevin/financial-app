@@ -1,11 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/models/user_model.dart';
 import 'package:financialapp/pages/settings/settings_second_step_page.dart';
 import 'package:financialapp/shared/base_button.dart';
 import 'package:financialapp/shared/layout/base_back_button_page.dart';
-import 'package:financialapp/shared/typography/display2_text.dart';
-import 'package:financialapp/shared/typography/subtitle_text.dart';
 import 'package:financialapp/states/auth_state.dart';
 import 'package:financialapp/theme.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +75,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return BaseBackButtonPage(
       titleKey: SettingsPageTextKeys.firstTitle,
       content: <Widget>[
-        SubtitleText.key(
+        BodyMediumText.key(
           SettingsPageTextKeys.firstSubtitle,
         ),
         Row(
@@ -107,11 +106,11 @@ class _SettingsPageState extends State<SettingsPage> {
       autofocus: true,
       keyboardType: TextInputType.number,
       textAlign: TextAlign.end,
-      style: Theme.of(context).textTheme.display2,
+      style: Theme.of(context).textTheme.displaySmall,
       cursorColor: Colors.white,
       decoration: InputDecoration(
         suffixText: '°',
-        suffixStyle: Theme.of(context).textTheme.display2,
+        suffixStyle: Theme.of(context).textTheme.displaySmall,
         fillColor: DefaultColors.backgroundColor,
       ),
     );
@@ -143,7 +142,7 @@ class _SettingsPageState extends State<SettingsPage> {
     Color color = value == userConfig.dayType
         ? Colors.white
         : DefaultColors.subtitleColor;
-    return Display2Text.key(
+    return DisplaySmallText.key(
       titleKey,
       textColor: color,
     );

@@ -1,7 +1,7 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/shared/base_button.dart';
 import 'package:financialapp/shared/layout/base_back_button_page.dart';
-import 'package:financialapp/shared/typography/subtitle_text.dart';
 import 'package:flutter/material.dart';
 
 class RecoveryPasswordPage extends StatelessWidget {
@@ -14,18 +14,18 @@ class RecoveryPasswordPage extends StatelessWidget {
     return BaseBackButtonPage(
       titleKey: AuthPageTextKeys.pageForgotPasswordTitle,
       content: <Widget>[
-        SubtitleText.key(
+        BodyLargeText.key(
           AuthPageTextKeys.pageForgotPasswordSubtitleOne,
           overflow: TextOverflow.visible,
         ),
-        SubtitleText.key(
+        BodyMediumText.key(
           AuthPageTextKeys.pageForgotPasswordSubtitleSecond,
           overflow: TextOverflow.visible,
         ),
         SizedBox(
           height: 20,
         ),
-        SubtitleText.key(
+        BodyMediumText.key(
           AuthPageTextKeys.labelEmailInput,
           overflow: TextOverflow.visible,
         ),

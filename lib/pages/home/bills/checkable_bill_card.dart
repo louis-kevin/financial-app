@@ -1,7 +1,7 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/models/bill_model.dart';
 import 'package:financialapp/routes/router_arguments.dart';
 import 'package:financialapp/routes/router_manager.dart';
-import 'package:financialapp/shared/typography/subtitle_text.dart';
 import 'package:financialapp/states/bill_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -63,11 +63,11 @@ class CheckableBillCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SubtitleText(
+              BodyMediumText(
                 bill.name,
                 textColor: textColor,
               ),
-              SubtitleText(
+              BodyMediumText(
                 bill.amountMonetized,
                 textColor: textColor,
                 overflow: TextOverflow.clip,

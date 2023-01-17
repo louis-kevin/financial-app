@@ -1,3 +1,4 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:financialapp/locale/locale_i18n.dart';
 import 'package:financialapp/locale/locale_keys.dart';
@@ -7,7 +8,6 @@ import 'package:financialapp/shared/dialogs/bill_removal_dialog.dart';
 import 'package:financialapp/shared/inputs/amount_input.dart';
 import 'package:financialapp/shared/inputs/name_input.dart';
 import 'package:financialapp/shared/layout/base_back_button_page.dart';
-import 'package:financialapp/shared/typography/display1_text.dart';
 import 'package:financialapp/states/bill_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -151,8 +151,7 @@ class _FormBillPageState extends State<FormBillPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Display1Text.key(BillFormPageTextKeys.labelPaymentDay,
-              fit: BoxFit.fitWidth),
+          DisplaySmallText.key(BillFormPageTextKeys.labelPaymentDay, fit: BoxFit.fitWidth),
           Expanded(
             child: Container(),
           ),

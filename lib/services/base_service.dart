@@ -93,35 +93,35 @@ class BaseService {
 
 class AuthenticationInterceptor extends InterceptorsWrapper {
   @override
-  Future onRequest(RequestOptions options) async {
+  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     options.headers.addAll(await _fetchAuthHeader());
     print("[DIO] REQUEST[${options?.method}] => PATH: ${options?.path}");
     print("[DIO] HEADERS: ${options.headers}");
     print("[DIO] BODY: ${options?.data}");
     print("[DIO] QUERY: ${options?.queryParameters}");
-    return super.onRequest(options);
+    return super.onRequest(options, handler);
   }
 
   @override
-  Future onResponse(Response response) {
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
     print(
-        "[DIO] RESPONSE[${response?.statusCode}] => PATH: ${response?.request?.path}");
+        "[DIO] RESPONSE[${response?.statusCode}] => PATH: ${response?.requestOptions?.path}");
     print("[DIO] BODY: ${response?.data}");
 
     _checkIfHasRenewHeader(response.headers);
     _checkIfHasTokenOnBody(response.data);
 
-    return super.onResponse(response);
+    return super.onResponse(response, handler);
   }
 
   @override
-  Future onError(DioError error) async {
+  Future onError(DioError error, ErrorInterceptorHandler handler) async {
     var response = error?.response;
 
-    if (error.type != DioErrorType.response) return super.onError(error);
+    if (error.type != DioErrorType.response) return  super.onError(error, handler);
 
     print(
-        "ERROR[${response?.statusCode}] => PATH: ${error?.request?.uri?.path}");
+        "ERROR[${response?.statusCode}] => PATH: ${error?.requestOptions?.uri?.path}");
 
     if (response?.statusCode == 401) {
       Notifier()..fire(Logout());
@@ -131,7 +131,7 @@ class AuthenticationInterceptor extends InterceptorsWrapper {
       print("[DIO] MESSAGE => ${response.data}");
     }
 
-    return super.onError(error);
+    return super.onError(error, handler);
   }
 
   Future<Map<String, dynamic>> _fetchAuthHeader() async {

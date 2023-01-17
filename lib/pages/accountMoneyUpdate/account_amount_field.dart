@@ -1,9 +1,9 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:financialapp/locale/locale_i18n.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/models/account_model.dart';
 import 'package:financialapp/shared/inputs/amount_input.dart';
-import 'package:financialapp/shared/typography/display1_text.dart';
 import 'package:flutter/material.dart';
 
 class AccountAmountField extends StatefulWidget {
@@ -37,7 +37,7 @@ class _AccountAmountFieldState extends State<AccountAmountField> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Expanded(
-              child: Display1Text(
+              child: DisplaySmallText(
                 widget.account.name,
               ),
             ),

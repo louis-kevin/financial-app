@@ -1,8 +1,7 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/locale/locale_i18n.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/routes/router_manager.dart';
-import 'package:financialapp/shared/typography/display4_text.dart';
-import 'package:financialapp/shared/typography/headline_text.dart';
 import 'package:financialapp/states/dashboard_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -87,7 +86,7 @@ class TotalsCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                HeadlineText.key(
+                HeadlineMediumText.key(
                   titleKey,
                   textColor: Colors.white,
                 ),
@@ -99,7 +98,7 @@ class TotalsCard extends StatelessWidget {
               ],
             ),
             FittedBox(
-              child: Display4Text(
+              child: DisplayMediumText(
                 amount.monetize,
               ),
             ),

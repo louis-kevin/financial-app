@@ -1,8 +1,8 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/models/account_model.dart';
 import 'package:financialapp/routes/router_arguments.dart';
 import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/dialogs/account_removal_dialog.dart';
-import 'package:financialapp/shared/typography/display1_text.dart';
 import 'package:flutter/material.dart';
 
 class AccountItemList extends StatelessWidget {
@@ -32,7 +32,7 @@ class AccountItemList extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Expanded(
-              child: Display1Text(
+              child: DisplaySmallText(
                 account.name,
                 overflow: TextOverflow.clip,
               ),

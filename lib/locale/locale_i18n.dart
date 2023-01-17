@@ -1,3 +1,4 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/locale/messages/messages_en.dart';
@@ -15,6 +16,14 @@ var _controller = MoneyMaskedTextController(
   thousandSeparator: MoneyTextKeys.thousandSeparator.i18n,
   leftSymbol: MoneyTextKeys.leftSymbol.i18n,
 );
+
+class Locale extends TextLocale {
+  @override
+  String localize(String key) {
+    return key.i18n;
+  }
+
+}
 
 extension Localization on String {
   static var _t = Translations.byLocale("pt-br") + messages;

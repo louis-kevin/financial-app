@@ -1,9 +1,7 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/locale/locale_keys.dart';
 import 'package:financialapp/routes/router_manager.dart';
 import 'package:financialapp/shared/base_button.dart';
-import 'package:financialapp/shared/typography/body2_text.dart';
-import 'package:financialapp/shared/typography/display4_text.dart';
-import 'package:financialapp/shared/typography/headline_text.dart';
 import 'package:financialapp/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:i18n_extension/i18n_widget.dart';
@@ -29,21 +27,21 @@ class _WelcomePageState extends State<WelcomePage> {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Display4Text.key(
+            DisplayMediumText.key(
               WelcomePageTextKeys.title,
               textAlign: TextAlign.center,
             ),
             SizedBox(
               height: 20,
             ),
-            HeadlineText.key(
+            HeadlineMediumText.key(
               WelcomePageTextKeys.subtitle,
               textAlign: TextAlign.center,
             ),
             SizedBox(
               height: 40,
             ),
-            Body2Text.key(
+            BodyMediumText.key(
               WelcomePageTextKeys.continueWith,
               textAlign: TextAlign.center,
             ),

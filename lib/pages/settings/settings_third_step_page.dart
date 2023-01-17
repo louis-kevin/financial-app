@@ -1,3 +1,4 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:financialapp/locale/locale_i18n.dart';
 import 'package:financialapp/locale/locale_keys.dart';
@@ -6,7 +7,6 @@ import 'package:financialapp/pages/settings/settings_last_step_page.dart';
 import 'package:financialapp/shared/base_button.dart';
 import 'package:financialapp/shared/inputs/amount_input.dart';
 import 'package:financialapp/shared/layout/base_back_button_page.dart';
-import 'package:financialapp/shared/typography/subtitle_text.dart';
 import 'package:financialapp/states/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -60,7 +60,7 @@ class _SettingsThirdStepPageState extends State<SettingsThirdStepPage> {
       child: BaseBackButtonPage(
         titleKey: SettingsPageTextKeys.thirdTitle,
         content: <Widget>[
-          SubtitleText.key(
+          BodyMediumText.key(
             SettingsPageTextKeys.thirdSubtitle,
           ),
           SizedBox(
@@ -69,7 +69,7 @@ class _SettingsThirdStepPageState extends State<SettingsThirdStepPage> {
           AmountInput(
             context,
             controller,
-            style: Theme.of(context).textTheme.display2,
+            style: Theme.of(context).textTheme.displaySmall,
             decoration: InputDecoration(),
             value: user?.config?.income ?? 0,
           )

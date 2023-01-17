@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage>
                   height: 48.0,
                   alignment: Alignment.centerLeft,
                   child: TabBar(
-                    labelStyle: Theme.of(context).textTheme.display2,
+                    labelStyle: Theme.of(context).textTheme.displaySmall,
                     isScrollable: true,
                     indicatorWeight: 0.000000001,
                     tabs: <Widget>[

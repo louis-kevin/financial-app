@@ -1,5 +1,5 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/shared/layout/flexible_screen.dart';
-import 'package:financialapp/shared/typography/display3_text.dart';
 import 'package:flutter/material.dart';
 
 class BaseBackButtonPage extends StatelessWidget {
@@ -54,7 +54,7 @@ class BaseBackButtonPage extends StatelessWidget {
     if (title != null || titleKey != null) {
       content.add(Container(
         child: FittedBox(
-          child: Display3Text.key(
+          child: DisplayMediumText.key(
             titleKey,
             text: title,
           ),

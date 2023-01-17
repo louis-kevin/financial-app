@@ -1,5 +1,5 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/pages/bill/bill_types_selector.dart';
-import 'package:financialapp/shared/typography/subtitle_text.dart';
 import 'package:flutter/material.dart';
 
 class BillTypeCard extends StatelessWidget {
@@ -30,7 +30,7 @@ class BillTypeCard extends StatelessWidget {
               billTypeSelector.icon,
               color: textColor,
             ),
-            SubtitleText.key(
+            BodyMediumText.key(
               billTypeSelector.titleKey,
               textColor: textColor,
             )

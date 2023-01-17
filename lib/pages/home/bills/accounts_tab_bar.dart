@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/models/account_model.dart';
 import 'package:financialapp/routes/router_arguments.dart';
 import 'package:financialapp/routes/router_manager.dart';
-import 'package:financialapp/shared/typography/display2_text.dart';
 import 'package:financialapp/states/account_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -78,7 +78,7 @@ class _AccountsTabBarState extends State<AccountsTabBar> {
             padding: const EdgeInsets.all(2.0),
             child: Center(
               child: FittedBox(
-                child: Display2Text(
+                child: DisplaySmallText(
                   account.name,
                   textColor: account.color,
                 ),

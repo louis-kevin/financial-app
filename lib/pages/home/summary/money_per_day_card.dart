@@ -1,6 +1,5 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/locale/locale_keys.dart';
-import 'package:financialapp/shared/typography/body2_text.dart';
-import 'package:financialapp/shared/typography/subtitle_text.dart';
 import 'package:financialapp/states/dashboard_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,11 +28,11 @@ class MoneyPerDayCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Body2Text.key(
+              BodyMediumText.key(
                 SummaryTabPageTextKeys.titleMoneyPerDayCard,
                 textColor: Colors.white,
               ),
-              SubtitleText(
+              BodyMediumText(
                 state.dashboard.overheadPerDayMonetized ?? '',
                 style: TextStyle(
                   color: Colors.white,

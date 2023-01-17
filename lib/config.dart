@@ -1,4 +1,6 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
+import 'package:easy_typography/easy_typography.dart';
+import 'package:financialapp/locale/locale_i18n.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 enum Env { production, development, test, staging }
 
@@ -22,13 +24,15 @@ class Config {
   String get host => _host;
 
   Future<bool> load() async {
-    await DotEnv.load(fileName: ".env");
+    await dotenv.load(fileName: ".env");
 
     _env = Env.values.firstWhere(
-      (name) => name.toString().replaceFirst('Env.', '') == DotEnv.env['ENV'],
+      (name) => name.toString().replaceFirst('Env.', '') == dotenv.env['ENV'],
     );
 
-    _host = DotEnv.env['API_HOST'] ?? '';
+    _host = dotenv.env['API_HOST'] ?? '';
+
+    BaseTextLocale()..setLocale(Locale());
 
     loaded = true;
 

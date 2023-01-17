@@ -1,6 +1,5 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/locale/locale_keys.dart';
-import 'package:financialapp/shared/typography/body2_text.dart';
-import 'package:financialapp/shared/typography/subtitle_text.dart';
 import 'package:financialapp/states/bill_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -45,11 +44,11 @@ class BillAccountSummary extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Body2Text.key(
+            BodyMediumText.key(
               titleKey,
               textColor: color,
             ),
-            SubtitleText(
+            BodyMediumText(
               amountMonetized,
               textColor: color,
             ),

@@ -1,3 +1,4 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:financialapp/events/notifier.dart';
 import 'package:financialapp/events/notifier_events.dart';
@@ -9,8 +10,6 @@ import 'package:financialapp/shared/dialogs/account_removal_dialog.dart';
 import 'package:financialapp/shared/inputs/amount_input.dart';
 import 'package:financialapp/shared/inputs/name_input.dart';
 import 'package:financialapp/shared/layout/base_back_button_page.dart';
-import 'package:financialapp/shared/typography/body2_text.dart';
-import 'package:financialapp/shared/typography/display1_text.dart';
 import 'package:financialapp/states/account_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -67,7 +66,7 @@ class _FormAccountPageState extends State<FormAccountPage> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Body2Text.key(AccountPageTextKeys.titleSelectColor),
+        title: BodyMediumText.key(AccountPageTextKeys.titleSelectColor),
         content: SingleChildScrollView(
           child: MaterialPicker(
             pickerColor: currentColor,
@@ -142,7 +141,7 @@ class _FormAccountPageState extends State<FormAccountPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Display1Text.key(AccountPageTextKeys.labelColor),
+          DisplaySmallText.key(AccountPageTextKeys.labelColor),
           GestureDetector(
             onTap: () => showColorPicker(),
             child: Container(

@@ -1,5 +1,5 @@
+import 'package:easy_typography/easy_typography.dart';
 import 'package:financialapp/locale/locale_keys.dart';
-import 'package:financialapp/shared/typography/body2_text.dart';
 import 'package:flutter/material.dart';
 
 import 'sign_in_tab.dart';
@@ -25,7 +25,7 @@ class AuthPage extends StatelessWidget {
               Tab(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 32.0),
-                  child: Body2Text.key(
+                  child: BodyMediumText.key(
                     AuthPageTextKeys.tabSignInTitle,
                     textColor: Colors.white,
                   ),
@@ -34,7 +34,7 @@ class AuthPage extends StatelessWidget {
               Tab(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Body2Text.key(
+                  child: BodyMediumText.key(
                     AuthPageTextKeys.tabSignUpTitle,
                     textColor: Colors.white,
                   ),
