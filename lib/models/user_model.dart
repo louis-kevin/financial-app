@@ -27,6 +27,7 @@ class UserModel {
 }
 
 enum DayType { workDay, allDays }
+
 enum IncomeOption { nextWorkDay, previousDay }
 
 class UserConfig {

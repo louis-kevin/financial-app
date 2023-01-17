@@ -22,7 +22,6 @@ class Locale extends TextLocale {
   String localize(String key) {
     return key.i18n;
   }
-
 }
 
 extension Localization on String {

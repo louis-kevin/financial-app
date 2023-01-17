@@ -151,7 +151,8 @@ class _FormBillPageState extends State<FormBillPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          DisplaySmallText.key(BillFormPageTextKeys.labelPaymentDay, fit: BoxFit.fitWidth),
+          DisplaySmallText.key(BillFormPageTextKeys.labelPaymentDay,
+              fit: BoxFit.fitWidth),
           Expanded(
             child: Container(),
           ),

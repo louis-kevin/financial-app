@@ -93,7 +93,8 @@ class BaseService {
 
 class AuthenticationInterceptor extends InterceptorsWrapper {
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+  void onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
     options.headers.addAll(await _fetchAuthHeader());
     print("[DIO] REQUEST[${options?.method}] => PATH: ${options?.path}");
     print("[DIO] HEADERS: ${options.headers}");
@@ -118,7 +119,8 @@ class AuthenticationInterceptor extends InterceptorsWrapper {
   Future onError(DioError error, ErrorInterceptorHandler handler) async {
     var response = error?.response;
 
-    if (error.type != DioErrorType.response) return  super.onError(error, handler);
+    if (error.type != DioErrorType.response)
+      return super.onError(error, handler);
 
     print(
         "ERROR[${response?.statusCode}] => PATH: ${error?.requestOptions?.uri?.path}");
